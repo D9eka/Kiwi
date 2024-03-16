@@ -52,8 +52,8 @@ namespace Creatures.Player
             SetPosition(data.Position.Value);
             SetScale(data.Scale);
 
-            SetHealth(data.Mana);
-            SetMaxHealth(data.MaxMana);
+            SetHealth(data.Health);
+            SetMaxHealth(data.MaxHealth);
 
             SetFirstStartState(data.FirstStart);
         }

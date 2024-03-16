@@ -205,6 +205,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1144437839036803546}
   - {fileID: 4321377706832166779}
   - {fileID: 4221083895384683461}
   - {fileID: 3747633726220549173}
@@ -278,6 +279,7 @@ MonoBehaviour:
   _groundCheck: {fileID: 4998445404144308329}
   _interactionCheck: {fileID: 6639206416449207082}
   _maxJumpTime: 0.3
+  _activeWeapon: {fileID: 4783704540083887971}
 --- !u!114 &6032756445693665985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -319,7 +321,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6032756445693665985}
         m_TargetAssemblyTypeName: Creatures.Player.PlayerInputReader, Assembly-CSharp
-        m_MethodName: OnMove
+        m_MethodName: OnPlayerMove
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -335,7 +337,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6032756445693665985}
         m_TargetAssemblyTypeName: Creatures.Player.PlayerInputReader, Assembly-CSharp
-        m_MethodName: OnInteract
+        m_MethodName: OnPlayerInteract
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -351,11 +353,75 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: ba94064e-b71f-46d2-85bc-2b1b03b24e90
     m_ActionName: Player/Pause[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6032756445693665985}
+        m_TargetAssemblyTypeName: Creatures.Player.PlayerInputReader, Assembly-CSharp
+        m_MethodName: OnPlayerAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 21501708-1770-4307-ba69-f84ec92f38eb
+    m_ActionName: Player/Attack[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6032756445693665985}
+        m_TargetAssemblyTypeName: Creatures.Player.PlayerInputReader, Assembly-CSharp
+        m_MethodName: OnPlayerWeaponReload
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 7474e419-2d96-4ab5-bcd6-7720022edd36
+    m_ActionName: Player/Reload[/Keyboard/r]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!1 &4689549421514395258
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1144437839036803546}
+  m_Layer: 0
+  m_Name: WeaponHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1144437839036803546
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4689549421514395258}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.4, y: -0.65, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1284604026424493743}
+  m_Father: {fileID: 5263302648794236649}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8609677751656144520
 GameObject:
   m_ObjectHideFlags: 0
@@ -430,7 +496,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: e32694034990e454f85933632d62d256, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -498,3 +564,76 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1001 &2024337164305932268
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1144437839036803546}
+    m_Modifications:
+    - target: {fileID: 991978714659166531, guid: df63638cc266c9e4b82ef312d47387e0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 991978714659166531, guid: df63638cc266c9e4b82ef312d47387e0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 991978714659166531, guid: df63638cc266c9e4b82ef312d47387e0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 991978714659166531, guid: df63638cc266c9e4b82ef312d47387e0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 991978714659166531, guid: df63638cc266c9e4b82ef312d47387e0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 991978714659166531, guid: df63638cc266c9e4b82ef312d47387e0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 991978714659166531, guid: df63638cc266c9e4b82ef312d47387e0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 991978714659166531, guid: df63638cc266c9e4b82ef312d47387e0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 991978714659166531, guid: df63638cc266c9e4b82ef312d47387e0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 991978714659166531, guid: df63638cc266c9e4b82ef312d47387e0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6817732230846011340, guid: df63638cc266c9e4b82ef312d47387e0, type: 3}
+      propertyPath: m_Name
+      value: Gun
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: df63638cc266c9e4b82ef312d47387e0, type: 3}
+--- !u!4 &1284604026424493743 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 991978714659166531, guid: df63638cc266c9e4b82ef312d47387e0, type: 3}
+  m_PrefabInstance: {fileID: 2024337164305932268}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4783704540083887971 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6806278258998116495, guid: df63638cc266c9e4b82ef312d47387e0, type: 3}
+  m_PrefabInstance: {fileID: 2024337164305932268}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7f35b21b33f69547997528ef34374d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

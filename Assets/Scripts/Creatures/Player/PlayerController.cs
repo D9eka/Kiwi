@@ -1,9 +1,11 @@
 using Components.ColliderBased;
 using Components.Health;
+using Extensions;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using Weapons;
 
 namespace Creatures.Player
 {
@@ -14,6 +16,9 @@ namespace Creatures.Player
 
         [Header("Jump")]
         [SerializeField] private float _maxJumpTime;
+
+        [Header("Weapon")]
+        [SerializeField] private Weapon _activeWeapon;
 
         private HealthComponent health;
 
@@ -48,19 +53,34 @@ namespace Creatures.Player
         private void Start()
         {
             PlayerInputReader inputReader = GetComponent<PlayerInputReader>();
-            inputReader.OnPlayerMove += PlayerController_OnPlayerMove;
-            inputReader.OnPlayerInteract += PlayerController_OnPlayerInteract;
+            inputReader.OnMove += PlayerInputReader_OnMove;
+            inputReader.OnInteract += PlayerInputReader_OnInteract;
+
+            inputReader.OnAttack += PlayerInputReader_OnAttack;
+            inputReader.OnWeaponReload += PlayerInputReader_OnWeaponReload;
         }
 
         #region Events
-        private void PlayerController_OnPlayerMove(object sender, Vector2 e)
+        private void PlayerInputReader_OnMove(object sender, Vector2 e)
         {
             SetDirection(e);
         }
 
-        private void PlayerController_OnPlayerInteract(object sender, EventArgs e)
+        private void PlayerInputReader_OnInteract(object sender, EventArgs e)
         {
             _interactionCheck.Check();
+        }
+
+        private void PlayerInputReader_OnAttack(object sender, EventArgs e)
+        {
+            if(_activeWeapon != null)
+                _activeWeapon.Attack();
+        }
+
+        private void PlayerInputReader_OnWeaponReload(object sender, EventArgs e)
+        {
+            if (_activeWeapon != null && _activeWeapon is Gun gun)
+                gun.Reload();
         }
         #endregion
 
@@ -110,6 +130,19 @@ namespace Creatures.Player
             return new PlayerData(SceneManager.GetActiveScene().name, transform.position, transform.localScale.x,
                                   healthData.health, healthData.maxHealth, true);
         }
+
+        public override void UpdateSpriteDirection()
+        {
+            float angleToMouse = transform.GetAngleToMouse();
+
+            if (angleToMouse >= -90f && angleToMouse <= 90f)
+                transform.localScale = new Vector2(1f, _visual.transform.localScale.y);
+            else
+                transform.localScale = new Vector2(-1f, _visual.transform.localScale.y);
+
+            if (_activeWeapon != null && _activeWeapon is Gun gun)
+                gun.UpdateSpriteDirection();
+        }
     }
 
     [System.Serializable]
@@ -119,8 +152,8 @@ namespace Creatures.Player
         public Vector2? Position { get; private set; }
         public float Scale { get; private set; }
 
-        public float Mana { get; private set; }
-        public float MaxMana { get; private set; }
+        public float Health { get; private set; }
+        public float MaxHealth { get; private set; }
 
         public bool FirstStart { get; private set; }
 
@@ -128,15 +161,15 @@ namespace Creatures.Player
         private const float DEFAULT_MAX_HEALTH = 100f;
 
         public PlayerData(string location, Vector2 position, float scale = 1f, 
-                          float mana = DEFAULT_HEALTH, float maxMana = DEFAULT_MAX_HEALTH,
+                          float health = DEFAULT_HEALTH, float maxHealth = DEFAULT_MAX_HEALTH,
                           bool firstStart = true)
         {
             Location = location;
             Position = position;
             Scale = scale;
 
-            Mana = mana;
-            MaxMana = maxMana;
+            Health = health;
+            MaxHealth = maxHealth;
 
             FirstStart = firstStart;
         }

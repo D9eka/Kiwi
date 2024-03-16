@@ -24,19 +24,12 @@ namespace Components.Health
         private void Start()
         {
             health = _maxHealth;
-            LoadData(PlayerPrefsController.GetPlayerData());
 
             OnValueChange?.Invoke(this, new OnValueChangeEventArgs
             {
                 value = health,
                 maxValue = _maxHealth,
             });
-        }
-
-        private void LoadData(PlayerData data)
-        {
-            _maxHealth = data.MaxMana;
-            health = data.Mana;
         }
 
         public void ModifyHealth(float changeValue)
