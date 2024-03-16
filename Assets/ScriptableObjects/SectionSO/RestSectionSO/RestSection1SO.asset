@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f4faf231dea66b4ab2e0b1925a6c582, type: 3}
+  m_Name: RestSection1SO
+  m_EditorClassIdentifier: 
+  sectionTypeSO: {fileID: 11400000, guid: 54bfa244b73a826469e02f858b29fb18, type: 2}
+  sectionName: RestSection1
