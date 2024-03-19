@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04e1c023e1d86334c9ba55787eccb9c1, type: 3}
   m_Name: TraderSectionTypeSO
   m_EditorClassIdentifier: 
-  sectionType: 2
-  name: Trader
-  image: {fileID: 21300000, guid: c7eff54f7764e584a8b30c36be2c84d6, type: 3}
+  _sectionType: 2
+  _name: Trader Section
+  _image: {fileID: 21300000, guid: 37b86149c34faf045987696ddb51c93b, type: 3}

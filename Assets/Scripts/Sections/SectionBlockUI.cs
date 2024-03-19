@@ -9,19 +9,19 @@ using UnityEngine.UI;
 public class SectionBlockUI : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField] private TextMeshProUGUI sectionTypeName;
-    [SerializeField] private Image image;
-    private SectionType sectionType;
+    [SerializeField] private TextMeshProUGUI _sectionTypeName;
+    [SerializeField] private Image _image;
+    private SectionTypeSO _sectionType;
 
     public void SetInfo(SectionTypeSO sectionTypeSO)
     {
-        sectionType = sectionTypeSO.SectionType;
-        sectionTypeName.text = sectionTypeSO.Name;
-        image.sprite = sectionTypeSO.Image;
+        _sectionType = sectionTypeSO;
+        _sectionTypeName.text = sectionTypeSO.Name;
+        _image.sprite = sectionTypeSO.Image;
     }
 
     public void MakeChoice()
     {
-        SectionManager.Instance.EnterRandomSection(sectionType);
+        SectionManager.Instance.EnterRandomSection(_sectionType);
     }
 }

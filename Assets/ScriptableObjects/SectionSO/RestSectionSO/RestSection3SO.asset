@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f4faf231dea66b4ab2e0b1925a6c582, type: 3}
   m_Name: RestSection3SO
   m_EditorClassIdentifier: 
-  sectionTypeSO: {fileID: 11400000, guid: 54bfa244b73a826469e02f858b29fb18, type: 2}
-  sectionName: RestSection3
+  _sectionTypeSO: {fileID: 11400000, guid: 54bfa244b73a826469e02f858b29fb18, type: 2}
+  _sectionName: RestSection3

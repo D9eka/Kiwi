@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using Sections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class NextSectionSelectionUI : MonoBehaviour
 {
-    [SerializeField] private SectionBlockUI leftChoiceBlock;
-    [SerializeField] private SectionBlockUI centerChoiceBlock;
-    [SerializeField] private SectionBlockUI rightChoiceBlock;
-    private int count;
+    [SerializeField] private SectionBlockUI _leftChoiceBlock;
+    [SerializeField] private SectionBlockUI _centerChoiceBlock;
+    [SerializeField] private SectionBlockUI _rightChoiceBlock;
+    private int _count;
     public static NextSectionSelectionUI Instance { get; private set; }
 
     private void Awake()
@@ -34,23 +35,23 @@ public class NextSectionSelectionUI : MonoBehaviour
 
     public void SetTypes(List<SectionTypeSO> sectionTypes)
     {
-        count = sectionTypes.Count;
-        switch (count)
+        _count = sectionTypes.Count;
+        switch (_count)
         {
             case 1:
-                Destroy(leftChoiceBlock.gameObject);
-                Destroy(rightChoiceBlock.gameObject);
-                centerChoiceBlock.SetInfo(sectionTypes[0]);
+                Destroy(_leftChoiceBlock.gameObject);
+                Destroy(_rightChoiceBlock.gameObject);
+                _centerChoiceBlock.SetInfo(sectionTypes[0]);
                 break;
             case 2:
-                Destroy(centerChoiceBlock.gameObject);
-                leftChoiceBlock.SetInfo(sectionTypes[0]);
-                rightChoiceBlock.SetInfo(sectionTypes[1]);
+                Destroy(_centerChoiceBlock.gameObject);
+                _leftChoiceBlock.SetInfo(sectionTypes[0]);
+                _rightChoiceBlock.SetInfo(sectionTypes[1]);
                 break;
             default:
-                leftChoiceBlock.SetInfo(sectionTypes[0]);
-                centerChoiceBlock.SetInfo(sectionTypes[1]);
-                rightChoiceBlock.SetInfo(sectionTypes[2]);
+                _leftChoiceBlock.SetInfo(sectionTypes[0]);
+                _centerChoiceBlock.SetInfo(sectionTypes[1]);
+                _rightChoiceBlock.SetInfo(sectionTypes[2]);
                 break;
         }
     }

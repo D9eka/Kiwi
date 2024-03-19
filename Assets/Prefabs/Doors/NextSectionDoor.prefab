@@ -98,9 +98,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e854ed5becab6394398646515e8c6057, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isRandom: 1
-  choicesCount: 2
-  possibleSectionTypes: []
+  _isRandom: 1
+  _choicesCount: 2
+  _possibleSectionTypes: []
 --- !u!61 &6061482304662938985
 BoxCollider2D:
   m_ObjectHideFlags: 0

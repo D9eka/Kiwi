@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f4faf231dea66b4ab2e0b1925a6c582, type: 3}
   m_Name: BossSection3SO
   m_EditorClassIdentifier: 
-  sectionTypeSO: {fileID: 11400000, guid: 605969b1425a44b4085a8076b75cbcba, type: 2}
-  sectionName: BossSection3
+  _sectionTypeSO: {fileID: 11400000, guid: 605969b1425a44b4085a8076b75cbcba, type: 2}
+  _sectionName: BossSection3

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04e1c023e1d86334c9ba55787eccb9c1, type: 3}
   m_Name: RestSectionTypeSO
   m_EditorClassIdentifier: 
-  sectionType: 1
-  name: Rest
-  image: {fileID: 21300000, guid: eb7e0459b2c65c34598439ed1ed1dd20, type: 3}
+  _sectionType: 1
+  _name: Rest Section
+  _image: {fileID: 21300000, guid: 6c4b7fb446df7a04fb27068133258432, type: 3}

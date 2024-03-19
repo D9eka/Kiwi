@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f4faf231dea66b4ab2e0b1925a6c582, type: 3}
   m_Name: BattleSection2SO
   m_EditorClassIdentifier: 
-  sectionTypeSO: {fileID: 11400000, guid: 1bbbbeced275bf346aaff7c7f4599335, type: 2}
-  sectionName: BattleSection2
+  _sectionTypeSO: {fileID: 11400000, guid: b0e153cf134492349a748e0fba5a8a6b, type: 2}
+  _sectionName: BattleSection2
