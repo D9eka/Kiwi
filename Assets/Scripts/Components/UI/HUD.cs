@@ -38,7 +38,7 @@ namespace Components.UI
 
         private void LoadData(PlayerData data)
         {
-            UpdateMana(data.Mana, data.MaxMana);
+            UpdateMana(data.Health, data.MaxHealth);
         }    
 
         public void SendMessage(string message, float viewTime)
