@@ -98,11 +98,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7f35b21b33f69547997528ef34374d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 1
-  _attackDelay: 0.1
+  _damage: 2
+  _attackDelay: 0.5
   _bullet: {fileID: 2968767307136606044, guid: 00cb3701b22febf4989559b214d28af7, type: 3}
   _shotPoint: {fileID: 5473191581541652279}
-  _ammoCapacity: 10
+  _ammoCapacity: 5
 --- !u!1 &9016657978327565834
 GameObject:
   m_ObjectHideFlags: 0

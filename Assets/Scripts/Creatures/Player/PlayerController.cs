@@ -12,9 +12,12 @@ namespace Creatures.Player
     [RequireComponent(typeof(HealthComponent))]
     public class PlayerController : Creature
     {
+        [Header("Checkers")]
+        [SerializeField] protected LayerCheck _groundCheck;
         [SerializeField] private CheckCircleOverlap _interactionCheck;
 
         [Header("Jump")]
+        [SerializeField] protected float _jumpForce;
         [SerializeField] private float _maxJumpTime;
 
         [Header("Weapon")]
@@ -23,6 +26,8 @@ namespace Creatures.Player
         private HealthComponent health;
 
         private float jumpTimeCounter;
+
+        private const string IS_ON_GROUND_KEY = "is-on-ground";
 
         public bool Active { get; private set; }
 
@@ -95,7 +100,13 @@ namespace Creatures.Player
             UpdateSpriteDirection();
         }
 
-        protected override void Jump()
+        protected override void Move()
+        {
+            var xVelocity = direction.x * _speed;
+            _rigidbody.velocity = new Vector2(xVelocity, _rigidbody.velocity.y);
+        }
+
+        private void Jump()
         {
             bool isJumpKeyPressed = direction.y > 0;
 
@@ -142,6 +153,12 @@ namespace Creatures.Player
 
             if (_activeWeapon != null && _activeWeapon is Gun gun)
                 gun.UpdateSpriteDirection();
+        }
+
+        protected override void UpdateAnimations()
+        {
+            base.UpdateAnimations();
+            _animator.SetBool(IS_ON_GROUND_KEY, isGrounded);
         }
     }
 

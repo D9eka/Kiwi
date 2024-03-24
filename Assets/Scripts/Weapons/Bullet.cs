@@ -38,7 +38,7 @@ namespace Weapons
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.TryGetComponent(out HealthComponent health))
+            if (collision.transform.parent.TryGetComponent(out HealthComponent health))
                 health.ModifyHealth(-damage);
         }
     }

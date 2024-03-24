@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3747633726220549173}
   - component: {fileID: 6220802252440826683}
   - component: {fileID: 6639206416449207082}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: InteractionCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 4221083895384683461}
   - component: {fileID: 1041912486514205334}
   - component: {fileID: 4998445404144308329}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185,7 +185,8 @@ GameObject:
   - component: {fileID: 7319468620172104336}
   - component: {fileID: 6032756445693665985}
   - component: {fileID: 4044865676191843552}
-  m_Layer: 0
+  - component: {fileID: 1272376342476440718}
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -223,7 +224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 473fbe68f03715c46801089ad823e653, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 0
+  _maxHealth: 20
   _onHeal:
     m_PersistentCalls:
       m_Calls: []
@@ -232,7 +233,20 @@ MonoBehaviour:
       m_Calls: []
   _onDie:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1272376342476440718}
+        m_TargetAssemblyTypeName: Components.LevelManagement.ReloadLevelComponent,
+          Assembly-CSharp
+        m_MethodName: Reload
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!50 &8720221817345873357
 Rigidbody2D:
   serializedVersion: 4
@@ -275,9 +289,9 @@ MonoBehaviour:
   _visual: {fileID: 8609677751656144520}
   _invertScale: 0
   _speed: 5
-  _jumpForce: 7
   _groundCheck: {fileID: 4998445404144308329}
   _interactionCheck: {fileID: 6639206416449207082}
+  _jumpForce: 7
   _maxJumpTime: 0.3
   _activeWeapon: {fileID: 4783704540083887971}
 --- !u!114 &6032756445693665985
@@ -390,6 +404,18 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1272376342476440718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4410418010078227160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13d4821c9a28b7647a038133a8fd83e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4689549421514395258
 GameObject:
   m_ObjectHideFlags: 0
@@ -399,7 +425,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1144437839036803546}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: WeaponHandler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -434,7 +460,7 @@ GameObject:
   - component: {fileID: 6815776301083688235}
   - component: {fileID: 5902230397924490279}
   - component: {fileID: 6931674146981547745}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Visual
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -615,6 +641,14 @@ PrefabInstance:
     - target: {fileID: 6817732230846011340, guid: df63638cc266c9e4b82ef312d47387e0, type: 3}
       propertyPath: m_Name
       value: Gun
+      objectReference: {fileID: 0}
+    - target: {fileID: 6817732230846011340, guid: df63638cc266c9e4b82ef312d47387e0, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9016657978327565834, guid: df63638cc266c9e4b82ef312d47387e0, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
