@@ -6,7 +6,7 @@ namespace Components.Health
     {
         [SerializeField] private int _healthDelta;
 
-        public void ModifyMana(GameObject target)
+        public void ModifyHealth(GameObject target)
         {
             if(target.transform.parent.TryGetComponent<HealthComponent>(out var healthComponent))
                 healthComponent.ModifyHealth(_healthDelta);

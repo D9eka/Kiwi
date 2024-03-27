@@ -47,6 +47,8 @@ namespace Components.Health
                 _onDie?.Invoke();
             if(changeValue > 0)
                 _onHeal?.Invoke();
+
+            Debug.Log($"{gameObject.name}: {health} ({changeValue})");
         }
 
         public (float health, float maxHealth) SaveData()
