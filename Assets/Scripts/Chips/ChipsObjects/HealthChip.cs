@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthChip : Chip
+public class HealthChip : PassiveChip
 {
     private const int MAX_LEVEL = 3;
 
@@ -10,18 +10,13 @@ public class HealthChip : Chip
 
     protected override void SetValues()
     {
-        switch (currentLevel)
+        _healthIncrease = currentLevel switch
         {
-            case 1:
-                _healthIncrease = 5;
-                break;
-            case 2:
-                _healthIncrease = 10;
-                break;
-            case 3:
-                _healthIncrease = 15;
-                break;
-        }
+            1 => 5,
+            2 => 10,
+            3 => 15,
+            _ => _healthIncrease
+        };
     }
 
     public override void Activate()

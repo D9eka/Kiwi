@@ -11,6 +11,8 @@ public class ChipManager : MonoBehaviour
 
     //Тестовый вариант
     private ShieldChip _shieldChip;
+    private RevivalChip _revivalChip;
+    private VampirismChip _vampirismChip;
 
     private void Awake()
     {
@@ -29,43 +31,77 @@ public class ChipManager : MonoBehaviour
     public void ObtainChip(Chip chip)
     {
         _obtainedChips.Add(chip);
-        if (chip.GetType().IsSubclassOf(typeof(UpdatingChip)))
+        if (chip is UpdatingChip updatingChip)
         {
-            _obtainedUpdatingChips.Add((UpdatingChip)chip);
-            //Тестовый вариант
-            if (chip.GetType() == typeof(ShieldChip))
-            {
-                _shieldChip = (ShieldChip)chip;
-            }
+            _obtainedUpdatingChips.Add(updatingChip);
         }
 
-        chip.Activate();
+        TrySetChip(chip);
+        if (chip is PassiveChip passiveChip) passiveChip.Activate();
     }
 
     public void RemoveChip(Chip chip)
     {
         _obtainedChips.Remove(chip);
-        if (chip.GetType().IsSubclassOf(typeof(UpdatingChip)))
+        if (chip is UpdatingChip updatingChip)
         {
-            _obtainedUpdatingChips.Remove((UpdatingChip)chip);
-            //Тестовый вариант
-            if (chip.GetType() == typeof(UpdatingChip))
-                _shieldChip = null;
+            _obtainedUpdatingChips.Remove(updatingChip);
         }
 
-        chip.Deactivate();
+        UnsetChip(chip);
+        if (chip is PassiveChip passiveChip) passiveChip.Deactivate();
     }
 
-    //Тестовый вариант
-    // Задумка в том, чтобы в коде, где игрок получает урон, пытаться вызвать этот метод
     public bool TryUseShieldChip()
     {
-        if (_shieldChip == null || !_shieldChip.TryBlock())
+        return _shieldChip != null && _shieldChip.TryBlock();
+    }
+
+    public bool TryUseRevivalChip()
+    {
+        if (_revivalChip == null)
         {
             return false;
         }
 
-        _shieldChip.Deactivate();
+        _revivalChip.Revive();
         return true;
+    }
+
+    public void TryUseVampirismChip()
+    {
+        _vampirismChip?.TryRestoreHealth();
+    }
+
+    private void TrySetChip(Chip chip)
+    {
+        switch (chip)
+        {
+            case ShieldChip shieldChip:
+                _shieldChip = shieldChip;
+                break;
+            case RevivalChip revivalChip:
+                _revivalChip = revivalChip;
+                break;
+            case VampirismChip vampirismChip:
+                _vampirismChip = vampirismChip;
+                break;
+        }
+    }
+
+    private void UnsetChip(Chip chip)
+    {
+        switch (chip)
+        {
+            case ShieldChip:
+                _shieldChip = null;
+                break;
+            case RevivalChip:
+                _revivalChip = null;
+                break;
+            case VampirismChip:
+                _vampirismChip = null;
+                break;
+        }
     }
 }

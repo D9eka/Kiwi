@@ -28,9 +28,6 @@ public class NextSectionSelectionUI : MonoBehaviour
     public void ShowChoice()
     {
         gameObject.SetActive(true);
-        // leftChoiceBlock.gameObject.SetActive(true);
-        // centerChoiceBlock.gameObject.SetActive(true);
-        // rightChoiceBlock.gameObject.SetActive(true);
     }
 
     public void SetTypes(List<SectionTypeSO> sectionTypes)

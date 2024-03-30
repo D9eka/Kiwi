@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpeedChip : Chip
+public class SpeedChip : PassiveChip
 {
     private const int MAX_LEVEL = 3;
 
@@ -10,28 +10,23 @@ public class SpeedChip : Chip
 
     protected override void SetValues()
     {
-        switch (currentLevel)
+        _speedIncreasePercent = currentLevel switch
         {
-            case 1:
-                _speedIncreasePercent = 0.1f;
-                break;
-            case 2:
-                _speedIncreasePercent = 0.2f;
-                break;
-            case 3:
-                _speedIncreasePercent = 0.3f;
-                break;
-        }
+            1 => 0.1f,
+            2 => 0.2f,
+            3 => 0.3f,
+            _ => _speedIncreasePercent
+        };
     }
 
     public override void Activate()
     {
-        StatsModifier.speedDamageMultiplier += _speedIncreasePercent;
+        StatsModifier.speedMultiplier += _speedIncreasePercent;
     }
 
     public override void Deactivate()
     {
-        StatsModifier.speedDamageMultiplier -= _speedIncreasePercent;
+        StatsModifier.speedMultiplier -= _speedIncreasePercent;
     }
 
     public SpeedChip(int currentLevel) : base(currentLevel)

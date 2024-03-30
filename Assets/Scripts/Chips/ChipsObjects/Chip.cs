@@ -25,12 +25,10 @@ public abstract class Chip
         SetValues();
     }
 
-    public void Upgrade()
+    protected virtual void Upgrade()
     {
-        Deactivate();
         currentLevel += 1;
         SetValues();
-        Activate();
     }
 
     public void TryUpgrade()
@@ -42,6 +40,4 @@ public abstract class Chip
     }
 
     protected abstract void SetValues();
-    public abstract void Activate();
-    public abstract void Deactivate();
 }

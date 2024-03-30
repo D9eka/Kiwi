@@ -9,7 +9,7 @@ public class ShieldChip : UpdatingChip
     private float _blockChance = 0.2f;
     private float _cooldown = 10;
     private float _timeToActivation;
-    private bool _isActive;
+    private bool _isShieldRaised;
 
     protected override void SetValues()
     {
@@ -27,21 +27,9 @@ public class ShieldChip : UpdatingChip
         }
     }
 
-    public override void Activate()
-    {
-        _isActive = true;
-    }
-
-    public override void Deactivate()
-    {
-        if (!_isActive) return;
-        _isActive = false;
-        _timeToActivation = _cooldown;
-    }
-
     public override void Update()
     {
-        TryActivate();
+        TryRaiseShield();
     }
 
     public ShieldChip(int currentLevel) : base(currentLevel)
@@ -54,15 +42,24 @@ public class ShieldChip : UpdatingChip
         maxLevel = MAX_LEVEL;
     }
 
-    private void TryActivate()
+    private void TryRaiseShield()
     {
-        if (_isActive) return;
-        if (_timeToActivation <= 0) Activate();
+        if (_isShieldRaised) return;
+        if (_timeToActivation <= 0) _isShieldRaised = true;
         else _timeToActivation -= Time.deltaTime;
     }
 
     public bool TryBlock()
     {
-        return _isActive && Randomiser.Succeed(_blockChance);
+        var isSucceed = _isShieldRaised && Randomiser.Succeed(_blockChance);
+        if (isSucceed) LowerShield();
+        return isSucceed;
+    }
+
+    public void LowerShield()
+    {
+        if (!_isShieldRaised) return;
+        _isShieldRaised = false;
+        _timeToActivation = _cooldown;
     }
 }

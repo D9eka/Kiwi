@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RageChip : Chip
+public class RageChip : PassiveChip
 {
     private const int MAX_LEVEL = 3;
 
