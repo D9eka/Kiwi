@@ -33,7 +33,7 @@ namespace Components.Health
         }
 
         public void ModifyHealth(float changeValue)
-        {            
+        {
             health = Mathf.Min(health + changeValue, _maxHealth);
             OnValueChange?.Invoke(this, new OnValueChangeEventArgs
             {

@@ -1,33 +1,25 @@
 ﻿using Components.Health;
-using Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Weapons
 {
     public class Bullet : MonoBehaviour
     {
-        [SerializeField] private float _speed;
-        [SerializeField] private float _ttl;
-
         private Rigidbody2D _rigidbody;
 
-        private float damage;
+        private float _damage;
+        private float _speed;
 
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
-
-            Destroy(gameObject, _ttl);
         }
 
-        public void Initialize(float damage)
+        public void Initialize(float damage, float speed, float ttl)
         {
-            this.damage = damage;
+            this._damage = damage;
+            this._speed = speed;
+            Destroy(gameObject, ttl);
         }
 
         private void Update()
@@ -35,11 +27,14 @@ namespace Weapons
             _rigidbody.velocity = transform.right * _speed;
         }
 
-
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            if (collision.isTrigger)
+                return;
+
             if (collision.transform.parent.TryGetComponent(out HealthComponent health))
-                health.ModifyHealth(-damage);
+                health.ModifyHealth(-_damage);
+            Destroy(gameObject);
         }
     }
 }

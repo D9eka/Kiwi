@@ -78,7 +78,7 @@ namespace Creatures.Player
 
         private void PlayerInputReader_OnAttack(object sender, EventArgs e)
         {
-            if(_activeWeapon != null)
+            if (_activeWeapon != null && _activeWeapon.gameObject.activeSelf)
                 _activeWeapon.Attack();
         }
 

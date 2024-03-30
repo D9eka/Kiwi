@@ -36,7 +36,7 @@
                     "name": "Attack",
                     "type": "Value",
                     "id": "21501708-1770-4307-ba69-f84ec92f38eb",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -133,7 +133,7 @@
                     "name": "",
                     "id": "c4445185-ea07-45ad-8956-2de069e0c50f",
                     "path": "<Mouse>/leftButton",
-                    "interactions": "",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Attack",
