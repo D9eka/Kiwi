@@ -13,11 +13,12 @@ public class ChipManager : MonoBehaviour
     private ShieldChip _shieldChip;
     private RevivalChip _revivalChip;
     private VampirismChip _vampirismChip;
+    [SerializeField] private ChipSO _brokenChipSO;
 
     private void Awake()
     {
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+        // DontDestroyOnLoad(gameObject);
     }
 
     private void Update()
@@ -28,8 +29,21 @@ public class ChipManager : MonoBehaviour
         }
     }
 
-    public void ObtainChip(Chip chip)
+    public void ObtainChip(ChipSO chipSO)
     {
+        var chip = ChipCreator.Create(chipSO);
+        _obtainedChips.Add(chip);
+        if (chip is UpdatingChip updatingChip)
+        {
+            _obtainedUpdatingChips.Add(updatingChip);
+        }
+
+        TrySetChip(chip);
+        if (chip is PassiveChip passiveChip) passiveChip.Activate();
+    }
+    public void ObtainBrokenChip()
+    {
+        var chip = ChipCreator.Create(_brokenChipSO);
         _obtainedChips.Add(chip);
         if (chip is UpdatingChip updatingChip)
         {

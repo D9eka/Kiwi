@@ -4,30 +4,16 @@ using UnityEngine;
 
 public class RageChip : PassiveChip
 {
-    private const int MAX_LEVEL = 3;
-
     private float _damageIncreasePercent = 0.4f;
-
     private float _takenDamageIncreasePercent = 0.6f;
+    private readonly List<float> _damageIncreasePercentLevels = new() { 0.4f, 0.5f, 0.6f };
+    private readonly List<float> _takenDamageIncreasePercentLevels = new() { 0.6f, 0.5f, 0.4f };
 
 
     protected override void SetValues()
     {
-        switch (currentLevel)
-        {
-            case 1:
-                _damageIncreasePercent = 0.4f;
-                _takenDamageIncreasePercent = 0.6f;
-                break;
-            case 2:
-                _damageIncreasePercent = 0.5f;
-                _takenDamageIncreasePercent = 0.5f;
-                break;
-            case 3:
-                _damageIncreasePercent = 0.6f;
-                _takenDamageIncreasePercent = 0.4f;
-                break;
-        }
+        _damageIncreasePercent = _damageIncreasePercentLevels[currentLevel - 1];
+        _takenDamageIncreasePercent = _takenDamageIncreasePercentLevels[currentLevel - 1];
     }
 
     public override void Activate()
@@ -44,11 +30,11 @@ public class RageChip : PassiveChip
 
     public RageChip(int currentLevel) : base(currentLevel)
     {
-        maxLevel = MAX_LEVEL;
+        maxLevel = _damageIncreasePercentLevels.Count;
     }
 
     public RageChip()
     {
-        maxLevel = MAX_LEVEL;
+        maxLevel = _damageIncreasePercentLevels.Count;
     }
 }

@@ -9,7 +9,7 @@ public class OxygenStation : MonoBehaviour
     public void TryRestoreOxygen()
     {
         if (_wasUsed) return;
-        //Восстанавливается кислород
+        GameManager.Instance.ChangeOxygenPercent(1);
         _wasUsed = true;
     }
 }

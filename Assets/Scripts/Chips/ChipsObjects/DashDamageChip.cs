@@ -4,19 +4,13 @@ using UnityEngine;
 
 public class DashDamageChip : PassiveChip
 {
-    private const int MAX_LEVEL = 2;
-
     private float _dashDamageIncrease = 2f;
+    private readonly List<float> _dashDamageIncreaseLevels = new() { 2, 4 };
 
 
     protected override void SetValues()
     {
-        _dashDamageIncrease = currentLevel switch
-        {
-            1 => 2,
-            2 => 4f,
-            _ => _dashDamageIncrease
-        };
+        _dashDamageIncrease = _dashDamageIncreaseLevels[currentLevel - 1];
     }
 
     public override void Activate()
@@ -31,11 +25,11 @@ public class DashDamageChip : PassiveChip
 
     public DashDamageChip(int currentLevel) : base(currentLevel)
     {
-        maxLevel = MAX_LEVEL;
+        maxLevel = _dashDamageIncreaseLevels.Count;
     }
 
     public DashDamageChip()
     {
-        maxLevel = MAX_LEVEL;
+        maxLevel = _dashDamageIncreaseLevels.Count;;
     }
 }

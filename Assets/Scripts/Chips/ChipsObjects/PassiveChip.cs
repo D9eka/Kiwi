@@ -6,7 +6,6 @@ public abstract class PassiveChip : Chip
 {
     public abstract void Activate();
     public abstract void Deactivate();
-    protected List<List<float>> values;
 
     protected override void Upgrade()
     {

@@ -1,15 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Creatures.Player;
 using UnityEngine;
 
 public class GravityPanel : MonoBehaviour
 {
-    // private bool _wasUsed;
-
-    public void ChangeGravitation()
+    [ContextMenu(nameof(InvertGravity))]
+    public void InvertGravity()
     {
-        // if (_wasUsed) return;
-        // //Запускаем испытание
-        // _wasUsed = true;
+        GameManager.Instance.InvertGravity();
     }
 }

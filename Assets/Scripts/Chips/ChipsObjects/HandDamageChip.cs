@@ -4,20 +4,14 @@ using UnityEngine;
 
 public class HandDamageChip : PassiveChip
 {
-    private const int MAX_LEVEL = 3;
-
     private float _handDamageIncrease = 2;
+    private readonly List<float> _handDamageIncreaseLevels = new() { 2, 3, 4 };
+
 
 
     protected override void SetValues()
     {
-        _handDamageIncrease = currentLevel switch
-        {
-            1 => 2,
-            2 => 3,
-            3 => 4,
-            _ => _handDamageIncrease
-        };
+        _handDamageIncrease = _handDamageIncreaseLevels[currentLevel - 1];
     }
 
     public override void Activate()
@@ -32,11 +26,11 @@ public class HandDamageChip : PassiveChip
 
     public HandDamageChip(int currentLevel) : base(currentLevel)
     {
-        maxLevel = MAX_LEVEL;
+        maxLevel = _handDamageIncreaseLevels.Count;
     }
 
     public HandDamageChip()
     {
-        maxLevel = MAX_LEVEL;
+        maxLevel = _handDamageIncreaseLevels.Count;
     }
 }

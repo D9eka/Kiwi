@@ -6,12 +6,12 @@ public class MedicalStation : MonoBehaviour
 {
     private int _usesCount = 2;
 
-    public void TryRestoreHealth(float cost)
+    public void TryRestoreHealth(int cost)
     {
-        //также проверяетс наличие эссенции
         if (_usesCount <= 0) return;
-        //Восстанавливается здоровье
-        //Тратится эссенция
+        if (!GameManager.Instance.TrySpendEssence(cost)) return;
+        //Восстанавливается здоровье, по типу
+        // PlayerHealth.Instance.HealPercent(0.25)
         _usesCount -= 1;
     }
 }

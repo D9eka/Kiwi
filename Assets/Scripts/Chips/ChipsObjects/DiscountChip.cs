@@ -4,18 +4,12 @@ using UnityEngine;
 
 public class DiscountChip : PassiveChip
 {
-    private const int MAX_LEVEL = 2;
-
     private float _discountIncreasePercent = 0.15f;
+    private readonly List<float> _discountIncreasePercentLevels = new() { 0.15f, 0.3f };
 
     protected override void SetValues()
     {
-        _discountIncreasePercent = currentLevel switch
-        {
-            1 => 0.15f,
-            2 => 0.3f,
-            _ => _discountIncreasePercent
-        };
+        _discountIncreasePercent = _discountIncreasePercentLevels[currentLevel - 1];
     }
 
     public override void Activate()
@@ -30,11 +24,11 @@ public class DiscountChip : PassiveChip
 
     public DiscountChip(int currentLevel) : base(currentLevel)
     {
-        maxLevel = MAX_LEVEL;
+        maxLevel = _discountIncreasePercentLevels.Count;
     }
 
     public DiscountChip()
     {
-        maxLevel = MAX_LEVEL;
+        maxLevel = _discountIncreasePercentLevels.Count;
     }
 }

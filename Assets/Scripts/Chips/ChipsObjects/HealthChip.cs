@@ -4,38 +4,31 @@ using UnityEngine;
 
 public class HealthChip : PassiveChip
 {
-    private const int MAX_LEVEL = 3;
-
     private float _healthIncrease = 5;
+    private readonly List<float> _healthIncreaseLevels = new() { 5, 10, 15 };
 
     protected override void SetValues()
     {
-        _healthIncrease = currentLevel switch
-        {
-            1 => 5,
-            2 => 10,
-            3 => 15,
-            _ => _healthIncrease
-        };
+        _healthIncrease = _healthIncreaseLevels[currentLevel - 1];
     }
 
     public override void Activate()
     {
-        StatsModifier.healthAdder += _healthIncrease;
+        StatsModifier.ModifyHealthAdder(_healthIncrease);
     }
 
     public override void Deactivate()
     {
-        StatsModifier.healthAdder -= _healthIncrease;
+        StatsModifier.ModifyHealthAdder(-_healthIncrease);
     }
 
     public HealthChip(int currentLevel) : base(currentLevel)
     {
-        maxLevel = MAX_LEVEL;
+        maxLevel = _healthIncreaseLevels.Count;
     }
 
     public HealthChip()
     {
-        maxLevel = MAX_LEVEL;
+        maxLevel = _healthIncreaseLevels.Count;
     }
 }

@@ -4,19 +4,13 @@ using UnityEngine;
 
 public class SpeedChip : PassiveChip
 {
-    private const int MAX_LEVEL = 3;
+    private float _speedIncreasePercent = 0.1f;
+    private readonly List<float> _speedIncreasePercentLevels = new() { 0.1f, 0.2f, 0.3f };
 
-    private float _speedIncreasePercent= 0.1f;
 
     protected override void SetValues()
     {
-        _speedIncreasePercent = currentLevel switch
-        {
-            1 => 0.1f,
-            2 => 0.2f,
-            3 => 0.3f,
-            _ => _speedIncreasePercent
-        };
+        _speedIncreasePercent = _speedIncreasePercentLevels[currentLevel - 1];
     }
 
     public override void Activate()
@@ -31,12 +25,12 @@ public class SpeedChip : PassiveChip
 
     public SpeedChip(int currentLevel) : base(currentLevel)
     {
-        maxLevel = MAX_LEVEL;
+        maxLevel = _speedIncreasePercentLevels.Count;
     }
-    
+
 
     public SpeedChip()
     {
-        maxLevel = MAX_LEVEL;
+        maxLevel = _speedIncreasePercentLevels.Count;
     }
 }

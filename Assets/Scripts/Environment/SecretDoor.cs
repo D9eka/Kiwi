@@ -1,13 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sections;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class SecretDoor : MonoBehaviour
 {
     public bool IsOpened { get; private set; }
-
+    [SerializeField] private List<SectionTypeSO> _sectionTypeList;
     private SpriteRenderer _spriteRenderer;
     [SerializeField] private Sprite _openedDoorSprite;
 
@@ -26,6 +28,6 @@ public class SecretDoor : MonoBehaviour
     public void TryEnter()
     {
         if (!IsOpened) return;
-        //Входим в отсек
+        SectionManager.Instance.EnterRandomSectionType(_sectionTypeList);
     }
 }

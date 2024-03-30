@@ -12,16 +12,13 @@ namespace Creatures.Player
     [RequireComponent(typeof(HealthComponent))]
     public class PlayerController : Creature
     {
-        [Header("Checkers")]
-        [SerializeField] protected LayerCheck _groundCheck;
+        [Header("Checkers")] [SerializeField] protected LayerCheck _groundCheck;
         [SerializeField] private CheckCircleOverlap _interactionCheck;
 
-        [Header("Jump")]
-        [SerializeField] protected float _jumpForce;
+        [Header("Jump")] [SerializeField] protected float _jumpForce;
         [SerializeField] private float _maxJumpTime;
 
-        [Header("Weapon")]
-        [SerializeField] private Weapon _activeWeapon;
+        [Header("Weapon")] [SerializeField] private Weapon _activeWeapon;
 
         private HealthComponent health;
 
@@ -41,6 +38,7 @@ namespace Creatures.Player
             {
                 Destroy(Instance);
             }
+
             Instance = this;
 
             health = GetComponent<HealthComponent>();
@@ -63,9 +61,11 @@ namespace Creatures.Player
 
             inputReader.OnAttack += PlayerInputReader_OnAttack;
             inputReader.OnWeaponReload += PlayerInputReader_OnWeaponReload;
+            GameManager.Instance.OnGravityInverted += (sender, args) => InvertPlayerGravity();
         }
 
         #region Events
+
         private void PlayerInputReader_OnMove(object sender, Vector2 e)
         {
             SetDirection(e);
@@ -78,7 +78,7 @@ namespace Creatures.Player
 
         private void PlayerInputReader_OnAttack(object sender, EventArgs e)
         {
-            if(_activeWeapon != null)
+            if (_activeWeapon != null)
                 _activeWeapon.Attack();
         }
 
@@ -87,6 +87,7 @@ namespace Creatures.Player
             if (_activeWeapon != null && _activeWeapon is Gun gun)
                 gun.Reload();
         }
+
         #endregion
 
         protected override void Update()
@@ -116,13 +117,15 @@ namespace Creatures.Player
 
                 if (isJumpKeyPressed)
                 {
-                    _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _jumpForce);
+                    _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, GameManager.Instance.Gravity * _jumpForce);
                 }
+
                 return;
             }
+
             if (!isGrounded && isJumpKeyPressed && jumpTimeCounter > 0)
             {
-                _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _jumpForce);
+                _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, GameManager.Instance.Gravity * _jumpForce);
                 jumpTimeCounter -= Time.deltaTime;
                 return;
             }
@@ -139,7 +142,7 @@ namespace Creatures.Player
         {
             var healthData = health.SaveData();
             return new PlayerData(SceneManager.GetActiveScene().name, transform.position, transform.localScale.x,
-                                  healthData.health, healthData.maxHealth, true);
+                healthData.health, healthData.maxHealth, true);
         }
 
         public override void UpdateSpriteDirection()
@@ -160,6 +163,13 @@ namespace Creatures.Player
             base.UpdateAnimations();
             _animator.SetBool(IS_ON_GROUND_KEY, isGrounded);
         }
+
+        public void InvertPlayerGravity()
+        {
+            transform.Rotate(0, 180, 180);
+            transform.position += new Vector3(0, transform.lossyScale.y, 0) * GameManager.Instance.Gravity;
+            _rigidbody.gravityScale = GameManager.Instance.Gravity;
+        }
     }
 
     [System.Serializable]
@@ -177,9 +187,9 @@ namespace Creatures.Player
         private const float DEFAULT_HEALTH = 100f;
         private const float DEFAULT_MAX_HEALTH = 100f;
 
-        public PlayerData(string location, Vector2 position, float scale = 1f, 
-                          float health = DEFAULT_HEALTH, float maxHealth = DEFAULT_MAX_HEALTH,
-                          bool firstStart = true)
+        public PlayerData(string location, Vector2 position, float scale = 1f,
+            float health = DEFAULT_HEALTH, float maxHealth = DEFAULT_MAX_HEALTH,
+            bool firstStart = true)
         {
             Location = location;
             Position = position;

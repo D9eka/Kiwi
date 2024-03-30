@@ -12,6 +12,7 @@ namespace Sections
         [SerializeField] private bool _isRandom = true;
         [SerializeField, Range(1, 3)] private int _choicesCount = 2;
         [SerializeField] private List<SectionTypeSO> _possibleSectionTypes = new();
+
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.gameObject.CompareTag("Player"))

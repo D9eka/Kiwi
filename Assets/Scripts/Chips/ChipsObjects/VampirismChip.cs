@@ -8,35 +8,26 @@ public class VampirismChip : Chip
 
     private float _chance = 0.02f;
     private float _restorableHealth = 2;
+    private readonly List<float> _chanceLevels = new() { 0.02f, 0.04f, 0.06f };
+    private readonly List<float> _restorableHealthLevels = new() {2f, 4f, 6f };
+
+
 
 
     protected override void SetValues()
     {
-        switch (currentLevel)
-        {
-            case 1:
-                _chance = 0.02f;
-                _restorableHealth = 2;
-                break;
-            case 2:
-                _chance = 0.04f;
-                _restorableHealth = 4;
-                break;
-            case 3:
-                _chance= 0.06f;
-                _restorableHealth = 6;
-                break;
-        }
+        _chance = _chanceLevels[currentLevel];
+        _restorableHealth = _restorableHealthLevels[currentLevel];
     }
 
     public VampirismChip(int currentLevel) : base(currentLevel)
     {
-        maxLevel = MAX_LEVEL;
+        maxLevel = _chanceLevels.Count;
     }
 
     public VampirismChip()
     {
-        maxLevel = MAX_LEVEL;
+        maxLevel = _chanceLevels.Count;
     }
 
     public void TryRestoreHealth()

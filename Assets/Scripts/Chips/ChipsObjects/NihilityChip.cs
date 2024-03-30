@@ -4,20 +4,13 @@ using UnityEngine;
 
 public class NihilityChip : PassiveChip
 {
-    private const int MAX_LEVEL = 3;
-
     private float _damageIncreasePercent = 0.3f;
+    private readonly List<float> _damageIncreasePercentLevels = new() { 0.3f, 0.6f, 0.9f };
 
 
     protected override void SetValues()
     {
-        _damageIncreasePercent = currentLevel switch
-        {
-            1 => 0.3f,
-            2 => 0.6f,
-            3 => 0.9f,
-            _ => _damageIncreasePercent
-        };
+        _damageIncreasePercent = _damageIncreasePercentLevels[currentLevel - 1];
     }
 
     public override void Activate()
@@ -32,11 +25,11 @@ public class NihilityChip : PassiveChip
 
     public NihilityChip(int currentLevel) : base(currentLevel)
     {
-        maxLevel = MAX_LEVEL;
+        maxLevel = _damageIncreasePercentLevels.Count;
     }
 
     public NihilityChip()
     {
-        maxLevel = MAX_LEVEL;
+        maxLevel = _damageIncreasePercentLevels.Count;
     }
 }

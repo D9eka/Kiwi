@@ -4,20 +4,13 @@ using UnityEngine;
 
 public class BulletDamageChip : PassiveChip
 {
-    private const int MAX_LEVEL = 3;
-
     private float _bulletDamageIncrease = 2;
+    private readonly List<float> _bulletDamageIncreaseLevels = new() { 2, 3, 4 };
 
 
     protected override void SetValues()
     {
-        _bulletDamageIncrease = currentLevel switch
-        {
-            1 => 2,
-            2 => 3,
-            3 => 4,
-            _ => _bulletDamageIncrease
-        };
+        _bulletDamageIncrease = _bulletDamageIncreaseLevels[currentLevel - 1];
     }
 
     public override void Activate()
@@ -32,11 +25,11 @@ public class BulletDamageChip : PassiveChip
 
     public BulletDamageChip(int currentLevel) : base(currentLevel)
     {
-        maxLevel = MAX_LEVEL;
+        maxLevel = _bulletDamageIncreaseLevels.Count;
     }
 
     public BulletDamageChip()
     {
-        maxLevel = MAX_LEVEL;
+        maxLevel = _bulletDamageIncreaseLevels.Count;
     }
 }

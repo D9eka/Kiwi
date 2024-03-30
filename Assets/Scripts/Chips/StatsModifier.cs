@@ -27,7 +27,7 @@
                 damage += dashDamageAdder;
                 break;
         }
- 
+
         damage = damage * damageMultiplier * (1 + brokenChipDamagePercentAdder * brokenChipsCount);
         return damage;
     }
@@ -48,5 +48,20 @@
     {
         takenDamage *= takenDamageMultiplier;
         return takenDamage;
+    }
+
+    public static void ModifyHealthAdder(float addingValue)
+    {
+        healthAdder += addingValue;
+        //Можно либо вызвать здесь метод, который изменит здоровье игрока, что-то вроде
+        // PlayerHealth.Instance.ChangeMaxHealth(GetModifiedHealth(PlayerHealth.Instance.MaxHealth))
+        // PlayerHealth.Instance.ChangeHealth(GetModifiedHealth(PlayerHealth.Instance.Health))
+        //Либо можно сделать event/unityAction, на который подпишется здоровье, которое по выхову вызовет GetModifiedHealth, как в примере выше
+    }
+
+    public static float GetModifiedHealth(float health)
+    {
+        health += healthAdder;
+        return health;
     }
 }
