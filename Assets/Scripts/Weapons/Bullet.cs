@@ -29,7 +29,7 @@ namespace Weapons
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.isTrigger)
+            if (collision.isTrigger || collision.CompareTag("Player"))
                 return;
 
             if (collision.transform.parent.TryGetComponent(out HealthComponent health))
