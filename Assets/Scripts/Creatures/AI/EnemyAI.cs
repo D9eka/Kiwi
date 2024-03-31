@@ -12,7 +12,6 @@ namespace Creatures.Enemy
     public class EnemyAI : MonoBehaviour
     {
         [SerializeField] private LayerCheck _vision;
-        [SerializeField] private Animator _signAnimator;
         [SerializeField] private LayerCheck _canAttack;
         [Space]
         [SerializeField] private State _initialState = State.Patrolling;
@@ -44,9 +43,6 @@ namespace Creatures.Enemy
 
         private State _state;
 
-        private const string SUSPICION_SIGN_KEY = "suspicion-sign";
-        private const string DETECTION_SIGN_KEY = "detection-sign";
-
         public EventHandler<float> OnChangeSpeed;
 
         private void Start()
@@ -70,7 +66,6 @@ namespace Creatures.Enemy
             if (_state == State.GoToPlayer || _state == State.AttackPlayer)
                 return;
             navigation.SetTarget(player);
-            //_signAnimator.SetTrigger(DETECTION_SIGN_KEY);
             StartState(State.AgroToPlayer);
         }
 
@@ -123,7 +118,7 @@ namespace Creatures.Enemy
         {
             _state = state;
             navigation.followEnabled = true;
-            Debug.Log($"Change state to {state}");
+            Debug.Log($"{name} change state to {state}");
             enemy.Stop();
 
             if (current != null)

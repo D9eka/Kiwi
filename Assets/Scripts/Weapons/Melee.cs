@@ -1,9 +1,4 @@
 ﻿using Components.Health;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Weapons
@@ -12,22 +7,31 @@ namespace Weapons
     {
         [SerializeField] private CircleCollider2D _attackRange;
 
+        private void Awake()
+        {
+            _animator = GetComponent<Animator>();
+        }
+
         public override void Attack()
         {
-            if (timeBetweenAttacks < _attackDelay)
+            if (_timeBetweenAttacks < _attackDelay)
                 return;
 
+            _timeBetweenAttacks = 0;
             _animator.SetTrigger(ATTACK_KEY);
         }
 
         public void OnAttack()
         {
+            base.Attack();
+
             Collider2D[] colliders = Physics2D.OverlapCircleAll(_attackRange.transform.position, _attackRange.radius);
             foreach (Collider2D collider in colliders)
             {
-                if(collider.gameObject.TryGetComponent(out HealthComponent health))
+                if(!collider.isTrigger && !collider.CompareTag("Player") &&
+                   collider.transform.parent.TryGetComponent(out HealthComponent health))
                 {
-                    health.ModifyHealth(-_damage);
+                    health.ModifyHealth(-_currentDamage);
                 }
             }
         }    
