@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine;
 
 public abstract class Chip
 {
+    private ChipSO _chipSO;
     protected int maxLevel;
     protected int currentLevel;
 
@@ -12,6 +14,8 @@ public abstract class Chip
     public int CurrentLevel => currentLevel;
 
     private bool CanBeUpgrade => currentLevel < maxLevel;
+    //Нужен для того, чтобы обновлять описание чипа
+    public event EventHandler OnUpgraded;
 
     protected Chip()
     {
@@ -25,12 +29,11 @@ public abstract class Chip
         SetValues();
     }
 
-    public void Upgrade()
+    protected virtual void Upgrade()
     {
-        Deactivate();
         currentLevel += 1;
         SetValues();
-        Activate();
+        OnUpgraded?.Invoke(this, EventArgs.Empty);
     }
 
     public void TryUpgrade()
@@ -41,7 +44,10 @@ public abstract class Chip
         }
     }
 
+    public void SetChipSO(ChipSO chipSO)
+    {
+        _chipSO = chipSO;
+    }
+
     protected abstract void SetValues();
-    public abstract void Activate();
-    public abstract void Deactivate();
 }

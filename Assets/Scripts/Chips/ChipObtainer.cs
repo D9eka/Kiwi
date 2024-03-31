@@ -10,7 +10,7 @@ public class ChipObtainer : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            ChipManager.Instance.ObtainChip(ChipCreator.Create(_chipSO.ChipType));
+            ChipManager.Instance.ObtainChip(_chipSO);
         }
     }
 }

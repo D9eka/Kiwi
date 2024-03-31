@@ -4,5 +4,12 @@
     Discount,
     Health,
     Shield,
-    Speed
+    Speed,
+    Broken,
+    BulletDamage,
+    DashDamage,
+    HandDamage,
+    Nihility,
+    Revival,
+    Vampirism
 }

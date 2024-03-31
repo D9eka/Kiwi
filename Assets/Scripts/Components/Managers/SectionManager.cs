@@ -28,7 +28,7 @@ namespace Sections
         private void Awake()
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            // DontDestroyOnLoad(gameObject);
         }
 
         private void Start()
@@ -68,8 +68,14 @@ namespace Sections
             }
             else
             {
-                EnterSection(_sectionsDictionary[sectionType][Random.Range(0, _sectionsDictionary[sectionType].Count)]);
+                EnterSection(Randomiser.GetRandomElement(_sectionsDictionary[sectionType]));
+                // EnterSection(_sectionsDictionary[sectionType][Random.Range(0, _sectionsDictionary[sectionType].Count)]);
             }
+        }
+
+        public void EnterRandomSectionType(List<SectionTypeSO> sectionTypeList)
+        {
+            EnterRandomSection(Randomiser.GetRandomElement(sectionTypeList));
         }
 
         public void EnterNextOpenedSection()

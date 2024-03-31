@@ -6,8 +6,7 @@ namespace Weapons
 {
     public class Gun : Weapon
     {
-        [Header("Bullet")]
-        [SerializeField] private GameObject _bullet;
+        [Header("Bullet")] [SerializeField] private GameObject _bullet;
         [SerializeField] private Transform _shotPoint;
 
         [SerializeField] private float _speed;
@@ -40,16 +39,16 @@ namespace Weapons
             ammoCount = _ammoCapacity;
             Debug.Log("Reload");
         }
-        
+
         public void UpdateSpriteDirection()
         {
             float angle = transform.GetAngleToMouse();
             transform.eulerAngles = new Vector3(0, 0, angle);
 
             if (PlayerController.Instance.transform.localScale.x > 0)
-                transform.localScale = new Vector2(1f, 1f);
+                transform.localScale = new Vector2(1f, 1f * GameManager.Instance.Gravity);
             else
-                transform.localScale = new Vector2(-1f, -1f);
+                transform.localScale = new Vector2(-1f, -1f * GameManager.Instance.Gravity);
         }
     }
 }

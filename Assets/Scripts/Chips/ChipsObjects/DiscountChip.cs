@@ -2,42 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DiscountChip : Chip
+public class DiscountChip : PassiveChip
 {
-    private const int MAX_LEVEL = 2;
-
     private float _discountIncreasePercent = 0.15f;
+    private readonly List<float> _discountIncreasePercentLevels = new() { 0.15f, 0.3f };
 
     protected override void SetValues()
     {
-        switch (currentLevel)
-        {
-            case 1:
-                _discountIncreasePercent = 0.15f;
-                break;
-            case 2:
-                _discountIncreasePercent = 0.3f;
-                break;
-        }
+        _discountIncreasePercent = _discountIncreasePercentLevels[currentLevel - 1];
     }
 
     public override void Activate()
     {
-        StatsModifier.pricesMultiplier -= _discountIncreasePercent;
+        StatsModifier.priceMultiplier -= _discountIncreasePercent;
     }
 
     public override void Deactivate()
     {
-        StatsModifier.pricesMultiplier += _discountIncreasePercent;
+        StatsModifier.priceMultiplier += _discountIncreasePercent;
     }
 
     public DiscountChip(int currentLevel) : base(currentLevel)
     {
-        maxLevel = MAX_LEVEL;
+        maxLevel = _discountIncreasePercentLevels.Count;
     }
 
     public DiscountChip()
     {
-        maxLevel = MAX_LEVEL;
+        maxLevel = _discountIncreasePercentLevels.Count;
     }
 }

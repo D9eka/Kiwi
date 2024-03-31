@@ -23,13 +23,13 @@ namespace Sections
 
         private void TryHideDoor()
         {
-            if (
-                // Невыполнение условия прохождения секцции
-                false
-            )
-            {
-                gameObject.SetActive(false);
-            }
+            // if (
+            //     // Невыполнение условия прохождения секцции
+            //     false
+            // )
+            // {
+            //     gameObject.SetActive(false);
+            // }
         }
     }
 }
