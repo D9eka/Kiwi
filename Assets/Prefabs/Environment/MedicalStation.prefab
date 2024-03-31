@@ -161,7 +161,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8049175926875074744}
         m_TargetAssemblyTypeName: MedicalStation, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: TryRestoreHealth
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

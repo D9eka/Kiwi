@@ -162,7 +162,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7144983599529496334}
         m_TargetAssemblyTypeName: ControlPanel, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: TryOpenSecretDoor
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

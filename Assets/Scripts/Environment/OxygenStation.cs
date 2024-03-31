@@ -5,11 +5,13 @@ using UnityEngine;
 public class OxygenStation : MonoBehaviour
 {
     private bool _wasUsed;
+    private float _restoringOxygenPercent = 1f;
+
 
     public void TryRestoreOxygen()
     {
         if (_wasUsed) return;
-        GameManager.Instance.ChangeOxygenPercent(1);
+        GameManager.Instance.ChangeOxygenPercent(_restoringOxygenPercent);
         _wasUsed = true;
     }
 }

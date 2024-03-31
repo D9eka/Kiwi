@@ -161,7 +161,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6061273827457766739}
         m_TargetAssemblyTypeName: GravityPanel, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: InvertGravity
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

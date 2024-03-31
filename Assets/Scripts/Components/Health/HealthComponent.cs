@@ -15,6 +15,7 @@ namespace Components.Health
         private float health;
 
         public EventHandler<OnValueChangeEventArgs> OnValueChange;
+
         public class OnValueChangeEventArgs : EventArgs
         {
             public float value;
@@ -33,7 +34,7 @@ namespace Components.Health
         }
 
         public void ModifyHealth(float changeValue)
-        {            
+        {
             health = Mathf.Min(health + changeValue, _maxHealth);
             OnValueChange?.Invoke(this, new OnValueChangeEventArgs
             {
@@ -45,10 +46,15 @@ namespace Components.Health
                 _onDamage?.Invoke();
             if (health <= 0)
                 _onDie?.Invoke();
-            if(changeValue > 0)
+            if (changeValue > 0)
                 _onHeal?.Invoke();
 
             Debug.Log($"{gameObject.name}: {health} ({changeValue})");
+        }
+
+        public void ModifyHealthPercent(float changeValuePercent)
+        {
+            ModifyHealth(_maxHealth * health);
         }
 
         public (float health, float maxHealth) SaveData()

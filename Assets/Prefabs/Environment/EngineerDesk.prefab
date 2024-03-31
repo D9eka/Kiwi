@@ -162,7 +162,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1985522551236471152}
         m_TargetAssemblyTypeName: EngineerDesk, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: OpenChipUpgradeMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
