@@ -30,13 +30,13 @@ namespace Weapons.Editor
             EditorGUILayout.PropertyField(_attackDelayProperty);
             EditorGUILayout.PropertyField(_modeProperty);
 
-            DamageType mode = (DamageType)_modeProperty.intValue;
+            WeaponDamageType mode = (WeaponDamageType)_modeProperty.intValue;
             switch (mode)
             {
-                case DamageType.Static:
+                case WeaponDamageType.Static:
                     EditorGUILayout.PropertyField(_damageProperty);
                     break;
-                case DamageType.Random:
+                case WeaponDamageType.Random:
                     EditorGUILayout.PropertyField(_minDamageProperty);
                     EditorGUILayout.PropertyField(_maxDamageProperty);
                     break;

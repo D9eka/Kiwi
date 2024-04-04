@@ -5,14 +5,14 @@ namespace Weapons
     public abstract class Weapon : MonoBehaviour
     {
         [SerializeField] protected float _attackDelay;
-        [SerializeField] protected DamageType _mode;
+        [SerializeField] protected WeaponDamageType _mode;
 
         [SerializeField] private float _damage;
 
         [SerializeField] protected float _minDamage;
         [SerializeField] protected float _maxDamage;
 
-        public enum DamageType
+        public enum WeaponDamageType
         { 
             Static,
             Random
@@ -34,10 +34,10 @@ namespace Weapons
         {
             switch (_mode) 
             { 
-                case DamageType.Static:
+                case WeaponDamageType.Static:
                     _currentDamage = _damage; 
                     break;
-                case DamageType.Random:
+                case WeaponDamageType.Random:
                     _currentDamage = Random.Range(_minDamage, _maxDamage);
                     break;
                 default:
