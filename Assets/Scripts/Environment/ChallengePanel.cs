@@ -9,7 +9,7 @@ public class ChallengePanel : MonoBehaviour
     public void TryActivateChallenge()
     {
         if (_wasUsed) return;
-        //Запускаем испытание
+        EnemySpawner.Instance.SpawnEnemies();
         _wasUsed = true;
     }
 }

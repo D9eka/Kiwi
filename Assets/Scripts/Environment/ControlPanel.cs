@@ -1,16 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class ControlPanel : MonoBehaviour
 {
-    [SerializeField] private SecretDoor _door;
+    [SerializeField] private SecretSectionDoorIn _secretSectionDoor;
     
     public void TryOpenSecretDoor()
     {
-        //Если нет пропуску, или дверь открыта то return, иначе открываем дверь и забираем(?) пропуск
-        if (_door.IsOpened) return;
+        if (_secretSectionDoor.IsOpened) return;
         if (!GameManager.Instance.TryUseKeyCard(1)) return;
-        _door.Open();
+        _secretSectionDoor.Open();
     }
 }

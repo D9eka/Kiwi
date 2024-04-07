@@ -6,9 +6,11 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     // Start is called before the first frame update
+    public bool _wasKeyCardGenerated;
+    private float _oxygenConsumption = 1;
     public int EssenceCount { get; private set; }
     public int KeyCardCount { get; private set; }
-    public float Oxygen { get; private set; }
+    public float Oxygen { get; private set; } = 300;
     public float MaxOxygen { get; private set; }
     public int Gravity { get; private set; } = 1;
     public event EventHandler OnEssenceCountChanged;
@@ -21,6 +23,11 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
         // DontDestroyOnLoad(gameObject);
+    }
+
+    private void Update()
+    {
+        Oxygen -= _oxygenConsumption * Time.deltaTime;
     }
 
 

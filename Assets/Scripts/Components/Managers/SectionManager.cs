@@ -11,24 +11,25 @@ namespace Sections
     public class SectionManager : MonoBehaviour
     {
         [SerializeField] private List<SectionSO> _sections = new();
-        [SerializeField] private SectionSO _secretSection;
+
+        // [SerializeField] private SectionSO _secretSection;
         [SerializeField] private SectionSO _startSection;
 
-        // [SerializeField] private List<SectionTypeSO> _possibleRandomSectionTypes = new();
 
         private List<SectionSO> _openedSections = new();
+        private SectionSO _secretSection;
         public int OpenedSectionsCount => _openedSections.Count;
         public int CurrentSectionIndex { get; private set; }
 
-        private Dictionary<SectionTypeSO, List<SectionSO>> _sectionsDictionary = new();
+        private Dictionary<SectionTypeSO, List<SectionSO>> _usualSectionDictionary = new();
+        private List<SectionSO> _possibleSecretSections = new();
         public static SectionManager Instance { get; private set; }
-        private bool _wasSecretSectionOpened;
-        private SectionTypeSO CurrentSectionType => _openedSections[CurrentSectionIndex].SectionTypeSO;
+        public bool _wasSecretSectionFound;
+        public SectionTypeSO CurrentSectionType => _openedSections[CurrentSectionIndex].SectionTypeSO;
 
         private void Awake()
         {
             Instance = this;
-            // DontDestroyOnLoad(gameObject);
         }
 
         private void Start()
@@ -43,40 +44,42 @@ namespace Sections
             {
                 var sectionType = section.SectionTypeSO;
 
-                if (!_sectionsDictionary.ContainsKey(sectionType))
-                    _sectionsDictionary.Add(sectionType, new List<SectionSO>());
+                if (!_usualSectionDictionary.ContainsKey(sectionType))
+                    _usualSectionDictionary.Add(sectionType, new List<SectionSO>());
 
-                _sectionsDictionary[sectionType].Add(section);
+                _usualSectionDictionary[sectionType].Add(section);
             }
         }
 
-        public void EnterSection(SectionSO sectionSO)
+        public void EnterSecretSection()
+        {
+            _secretSection ??= Randomiser.GetRandomElement(_possibleSecretSections);
+            SceneManager.LoadScene(_secretSection.SectionName);
+        }
+
+        public void ExitSecretSection()
+        {
+            SceneManager.LoadScene(_openedSections[CurrentSectionIndex].SectionName);
+        }
+
+        public void EnterNextNewSection(SectionSO sectionSO)
         {
             CurrentSectionIndex += 1;
             SceneManager.LoadScene(sectionSO.SectionName);
             _openedSections.Add(sectionSO);
         }
 
-        public void EnterRandomSection(SectionTypeSO sectionType)
+        public void EnterNextNewRandomSection(SectionTypeSO sectionType)
         {
-            //Не очень понял, что из себя представляет секрет, поэтому сделал так, что с определёной вероятностью появляется секретная комната
-            var randomNumber = Random.Range(0, 10);
-            if (randomNumber <= 2 && !_wasSecretSectionOpened)
-            {
-                EnterSection(_secretSection);
-                _wasSecretSectionOpened = true;
-            }
-            else
-            {
-                EnterSection(Randomiser.GetRandomElement(_sectionsDictionary[sectionType]));
-                // EnterSection(_sectionsDictionary[sectionType][Random.Range(0, _sectionsDictionary[sectionType].Count)]);
-            }
+            if (_wasSecretSectionFound)
+                EnterNextNewSection(Randomiser.GetRandomNotSecretSection(_usualSectionDictionary[sectionType]));
+            EnterNextNewSection(Randomiser.GetRandomElement(_usualSectionDictionary[sectionType]));
         }
 
-        public void EnterRandomSectionType(List<SectionTypeSO> sectionTypeList)
-        {
-            EnterRandomSection(Randomiser.GetRandomElement(sectionTypeList));
-        }
+        // public void EnterNextNewRandomSectionType(List<SectionTypeSO> sectionTypeList)
+        // {
+        //     EnterNextNewRandomSection(Randomiser.GetRandomElement(sectionTypeList));
+        // }
 
         public void EnterNextOpenedSection()
         {
@@ -105,7 +108,7 @@ namespace Sections
             }
 
             var finalSectionTypes = new List<SectionTypeSO>();
-            var keys = _sectionsDictionary.Keys.ToList();
+            var keys = _usualSectionDictionary.Keys.ToList();
             keys.Remove(CurrentSectionType);
             while (finalSectionTypes.Count < count)
             {
