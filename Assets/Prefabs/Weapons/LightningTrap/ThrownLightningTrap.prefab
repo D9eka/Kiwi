@@ -81,7 +81,7 @@ GameObject:
   - component: {fileID: 7696963639730060361}
   - component: {fileID: 8042183129822942626}
   - component: {fileID: 4694739624449353348}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: ThrownLightningTrap
   m_TagString: Untagged
   m_Icon: {fileID: 0}

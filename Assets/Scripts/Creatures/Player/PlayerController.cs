@@ -42,15 +42,8 @@ namespace Creatures.Player
             Instance = this;
 
             health = GetComponent<HealthComponent>();
-            LoadData(PlayerPrefsController.GetPlayerData());
 
             Active = true;
-        }
-
-        private void LoadData(PlayerData data)
-        {
-            transform.position = data.Position.Value;
-            transform.localScale = new Vector2(data.Scale, transform.localScale.y);
         }
 
         private void Start()
