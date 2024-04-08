@@ -28,10 +28,10 @@ namespace Weapons.Editor
 
             EditorGUILayout.PropertyField(_modeProperty);
 
-            DestroyType mode = (DestroyType)_modeProperty.intValue;
+            TrapDestroyType mode = (TrapDestroyType)_modeProperty.intValue;
             switch (mode)
             {
-                case DestroyType.TimeLimit:
+                case TrapDestroyType.TimeLimit:
                     EditorGUILayout.PropertyField(_ttlProperty);
                     break;
                 default:

@@ -10,12 +10,12 @@ namespace Weapons
     {
         [SerializeField] private CircleCollider2D _attackRange;
         [Space]
-        [SerializeField] private DestroyType _mode;
+        [SerializeField] private TrapDestroyType _mode;
         [SerializeField] private float _ttl;
 
         protected const string ATTACK_KEY = "attack";
 
-        public enum DestroyType
+        public enum TrapDestroyType
         {
             AfterAttack,
             TimeLimit
@@ -40,7 +40,7 @@ namespace Weapons
 
             InvokeRepeating(nameof(Attack), attackDelay, attackDelay);
 
-            if (_mode == DestroyType.TimeLimit)
+            if (_mode == TrapDestroyType.TimeLimit)
             {
                 Invoke(nameof(DestroyIt), _ttl);
             }
@@ -54,7 +54,7 @@ namespace Weapons
             Collider2D[] colliders = Physics2D.OverlapCircleAll(_attackRange.transform.position, _attackRange.radius);
 
             float damage = _damage;
-            if (_mode == DestroyType.TimeLimit)
+            if (_mode == TrapDestroyType.TimeLimit)
                 damage += (_damage / 2) * colliders.Count(collider => collider.GetComponent<ThrownTrap>() != null);
 
             foreach (Collider2D collider in colliders.Where(collider => 
