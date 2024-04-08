@@ -33,7 +33,7 @@ namespace Weapons.Editor
         {
             EditorGUILayout.PropertyField(_attackDelayProperty);
             EditorGUILayout.PropertyField(_modeProperty);
-
+            
             WeaponDamageType mode = (WeaponDamageType)_modeProperty.intValue;
             switch (mode)
             {

@@ -1,9 +1,12 @@
-﻿public static class StatsModifier
+﻿using Components.Health;
+using Creatures.Player;
+
+public static class StatsModifier
 {
     // Задумка в том, чтобы в коде, где использвуются характеристики, прибавлять/умножать на эти значения.
     // Текущие значения регулируются раличными чипами, а может и не только
     public static int brokenChipsCount = 0;
-    public static float healthAdder = 0;
+    private static float healthAdder = 0;
     public static float dashDamageAdder = 0;
     public static float handDamageAdder = 0;
     public static float bulletDamageAdder = 0;
@@ -53,10 +56,7 @@
     public static void ModifyHealthAdder(float addingValue)
     {
         healthAdder += addingValue;
-        //Можно либо вызвать здесь метод, который изменит здоровье игрока, что-то вроде
-        // PlayerHealth.Instance.ChangeMaxHealth(GetModifiedHealth(PlayerHealth.Instance.MaxHealth))
-        // PlayerHealth.Instance.ChangeHealth(GetModifiedHealth(PlayerHealth.Instance.Health))
-        //Либо можно сделать event/unityAction, на который подпишется здоровье, которое по выхову вызовет GetModifiedHealth, как в примере выше
+        PlayerController.Instance.GetComponent<HealthComponent>().ChangeHealthStats(addingValue);
     }
 
     public static float GetModifiedHealth(float health)

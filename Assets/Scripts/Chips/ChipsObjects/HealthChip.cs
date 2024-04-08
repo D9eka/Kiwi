@@ -7,6 +7,14 @@ public class HealthChip : PassiveChip
     private float _healthIncrease = 5;
     private readonly List<float> _healthIncreaseLevels = new() { 5, 10, 15 };
 
+    protected override void Upgrade()
+    {
+        var previousLevelHealth = _healthIncreaseLevels[currentLevel];
+        currentLevel += 1;
+        SetValues();
+        StatsModifier.ModifyHealthAdder(_healthIncrease - previousLevelHealth);
+    }
+
     protected override void SetValues()
     {
         _healthIncrease = _healthIncreaseLevels[currentLevel - 1];
