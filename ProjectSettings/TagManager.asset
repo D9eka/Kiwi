@@ -15,6 +15,7 @@ TagManager:
   - Interactables
   - Item
   - Trap
+  - Stairs
   - Enemy
   - 
   - 

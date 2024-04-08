@@ -22,6 +22,6 @@ public class SectionBlockUI : MonoBehaviour
 
     public void MakeChoice()
     {
-        SectionManager.Instance.EnterRandomSection(_sectionType);
+        SectionManager.Instance.EnterNextNewRandomSection(_sectionType);
     }
 }

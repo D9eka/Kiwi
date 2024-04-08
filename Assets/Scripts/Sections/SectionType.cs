@@ -7,10 +7,14 @@ namespace Sections
     public enum SectionType
     {
         Start,
-        Rest,
-        Trader,
         Battle,
+        Rest,
+        Engineer,
+        Challenge,
+        Lobby,
+        Trader,
+        Reward,
         Boss,
-        Secret
+        // Secret
     }
 }

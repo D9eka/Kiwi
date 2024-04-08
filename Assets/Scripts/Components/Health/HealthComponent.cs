@@ -61,5 +61,14 @@ namespace Components.Health
         {
             return (health, _maxHealth);
         }
+
+        public void ChangeHealthStats(float addingValue)
+        {
+            _maxHealth += addingValue;
+            if (addingValue > 0)
+            {
+                health += addingValue;
+            }
+        }
     }
 }

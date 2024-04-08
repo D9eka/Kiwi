@@ -10,6 +10,7 @@ namespace Components.Interactables
         public void Interact()
         {
             _action?.Invoke();
+            Debug.Log(name + "interacted");
         }
     }
 }

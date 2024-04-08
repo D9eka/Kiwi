@@ -54,7 +54,6 @@ namespace Creatures.Player
 
             inputReader.OnAttack += PlayerInputReader_OnAttack;
             inputReader.OnWeaponReload += PlayerInputReader_OnWeaponReload;
-            GameManager.Instance.OnGravityInverted += (sender, args) => InvertPlayerGravity();
         }
 
         #region Events
@@ -156,13 +155,7 @@ namespace Creatures.Player
             base.UpdateAnimations();
             _animator.SetBool(IS_ON_GROUND_KEY, isGrounded);
         }
-
-        public void InvertPlayerGravity()
-        {
-            transform.Rotate(0, 180, 180);
-            transform.position += new Vector3(0, transform.lossyScale.y, 0) * GameManager.Instance.Gravity;
-            _rigidbody.gravityScale = GameManager.Instance.Gravity;
-        }
+        
     }
 
     [System.Serializable]
