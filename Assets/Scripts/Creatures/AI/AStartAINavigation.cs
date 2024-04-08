@@ -27,7 +27,11 @@ namespace Creatures.AI
         private GameObject _spawnedTargetBackingField;
         private GameObject _spawnedTarget
         {
-            get => _spawnedTargetBackingField;
+            get
+            {
+                return _spawnedTargetBackingField;
+            }
+
             set
             {
                 if (_spawnedTargetBackingField != null)
@@ -55,6 +59,17 @@ namespace Creatures.AI
             InvokeRepeating(nameof(UpdatePath), 0, _pathUpdateSeconds);
         }
 
+
+
+        private void UpdatePath()
+        {
+            if (_target != null && _seeker.IsDone())
+            {
+                _seeker.StartPath(transform.position, _target.transform.position, OnPathComplete);
+                _currentWaypoint = 0;
+            }
+        }
+
         public override void StartNavigation()
         {
             _followEnabled = true;
@@ -75,7 +90,7 @@ namespace Creatures.AI
             if (_spawnedTarget != null && (Vector2)_spawnedTarget.transform.position == target)
                 return;
             _spawnedTarget = Instantiate(_targetPrefab, target, Quaternion.identity);
-            SetTarget(gameObject);
+            SetTarget(_spawnedTarget);
         }
 
         public void SetTarget(GameObject target)
@@ -85,9 +100,14 @@ namespace Creatures.AI
 
         private void Update()
         {
-            if (!_followEnabled || _path == null || _currentWaypoint >= _path.vectorPath.Count)
+            if (!_followEnabled || _path == null)
             {
                 _creature.SetDirection(Vector2.zero);
+                return;
+            }
+
+            if (_currentWaypoint >= _path.vectorPath.Count)
+            {
                 return;
             }
 
@@ -97,18 +117,10 @@ namespace Creatures.AI
             else
                 _creature.SetDirection(new Vector2(direction.x, 0f));
 
-            if (Vector2.Distance(transform.position, _path.vectorPath[_currentWaypoint]) < _threshold)
+            float distance = Vector2.Distance(transform.position, _path.vectorPath[_currentWaypoint]);
+            if (distance < _threshold)
             {
                 _currentWaypoint++;
-            }
-        }
-
-        private void UpdatePath()
-        {
-            if (_target != null && _seeker.IsDone())
-            {
-                _seeker.StartPath(transform.position, _target.transform.position, OnPathComplete);
-                _currentWaypoint = 0;
             }
         }
 

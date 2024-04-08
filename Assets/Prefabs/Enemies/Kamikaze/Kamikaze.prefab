@@ -397,6 +397,6 @@ MonoBehaviour:
   _animationTrigger: attack
   _damage: 8
   _cooldownTime: 1
-  _attackType: 0
+  _attackType: 1
   _distance: {fileID: 1836624000995399157}
   _initialPosition: {x: 0, y: 0}
