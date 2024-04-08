@@ -1,5 +1,6 @@
 ﻿using Components.ColliderBased;
 using Components.Health;
+using Creatures.Player;
 using System.Linq;
 using UnityEngine;
 
@@ -126,7 +127,7 @@ namespace Creatures.Enemy
         {
             foreach (HealthComponent health in _activeAttack.OnAttack())
             {
-                if (health == GetComponent<HealthComponent>())
+                if (health != PlayerController.Instance.GetComponent<HealthComponent>())
                     continue;
 
                 health.ModifyHealth(-_activeAttack.Damage);

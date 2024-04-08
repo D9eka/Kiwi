@@ -19,7 +19,7 @@ namespace Creatures
 
         protected const string IS_RUNNING_KEY = "is-running";
         protected const string VERTICAL_VELOCITY_KEY = "vertical-velocity";
-        private const string DIE_KEY = "death";
+        private const string DEATH_TRIGGER = "death";
 
         protected virtual void Awake()
         {
@@ -62,7 +62,7 @@ namespace Creatures
 
         public virtual void Die()
         {
-            _animator.SetTrigger(DIE_KEY);
+            _animator.SetTrigger(DEATH_TRIGGER);
         }
     }
 }
