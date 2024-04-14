@@ -5,7 +5,7 @@ using UnityEngine;
 public class BulletDamageChip : PassiveChip
 {
     private float _bulletDamageIncrease = 2;
-    private readonly List<float> _bulletDamageIncreaseLevels = new() { 2, 3, 4 };
+    private readonly List<float> _bulletDamageIncreaseLevels = new List<float> { 2, 3, 4 };
 
 
     protected override void SetValues()

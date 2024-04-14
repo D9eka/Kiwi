@@ -260,6 +260,7 @@ GameObject:
   - component: {fileID: 1117736556313764536}
   - component: {fileID: 7537308003672901657}
   - component: {fileID: 2397307186334624916}
+  - component: {fileID: 467382099909360733}
   m_Layer: 3
   m_Name: TestPlayer
   m_TagString: Player
@@ -473,6 +474,70 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 7474e419-2d96-4ab5-bcd6-7720022edd36
     m_ActionName: Player/Reload[/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8128811423238263547}
+        m_TargetAssemblyTypeName: Creatures.Player.PlayerInputReader, Assembly-CSharp
+        m_MethodName: OnPlayerUIClose
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 0312e7c5-4ecb-4344-a7e3-a8c719116cf7
+    m_ActionName: Player/UIClose[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8128811423238263547}
+        m_TargetAssemblyTypeName: Creatures.Player.PlayerInputReader, Assembly-CSharp
+        m_MethodName: OnPlayerSwitchWeapon
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 907c92ea-24df-4499-b32b-8d59101ade7e
+    m_ActionName: Player/SwitchWeapon[/Keyboard/q]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8128811423238263547}
+        m_TargetAssemblyTypeName: Creatures.Player.PlayerInputReader, Assembly-CSharp
+        m_MethodName: OnPlayerSpacebarPressed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 68fb1647-8fc2-4ce0-9aec-45e334d76f35
+    m_ActionName: Player/Spacebar[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8128811423238263547}
+        m_TargetAssemblyTypeName: Creatures.Player.PlayerInputReader, Assembly-CSharp
+        m_MethodName: OnPlayerEnterPressed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 3e9059f1-cb31-4b65-aa62-897027e96a46
+    m_ActionName: Player/Enter[/Keyboard/enter]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -519,6 +584,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isNeededOffset: 1
+--- !u!114 &467382099909360733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5497516573302966223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82fb417cd65ef264abee02143cc1ff13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weaponHandler: {fileID: 7420506256797602534}
+  _firstWeapon: {fileID: 0}
+  _secondWeapon: {fileID: 0}
+  _trap: {fileID: 63200041990724651}
 --- !u!1 &6482806922410286275
 GameObject:
   m_ObjectHideFlags: 0

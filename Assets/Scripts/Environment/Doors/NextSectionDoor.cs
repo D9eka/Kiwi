@@ -10,7 +10,7 @@ public class NextSectionDoor : Door
     //Сделал возможность показывать 1, 2 или 3 варианта
     [SerializeField] private bool _isRandom = true;
     [SerializeField, Range(1, 3)] private int _choicesCount = 2;
-    [SerializeField] private List<SectionTypeSO> _possibleSectionTypes = new();
+    [SerializeField] private List<SectionTypeSO> _possibleSectionTypes = new List<SectionTypeSO>();
 
     private void SetChoice()
     {

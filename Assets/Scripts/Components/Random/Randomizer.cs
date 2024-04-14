@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Sections;
 using UnityEngine;
 
@@ -15,6 +16,21 @@ public static class Randomiser
     {
         return list[Random.Range(0, list.Count)];
     }
+
+    public static List<T> GetRandomElements<T>(List<T> list, int count)
+    {
+        var newList = list.GetRange(0, list.Count);
+        var answerList = new List<T>();
+        while (answerList.Count < count)
+        {
+            var element = GetRandomElement(newList);
+            answerList.Add(element);
+            newList.Remove(element);
+        }
+
+        return answerList;
+    }
+
     public static SectionSO GetRandomNotSecretSection(List<SectionSO> list)
     {
         var section = GetRandomElement(list);
@@ -22,6 +38,7 @@ public static class Randomiser
         {
             section = GetRandomElement(list);
         }
+
         return section;
     }
 }

@@ -1,33 +1,41 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using Sections;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     // Start is called before the first frame update
     public bool _wasKeyCardGenerated;
-    private float _oxygenConsumption = 1;
+    private float _oxygenSecondConsumption = 1;
     public int EssenceCount { get; private set; }
     public int KeyCardCount { get; private set; }
-    public float Oxygen { get; private set; } = 300;
-    public float MaxOxygen { get; private set; }
+    public float Oxygen { get; private set; }
+    public float MaxOxygen { get; private set; } = 300;
+
     public int Gravity { get; private set; } = 1;
+
     public event EventHandler OnEssenceCountChanged;
-    public event EventHandler OnKeyCardCountChanged;
     public event EventHandler OnGravityInverted;
-    public event EventHandler OnOxygenChanged;
+
+    public delegate void OxygenCountEventHandler(float oxygen, float maxOxygen);
+
+    public event OxygenCountEventHandler OnOxygenValueChanged;
+
     public static GameManager Instance { get; private set; }
 
     private void Awake()
     {
         Instance = this;
-        // DontDestroyOnLoad(gameObject);
     }
 
-    private void Update()
+    private void Start()
     {
-        Oxygen -= _oxygenConsumption * Time.deltaTime;
+        Oxygen = MaxOxygen;
+    }
+
+    private void FixedUpdate()
+    {
+        ChangeOxygenValue(-_oxygenSecondConsumption * Time.deltaTime);
     }
 
 
@@ -39,23 +47,27 @@ public class GameManager : MonoBehaviour
 
     public bool TrySpendEssence(int count)
     {
-        if (count > EssenceCount) return false;
+        if (!CanSpendEssence(count)) return false;
         EssenceCount -= count;
         OnEssenceCountChanged?.Invoke(this, EventArgs.Empty);
         return true;
     }
 
+    public bool CanSpendEssence(int count)
+    {
+        return count <= EssenceCount;
+    }
+
     public void GetKeyCard(int count)
     {
         KeyCardCount += count;
-        OnKeyCardCountChanged?.Invoke(this, EventArgs.Empty);
+        _wasKeyCardGenerated = true;
     }
 
     public bool TryUseKeyCard(int count)
     {
         if (count > EssenceCount) return false;
         KeyCardCount -= count;
-        OnKeyCardCountChanged?.Invoke(this, EventArgs.Empty);
         return true;
     }
 
@@ -69,13 +81,11 @@ public class GameManager : MonoBehaviour
     {
         Oxygen += value;
         Oxygen = Math.Min(MaxOxygen, Oxygen);
-        OnOxygenChanged?.Invoke(this, EventArgs.Empty);
+        OnOxygenValueChanged?.Invoke(Oxygen, MaxOxygen);
     }
 
     public void ChangeOxygenPercent(float percent)
     {
-        Oxygen += percent * MaxOxygen;
-        Oxygen = Math.Min(MaxOxygen, Oxygen);
-        OnOxygenChanged?.Invoke(this, EventArgs.Empty);
+        ChangeOxygenValue(percent * MaxOxygen);
     }
 }

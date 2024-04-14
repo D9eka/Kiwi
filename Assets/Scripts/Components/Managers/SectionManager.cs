@@ -120,6 +120,7 @@ namespace Sections
 
             return finalSectionTypes;
         }
+
         // public List<SectionTypeSO> GetRandomSectionTypesOld(int count)
         // {
         //     if (count < 1)

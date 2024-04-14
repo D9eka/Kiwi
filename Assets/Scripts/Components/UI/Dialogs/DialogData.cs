@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Components.UI.Dialogs
 {
@@ -13,10 +14,12 @@ namespace Components.UI.Dialogs
     [Serializable]
     public struct Sentence
     {
-        [SerializeField] private string _value;
-        [SerializeField] private AudioClip _voice;
+        [SerializeField] private string _speakerName;
+        [SerializeField] private string _phrase;
+        // [SerializeField] private AudioClip _voice;
 
-        public string Value => _value;
-        public AudioClip Voice => _voice;
+        public string SpeakerName => _speakerName;
+        public string Phrase => _phrase;
+        // public AudioClip Voice => _voice;
     }
 }

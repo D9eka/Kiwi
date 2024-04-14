@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpeedChip : PassiveChip
 {
     private float _speedIncreasePercent = 0.1f;
-    private readonly List<float> _speedIncreasePercentLevels = new() { 0.1f, 0.2f, 0.3f };
+    private readonly List<float> _speedIncreasePercentLevels = new List<float> { 0.1f, 0.2f, 0.3f };
 
 
     protected override void SetValues()

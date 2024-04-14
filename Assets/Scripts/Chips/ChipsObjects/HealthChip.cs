@@ -5,7 +5,7 @@ using UnityEngine;
 public class HealthChip : PassiveChip
 {
     private float _healthIncrease = 5;
-    private readonly List<float> _healthIncreaseLevels = new() { 5, 10, 15 };
+    private readonly List<float> _healthIncreaseLevels = new List<float> { 5, 10, 15 };
 
     protected override void Upgrade()
     {

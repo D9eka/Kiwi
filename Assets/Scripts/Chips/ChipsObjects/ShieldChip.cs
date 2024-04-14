@@ -5,7 +5,7 @@ using UnityEngine;
 public class ShieldChip : UpdatingChip
 {
     private float _blockChance = 0.2f;
-    private readonly List<float> _blockChanceLevels = new() { 0.2f, 0.25f, 0.3f };
+    private readonly List<float> _blockChanceLevels = new List<float> { 0.2f, 0.25f, 0.3f };
     private float _cooldown = 10;
     private float _timeToActivation;
     private bool _isShieldRaised;
