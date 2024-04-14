@@ -11,7 +11,7 @@ namespace Components.UI
     {
         public static HUD Instance { get; private set; }
 
-        private void Start()
+        private void Awake()
         {
             Instance = this;
         }
