@@ -1,27 +1,25 @@
+using Components.Oxygen;
+using Creatures.Player;
 using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class OxygenBarUI : MonoBehaviour
 {
-    // Start is called before the first frame update
     [SerializeField] private Image _filler;
-    private GameManager _gameManager;
     [SerializeField] private TextMeshProUGUI _textMeshProUGUI;
 
     private void Start()
     {
-        _gameManager = GameManager.Instance;
-        _gameManager.OnOxygenValueChanged += OnGameManagerOxygenValueChanged;
+        PlayerController.Instance.GetComponent<OxygenComponent>().OnValueChange += OnOxygenValueChanged;
     }
 
-    private void OnGameManagerOxygenValueChanged(float oxygen, float maxOxygen)
+    private void OnOxygenValueChanged(object sender, OxygenComponent.OnValueChangeEventArgs e)
     {
-        var oxygenPercent = oxygen / maxOxygen;
+        float oxygenPercent = e.value / e.maxValue;
         SetFillerValue(oxygenPercent);
-        SetText(oxygen);
+        SetText(e.value);
     }
 
 
@@ -30,9 +28,9 @@ public class OxygenBarUI : MonoBehaviour
         _filler.fillAmount = value;
     }
 
-    private void SetText(float health)
+    private void SetText(float value)
     {
-        var a = TimeSpan.FromSeconds(health);
+        var a = TimeSpan.FromSeconds(value);
         _textMeshProUGUI.text = a.ToString("mm':'ss");
     }
 }

@@ -14,8 +14,8 @@ namespace Creatures
         protected Rigidbody2D _rigidbody;
         protected Animator _animator;
 
-        protected Vector2 direction;
-        protected bool isGrounded;
+        protected Vector2 _direction;
+        protected bool _isGrounded;
 
         protected const string IS_RUNNING_KEY = "is-running";
         protected const string VERTICAL_VELOCITY_KEY = "vertical-velocity";
@@ -37,27 +37,27 @@ namespace Creatures
 
         protected virtual void Move()
         {
-            _rigidbody.velocity = direction * _speed;
+            _rigidbody.velocity = _direction * _speed;
         }
 
         protected virtual void UpdateAnimations()
         {
             _animator.SetFloat(VERTICAL_VELOCITY_KEY, _rigidbody.velocity.y);
-            _animator.SetBool(IS_RUNNING_KEY, direction.x != 0);
+            _animator.SetBool(IS_RUNNING_KEY, _direction.x != 0);
         }
 
         public virtual void UpdateSpriteDirection()
         {
             var multiplier = _invertScale ? -1 : 1;
-            if (direction.x > 0)
+            if (_direction.x > 0)
                 transform.localScale = new Vector3(multiplier, 1, 1);
-            else if (direction.x < 0)
+            else if (_direction.x < 0)
                 transform.localScale = new Vector3(-multiplier, 1, 1);
         }
 
         public virtual void SetDirection(Vector2 direction)
         {
-            this.direction = direction;
+            _direction = direction;
         }
 
         public virtual void Die()

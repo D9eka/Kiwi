@@ -739,9 +739,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _container: {fileID: 6413625072963611046}
-  _animator: {fileID: 0}
   _textSpeed: 0.05
   _content: {fileID: 8451987775748949027}
+  _speakerName: {fileID: 0}
 --- !u!1 &6413625072963611046
 GameObject:
   m_ObjectHideFlags: 0

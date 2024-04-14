@@ -8,8 +8,9 @@ namespace Creatures.Player
     public class PlayerInputReader : MonoBehaviour
     {
         public EventHandler<Vector2> OnMove;
-        public EventHandler<bool> OnJump;
+        public EventHandler OnJump;
         public EventHandler OnInteract;
+        public EventHandler OnDash;
 
         public EventHandler OnAttack;
         public EventHandler OnWeaponReload;
@@ -29,6 +30,16 @@ namespace Creatures.Player
         {
             Vector2 direction = context.ReadValue<Vector2>();
             OnMove?.Invoke(this, direction);
+        }
+
+        public void OnPlayerJump(InputAction.CallbackContext context)
+        {
+            OnJump?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void OnPlayerDash(InputAction.CallbackContext context) 
+        {
+            OnDash?.Invoke(this, EventArgs.Empty);
         }
 
         public void OnPlayerInteract(InputAction.CallbackContext context)

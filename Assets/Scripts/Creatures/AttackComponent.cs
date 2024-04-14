@@ -5,19 +5,19 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-namespace Creatures.Enemy
+namespace Creatures
 {
-    public class EnemyAttack : MonoBehaviour
+    public class AttackComponent : MonoBehaviour
     {
         [SerializeField] private string _animationTrigger;
         [SerializeField] private float _damage;
         [SerializeField] private float _cooldownTime;
-        [SerializeField] private EnemyAttackType _attackType;
+        [SerializeField] private AttackComponentType _attackType;
         [Space]
         [SerializeField] private ColliderTrigger _distance;
         [SerializeField] private Vector2 _initialPosition;
 
-        public enum EnemyAttackType
+        public enum AttackComponentType
         {
             Simple,
             WithDistance,
@@ -38,14 +38,14 @@ namespace Creatures.Enemy
         {
             switch (_attackType)
             { 
-                case EnemyAttackType.Simple:
+                case AttackComponentType.Simple:
                     _canAttackPlayer = true;
                     break;
-                case EnemyAttackType.WithDistance:
+                case AttackComponentType.WithDistance:
                     _distance.OnPlayerEnterTrigger += Distance_OnPlayerEnterTrigger;
                     _distance.OnPlayerExitTrigger += Distance_OnPlayerExitTrigger;
                     break;
-                case EnemyAttackType.WithInitialPosition:
+                case AttackComponentType.WithInitialPosition:
                     _canAttackPlayer = true;
                     break;
                 default:

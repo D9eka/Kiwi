@@ -1,11 +1,11 @@
 ﻿using UnityEditor;
-using static Creatures.Enemy.EnemyAttack;
+using static Creatures.AttackComponent;
 using static Weapons.Weapon;
 
 namespace Creatures.Enemy.Editor
 {
-    [CustomEditor(typeof(EnemyAttack))]
-    public class EnemyAttackEditor : UnityEditor.Editor
+    [CustomEditor(typeof(AttackComponent))]
+    public class AttackComponentEditor : UnityEditor.Editor
     {
         private SerializedProperty _animationTriggerProperty;
         private SerializedProperty _damageProperty;
@@ -33,13 +33,13 @@ namespace Creatures.Enemy.Editor
             EditorGUILayout.PropertyField(_cooldownTimeProperty);
             EditorGUILayout.PropertyField(_attackTypeProperty);
 
-            EnemyAttackType attackType = (EnemyAttackType)_attackTypeProperty.intValue;
+            AttackComponentType attackType = (AttackComponentType)_attackTypeProperty.intValue;
             switch (attackType)
             {
-                case EnemyAttackType.WithDistance:
+                case AttackComponentType.WithDistance:
                     EditorGUILayout.PropertyField(_distanceProperty);
                     break;
-                case EnemyAttackType.WithInitialPosition:
+                case AttackComponentType.WithInitialPosition:
                     EditorGUILayout.PropertyField(_initialPositionProperty);
                     break;
                 default:
