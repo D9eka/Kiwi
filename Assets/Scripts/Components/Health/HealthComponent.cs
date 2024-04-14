@@ -1,5 +1,4 @@
-﻿using Creatures.Player;
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,7 +11,7 @@ namespace Components.Health
         [SerializeField] private UnityEvent _onDamage;
         [SerializeField] private UnityEvent _onDie;
 
-        private float health;
+        private float _health;
 
         public EventHandler<OnValueChangeEventArgs> OnValueChange;
 
@@ -24,32 +23,32 @@ namespace Components.Health
 
         private void Start()
         {
-            health = _maxHealth;
+            _health = _maxHealth;
 
             OnValueChange?.Invoke(this, new OnValueChangeEventArgs
             {
-                value = health,
+                value = _health,
                 maxValue = _maxHealth,
             });
         }
 
         public void ModifyHealth(float changeValue)
         {
-            health = Mathf.Min(health + changeValue, _maxHealth);
+            _health = Mathf.Min(_health + changeValue, _maxHealth);
             OnValueChange?.Invoke(this, new OnValueChangeEventArgs
             {
-                value = health,
+                value = _health,
                 maxValue = _maxHealth,
             });
 
             if (changeValue < 0)
                 _onDamage?.Invoke();
-            if (health <= 0)
+            if (_health <= 0)
                 _onDie?.Invoke();
             if (changeValue > 0)
                 _onHeal?.Invoke();
 
-            Debug.Log($"{gameObject.name}: {health} ({changeValue})");
+            Debug.Log($"{gameObject.name}: {_health} ({changeValue})");
         }
 
         public void ModifyHealthPercent(float changeValuePercent)
@@ -59,7 +58,7 @@ namespace Components.Health
 
         public (float health, float maxHealth) SaveData()
         {
-            return (health, _maxHealth);
+            return (_health, _maxHealth);
         }
 
         public void ChangeHealthStats(float addingValue)
@@ -67,11 +66,11 @@ namespace Components.Health
             _maxHealth += addingValue;
             if (addingValue > 0)
             {
-                health += addingValue;
+                _health += addingValue;
             }
             OnValueChange?.Invoke(this, new OnValueChangeEventArgs
             {
-                value = health,
+                value = _health,
                 maxValue = _maxHealth,
             });
         }

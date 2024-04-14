@@ -11,7 +11,7 @@ namespace Creatures.Enemy
         [SerializeField] protected EnemyState _initialState;
         [Space]
         [SerializeField] protected ColliderTrigger _vision;
-        [SerializeField] protected EnemyAttack[] _attacks;
+        [SerializeField] protected AttackComponent[] _attacks;
 
         public enum EnemyState
         {
@@ -23,7 +23,7 @@ namespace Creatures.Enemy
 
         protected EnemyState _state;
         protected bool _seePlayer;
-        protected EnemyAttack _activeAttack;
+        protected AttackComponent _activeAttack;
 
         private const string PATROLLING_TRIGGER = "patrolling";
         private const string CHASING_TRIGGER = "chasing";
@@ -96,7 +96,7 @@ namespace Creatures.Enemy
 
         protected virtual void ChooseAttack()
         {
-            EnemyAttack[] availableAttacks = _attacks.Where(attack => attack.CanAttack).ToArray();
+            AttackComponent[] availableAttacks = _attacks.Where(attack => attack.CanAttack).ToArray();
             if (availableAttacks.Length > 0)
             {
                 SetState(EnemyState.Attack);

@@ -2,6 +2,7 @@ using Components.ColliderBased;
 using Components.Health;
 using Extensions;
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -12,17 +13,31 @@ namespace Creatures.Player
     [RequireComponent(typeof(HealthComponent))]
     public class PlayerController : Creature
     {
-        [Header("Checkers")] [SerializeField] protected LayerCheck _groundCheck;
+        [Header("Checkers")] 
+        [SerializeField] protected LayerCheck _groundCheck;
         [SerializeField] private CheckCircleOverlap _interactionCheck;
 
-        [Header("Jump")] [SerializeField] protected float _jumpForce;
-        [SerializeField] private float _maxJumpTime;
+        [Header("Jump")] 
+        [SerializeField] protected float _jumpForce;
 
-        [Header("Weapon")] [SerializeField] private Weapon _activeWeapon;
+        [Header("Dash")]
+        [SerializeField] protected int _dashCount;
+        [SerializeField] private float _dashForce;
+        [SerializeField] private float _dashDrug;
+        [SerializeField] private float _dashCooldown;
+        [SerializeField] private AttackComponent _dashAttack;
 
-        private HealthComponent health;
+        [Header("Weapon")] 
+        [SerializeField] private Weapon _activeWeapon;
 
-        private float jumpTimeCounter;
+        private HealthComponent _health;
+
+        private float _initialGravity;
+        private bool _isOnLadder;
+
+        private int _dashCounter;
+        private bool _canDashAttack;
+        private bool _isDashing;
 
         private const string IS_ON_GROUND_KEY = "is-on-ground";
 
@@ -41,15 +56,19 @@ namespace Creatures.Player
 
             Instance = this;
 
-            health = GetComponent<HealthComponent>();
+            _health = GetComponent<HealthComponent>();
 
             Active = true;
+            _initialGravity = _rigidbody.gravityScale;
+            _dashCounter = _dashCount;
         }
 
         private void Start()
         {
             PlayerInputReader inputReader = GetComponent<PlayerInputReader>();
             inputReader.OnMove += PlayerInputReader_OnMove;
+            inputReader.OnJump += PlayerInputReader_OnJump;
+            inputReader.OnDash += PlayerInputReader_OnDash;
             inputReader.OnInteract += PlayerInputReader_OnInteract;
 
             inputReader.OnAttack += PlayerInputReader_OnAttack;
@@ -63,6 +82,18 @@ namespace Creatures.Player
             SetDirection(e);
         }
 
+        private void PlayerInputReader_OnJump(object sender, EventArgs e)
+        {
+            Jump();
+        }
+
+        private void PlayerInputReader_OnDash(object sender, EventArgs e)
+        {
+            if (_isDashing)
+                return;
+            StartCoroutine(Dash());
+        }
+
         private void PlayerInputReader_OnInteract(object sender, EventArgs e)
         {
             _interactionCheck.Check();
@@ -70,7 +101,7 @@ namespace Creatures.Player
 
         private void PlayerInputReader_OnAttack(object sender, EventArgs e)
         {
-            if (_activeWeapon != null && _activeWeapon.gameObject.activeSelf)
+            if (!_isOnLadder && _activeWeapon != null && _activeWeapon.gameObject.activeSelf)
                 _activeWeapon.Attack();
         }
 
@@ -84,10 +115,12 @@ namespace Creatures.Player
 
         protected override void Update()
         {
-            isGrounded = _groundCheck.IsTouchingLayer;
+            if(_isDashing)
+                return;
+
+            _isGrounded = _groundCheck.IsTouchingLayer;
 
             Move();
-            Jump();
 
             UpdateAnimations();
             UpdateSpriteDirection();
@@ -95,32 +128,48 @@ namespace Creatures.Player
 
         protected override void Move()
         {
-            var xVelocity = direction.x * _speed;
-            _rigidbody.velocity = new Vector2(xVelocity, _rigidbody.velocity.y);
+            float xVelocity = _direction.x * _speed;
+            float yVelocity = _isOnLadder ? _direction.y * _speed * GameManager.Instance.Gravity : _rigidbody.velocity.y;
+            _rigidbody.velocity = new Vector2(xVelocity, yVelocity);
         }
 
         private void Jump()
         {
-            bool isJumpKeyPressed = direction.y > 0;
-
-            if (isGrounded)
-            {
-                jumpTimeCounter = _maxJumpTime;
-
-                if (isJumpKeyPressed)
-                {
-                    _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, GameManager.Instance.Gravity * _jumpForce);
-                }
-
-                return;
-            }
-
-            if (!isGrounded && isJumpKeyPressed && jumpTimeCounter > 0)
+            if (_isGrounded || _isOnLadder)
             {
                 _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, GameManager.Instance.Gravity * _jumpForce);
-                jumpTimeCounter -= Time.deltaTime;
-                return;
             }
+        }
+
+        private IEnumerator Dash()
+        {
+            if (_dashCounter > 0 && (_isGrounded || _isOnLadder))
+            {
+                float linearDrag = _rigidbody.drag;
+                _rigidbody.drag = _dashDrug;
+                _isDashing = true;
+                _rigidbody.velocity = new Vector2(_dashForce * transform.localScale.x, 0f);
+                _dashCounter--;
+                yield return new WaitUntil(() => Math.Abs(_rigidbody.velocity.x) <= 0.5f);
+                _rigidbody.drag = linearDrag;
+                _isDashing = false;
+                if (_canDashAttack)
+                {
+                    foreach (HealthComponent health in _dashAttack.OnAttack())
+                    {
+                        if (health == GetComponent<HealthComponent>())
+                            continue;
+
+                        health.ModifyHealth(-_dashAttack.Damage);
+                    }
+                }
+                Invoke(nameof(ActivateDash), _dashCooldown);
+            }
+        }
+
+        private void ActivateDash()
+        {
+            _dashCounter++;
         }
 
         public void Deactivate()
@@ -130,9 +179,15 @@ namespace Creatures.Player
             _rigidbody.velocity = Vector2.zero;
         }
 
+        public void SetLadderState(bool state)
+        {
+            _isOnLadder = state;
+            _rigidbody.gravityScale = _isOnLadder ? 0 : _initialGravity * GameManager.Instance.Gravity;
+        }
+
         public PlayerData SaveData()
         {
-            var healthData = health.SaveData();
+            var healthData = _health.SaveData();
             return new PlayerData(SceneManager.GetActiveScene().name, transform.position, transform.localScale.x,
                 healthData.health, healthData.maxHealth, true);
         }
@@ -153,7 +208,7 @@ namespace Creatures.Player
         protected override void UpdateAnimations()
         {
             base.UpdateAnimations();
-            _animator.SetBool(IS_ON_GROUND_KEY, isGrounded);
+            _animator.SetBool(IS_ON_GROUND_KEY, _isGrounded);
         }
 
         public void SetActiveWeapon(Weapon weapon)

@@ -22,7 +22,7 @@ namespace Creatures.Enemy
 
         protected override void ChooseAttack()
         {
-            List<EnemyAttack> availableAttacks = _attacks.Where(attack => attack.CanAttack).ToList();
+            List<AttackComponent> availableAttacks = _attacks.Where(attack => attack.CanAttack).ToList();
             if (_canReachPlayer && availableAttacks.Contains(_attacks[1]))
                 availableAttacks.Remove(_attacks[1]);
 

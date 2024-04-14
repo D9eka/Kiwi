@@ -186,6 +186,7 @@ GameObject:
   - component: {fileID: 6032756445693665985}
   - component: {fileID: 4044865676191843552}
   - component: {fileID: 1272376342476440718}
+  - component: {fileID: 4735317334873176662}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -286,14 +287,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 467fb56151c5e614b8688fa960e6474f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _visual: {fileID: 8609677751656144520}
+  _visual: {fileID: 0}
   _invertScale: 0
   _speed: 5
-  _groundCheck: {fileID: 4998445404144308329}
-  _interactionCheck: {fileID: 6639206416449207082}
+  _groundCheck: {fileID: 0}
+  _interactionCheck: {fileID: 0}
   _jumpForce: 7
-  _maxJumpTime: 0.3
-  _activeWeapon: {fileID: 1415162979297358193}
+  _dashCount: 2
+  _dashForce: 30
+  _dashDrug: 5
+  _dashCooldown: 3
+  _dashAttack: {fileID: 0}
+  _activeWeapon: {fileID: 0}
 --- !u!114 &6032756445693665985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -333,7 +338,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6032756445693665985}
+      - m_Target: {fileID: 8128811423238263547, guid: 92dbfdc6c25110541b3e3dc0d5f6a16c, type: 3}
         m_TargetAssemblyTypeName: Creatures.Player.PlayerInputReader, Assembly-CSharp
         m_MethodName: OnPlayerMove
         m_Mode: 0
@@ -349,7 +354,7 @@ MonoBehaviour:
     m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6032756445693665985}
+      - m_Target: {fileID: 8128811423238263547, guid: 92dbfdc6c25110541b3e3dc0d5f6a16c, type: 3}
         m_TargetAssemblyTypeName: Creatures.Player.PlayerInputReader, Assembly-CSharp
         m_MethodName: OnPlayerInteract
         m_Mode: 0
@@ -369,7 +374,7 @@ MonoBehaviour:
     m_ActionName: Player/Pause[/Keyboard/escape]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6032756445693665985}
+      - m_Target: {fileID: 8128811423238263547, guid: 92dbfdc6c25110541b3e3dc0d5f6a16c, type: 3}
         m_TargetAssemblyTypeName: Creatures.Player.PlayerInputReader, Assembly-CSharp
         m_MethodName: OnPlayerAttack
         m_Mode: 0
@@ -385,7 +390,7 @@ MonoBehaviour:
     m_ActionName: Player/Attack[/Mouse/leftButton]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6032756445693665985}
+      - m_Target: {fileID: 8128811423238263547, guid: 92dbfdc6c25110541b3e3dc0d5f6a16c, type: 3}
         m_TargetAssemblyTypeName: Creatures.Player.PlayerInputReader, Assembly-CSharp
         m_MethodName: OnPlayerWeaponReload
         m_Mode: 0
@@ -399,6 +404,102 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 7474e419-2d96-4ab5-bcd6-7720022edd36
     m_ActionName: Player/Reload[/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8128811423238263547, guid: 92dbfdc6c25110541b3e3dc0d5f6a16c, type: 3}
+        m_TargetAssemblyTypeName: Creatures.Player.PlayerInputReader, Assembly-CSharp
+        m_MethodName: OnPlayerUIClose
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 0312e7c5-4ecb-4344-a7e3-a8c719116cf7
+    m_ActionName: Player/UIClose[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8128811423238263547, guid: 92dbfdc6c25110541b3e3dc0d5f6a16c, type: 3}
+        m_TargetAssemblyTypeName: Creatures.Player.PlayerInputReader, Assembly-CSharp
+        m_MethodName: OnPlayerSwitchWeapon
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 907c92ea-24df-4499-b32b-8d59101ade7e
+    m_ActionName: Player/SwitchWeapon[/Keyboard/q]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8128811423238263547, guid: 92dbfdc6c25110541b3e3dc0d5f6a16c, type: 3}
+        m_TargetAssemblyTypeName: Creatures.Player.PlayerInputReader, Assembly-CSharp
+        m_MethodName: OnPlayerSpacebarPressed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 68fb1647-8fc2-4ce0-9aec-45e334d76f35
+    m_ActionName: Player/Spacebar[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8128811423238263547, guid: 92dbfdc6c25110541b3e3dc0d5f6a16c, type: 3}
+        m_TargetAssemblyTypeName: Creatures.Player.PlayerInputReader, Assembly-CSharp
+        m_MethodName: OnPlayerEnterPressed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 3e9059f1-cb31-4b65-aa62-897027e96a46
+    m_ActionName: Player/Enter[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8128811423238263547, guid: 92dbfdc6c25110541b3e3dc0d5f6a16c, type: 3}
+        m_TargetAssemblyTypeName: Creatures.Player.PlayerInputReader, Assembly-CSharp
+        m_MethodName: OnPlayerJump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 60429489-ef44-4f29-b8bb-53ee4040f272
+    m_ActionName: Player/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8128811423238263547, guid: 92dbfdc6c25110541b3e3dc0d5f6a16c, type: 3}
+        m_TargetAssemblyTypeName: Creatures.Player.PlayerInputReader, Assembly-CSharp
+        m_MethodName: OnPlayerDash
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: a0a1e261-6dad-4a49-a9e1-2a2301464a39
+    m_ActionName: Player/Dash[/Keyboard/shift]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -416,6 +517,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13d4821c9a28b7647a038133a8fd83e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4735317334873176662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4410418010078227160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47457332579bc704a9732fade80ae7de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxOxygen: 300
+  _decreaseValue: 1
+  _decreaseTime: 1
+  _onRestore:
+    m_PersistentCalls:
+      m_Calls: []
+  _onEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Components.LevelManagement.ReloadLevelComponent,
+          Assembly-CSharp
+        m_MethodName: Reload
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4689549421514395258
 GameObject:
   m_ObjectHideFlags: 0
@@ -647,17 +782,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad8a6779776f41849a77b0f015a18388, type: 3}
---- !u!114 &1415162979297358193 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8829688734121502345, guid: ad8a6779776f41849a77b0f015a18388, type: 3}
-  m_PrefabInstance: {fileID: 7578133362072213496}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4605f9ae8389fb04ead661868736d635, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &2293348853618518016 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8573002687772295160, guid: ad8a6779776f41849a77b0f015a18388, type: 3}

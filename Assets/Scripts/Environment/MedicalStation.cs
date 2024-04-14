@@ -11,8 +11,8 @@ public class MedicalStation : MonoBehaviour
 
     public void TryRestoreHealth(int cost)
     {
-        if (_usesCount <= 0) return;
-        if (!GameManager.Instance.TrySpendEssence(cost)) return;
+        if (_usesCount <= 0 || !GameManager.Instance.TrySpendEssence(cost))
+            return;
         if (PlayerController.Instance.TryGetComponent<HealthComponent>(out var healthComponent))
         {
             healthComponent.ModifyHealthPercent(restoringHealthPercent);
