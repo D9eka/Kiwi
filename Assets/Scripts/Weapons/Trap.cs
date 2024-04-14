@@ -13,6 +13,8 @@ namespace Weapons
         [SerializeField] private int _maxAmount;
 
         private int _amount;
+        public int Amount => _amount;
+        public int MaxAmount => _maxAmount;
 
         private void Start()
         {
@@ -28,14 +30,16 @@ namespace Weapons
 
             float playerLocalScaleX = PlayerController.Instance.transform.localScale.x;
             Vector2 throwForce = _throwForce * playerLocalScaleX;
-            ThrownTrap thrownTrap = Instantiate(_thrownTrap, transform.position, Quaternion.identity).GetComponent<ThrownTrap>();
+            ThrownTrap thrownTrap = Instantiate(_thrownTrap, transform.position, Quaternion.identity)
+                .GetComponent<ThrownTrap>();
             thrownTrap.Initialize(_currentDamage, _thrownTrapAttackDelay, throwForce);
             _timeBetweenAttacks = 0;
 
             _amount--;
-            if(_amount <= 0)
+            if (_amount <= 0)
             {
-                gameObject.SetActive(false);
+                // gameObject.SetActive(false);
+                if (WeaponController.Instance is not null) WeaponController.Instance.DropConsumableWeapon();
             }
         }
     }

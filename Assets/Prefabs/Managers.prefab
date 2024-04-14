@@ -45,6 +45,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _brokenChipSO: {fileID: 0}
+--- !u!1 &1871438032683279530
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1366214301714061669}
+  - component: {fileID: 6947496685815010494}
+  m_Layer: 0
+  m_Name: UIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1366214301714061669
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1871438032683279530}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 983.5, y: 540, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4892241888743039000}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6947496685815010494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1871438032683279530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d53a3aa78ca98f2489d843a269121529, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4139893807290803082
 GameObject:
   m_ObjectHideFlags: 0
@@ -78,6 +122,7 @@ Transform:
   - {fileID: 5338529967611065178}
   - {fileID: 1921305575652036108}
   - {fileID: 1481908942911642954}
+  - {fileID: 1366214301714061669}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8853813925052373048
@@ -149,8 +194,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 33eccfb51bb8cc44ab616c5b02e2113f, type: 2}
   - {fileID: 11400000, guid: a27f5b4efa44357429db9798c34e5cf2, type: 2}
   - {fileID: 11400000, guid: fcdcae2510dd7e446b98600933155a89, type: 2}
-  _secretSection: {fileID: 11400000, guid: 3a367e06da80af04b8e704de3a28d65a, type: 2}
   _startSection: {fileID: 11400000, guid: 67a5756b42ebd924c9742b6d9f48ccdc, type: 2}
+  _wasSecretSectionFound: 0
 --- !u!1 &7845740480520228632
 GameObject:
   m_ObjectHideFlags: 0
@@ -195,3 +240,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe3e8c0100d18604d8ce0b9baa5144f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _wasKeyCardGenerated: 0

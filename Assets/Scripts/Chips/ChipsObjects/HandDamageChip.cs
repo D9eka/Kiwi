@@ -5,7 +5,7 @@ using UnityEngine;
 public class HandDamageChip : PassiveChip
 {
     private float _handDamageIncrease = 2;
-    private readonly List<float> _handDamageIncreaseLevels = new() { 2, 3, 4 };
+    private readonly List<float> _handDamageIncreaseLevels = new List<float> { 2, 3, 4 };
 
 
 

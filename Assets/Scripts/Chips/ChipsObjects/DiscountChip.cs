@@ -5,7 +5,7 @@ using UnityEngine;
 public class DiscountChip : PassiveChip
 {
     private float _discountIncreasePercent = 0.15f;
-    private readonly List<float> _discountIncreasePercentLevels = new() { 0.15f, 0.3f };
+    private readonly List<float> _discountIncreasePercentLevels = new List<float> { 0.15f, 0.3f };
 
     protected override void SetValues()
     {

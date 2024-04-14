@@ -11,7 +11,7 @@ public class InteractiveComponent : MonoBehaviour
 
     private void Start()
     {
-        var inputReader = GetComponentInParent<PlayerInputReader>();
+        var inputReader = PlayerInputReader.Instance;
         inputReader.OnInteract += PlayerInputReader_OnInteract;
     }
 
@@ -30,7 +30,9 @@ public class InteractiveComponent : MonoBehaviour
     {
         if (other.TryGetComponent(out InteractableComponent interactableComponent))
         {
+            if (_interactableComponents.Count > 0) interactableComponent.ShowHintUI(false);
             _interactableComponents.Add(interactableComponent);
+            interactableComponent.ShowHintUI();
         }
     }
 
@@ -39,6 +41,7 @@ public class InteractiveComponent : MonoBehaviour
         if (other.TryGetComponent(out InteractableComponent interactableComponent))
         {
             _interactableComponents.Remove(interactableComponent);
+            interactableComponent.ShowHintUI(false);
         }
     }
 }

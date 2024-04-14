@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -8,14 +10,15 @@ namespace Components.UI.Dialogs
     public class DialogBoxController : MonoBehaviour
     {
         [SerializeField] private GameObject _container;
-        [SerializeField] private Animator _animator;
-        [Space]
-        [SerializeField] private float _textSpeed = 0.05f;
-        [Space]
-        [SerializeField] protected DialogContent _content;
+
+        // [SerializeField] private Animator _animator;
+        [Space] [SerializeField] private float _textSpeed = 0.05f;
+        [Space] [SerializeField] protected DialogContent _content;
+        [Space] [SerializeField] protected TextMeshProUGUI _speakerName;
 
         protected Sentence CurrentSentence => data.Sentences[currentSentence];
-        protected virtual DialogContent CurrentContent => _content;
+        protected virtual TextMeshProUGUI CurrentContent => _speakerName;
+        protected virtual DialogContent SpeakerName => _content;
 
         private const string IS_OPEN_KEY = "is-open";
 
@@ -24,6 +27,18 @@ namespace Components.UI.Dialogs
         private Coroutine typingRoutine;
 
         private UnityEvent onFinishDialog;
+        public static DialogBoxController Instance { get; set; }
+        private WindowUI _windowUI;
+
+        private void Awake()
+        {
+            Instance = this;
+        }
+
+        private void Start()
+        {
+            _windowUI = GetComponent<WindowUI>();
+        }
 
         public void ShowDialog(DialogData data, UnityEvent onStart, UnityEvent onFinish)
         {
@@ -33,24 +48,26 @@ namespace Components.UI.Dialogs
                 return;
             }
 
-            LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
+            UIManager.Instance.OpenNewWindow(_windowUI);
+            // LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
 
             onStart?.Invoke();
             onFinishDialog = onFinish;
 
             this.data = data;
-            currentSentence = 0;
+            currentSentence = -1;
             _content.Text.text = "";
 
-            _container.SetActive(true);
-            _animator.SetBool(IS_OPEN_KEY, true);
+            // _container.SetActive(true);
+            ShowDialog(this.data, onStart, onFinish);
+            // _animator.SetBool(IS_OPEN_KEY, true);
         }
 
         private IEnumerator TypeDialogText()
         {
             _content.Text.text = string.Empty;
 
-            var text = CurrentSentence.Value;
+            var text = CurrentSentence.Phrase;
             foreach (var letter in text)
             {
                 _content.Text.text += letter;
@@ -66,7 +83,7 @@ namespace Components.UI.Dialogs
                 return;
 
             StopTypeAnimation();
-            _content.Text.text = data.Sentences[currentSentence].Value;
+            _content.Text.text = data.Sentences[currentSentence].Phrase;
         }
 
         public void OnContinue()
@@ -84,12 +101,17 @@ namespace Components.UI.Dialogs
             if (isDialogComplete)
                 HideDialogBox();
             else
+
+            {
+                SetSpeakerName();
                 OnStartDialogAnimationComplete();
+            }
         }
 
         private void HideDialogBox()
         {
-            _animator.SetBool(IS_OPEN_KEY, false);
+            // _animator.SetBool(IS_OPEN_KEY, false);
+            UIManager.Instance.TryCloseLastWindow();
         }
 
         private void StopTypeAnimation()
@@ -115,6 +137,19 @@ namespace Components.UI.Dialogs
             onFinishDialog?.Invoke();
             //Cursor.visible = false;
             _container.SetActive(false);
+        }
+
+        public void SkipAll()
+        {
+            while (currentSentence < data.Sentences.Length)
+            {
+                OnContinue();
+            }
+        }
+
+        private void SetSpeakerName()
+        {
+            _speakerName.text = CurrentSentence.SpeakerName;
         }
     }
 }

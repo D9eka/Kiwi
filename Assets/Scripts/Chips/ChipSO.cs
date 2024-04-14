@@ -11,6 +11,5 @@ public class ChipSO : ScriptableObject
     public Sprite Image => _image;
     public string Name => _name;
     public List<string> Description => _descriptions;
-
     public ChipType ChipType => _chipType;
 }
