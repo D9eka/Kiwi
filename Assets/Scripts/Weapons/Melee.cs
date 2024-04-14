@@ -6,6 +6,7 @@ namespace Weapons
     public class Melee : Weapon
     {
         [SerializeField] private CircleCollider2D _attackRange;
+        public float AttackRange => _attackRange.radius;
 
         private void Awake()
         {
@@ -28,12 +29,12 @@ namespace Weapons
             Collider2D[] colliders = Physics2D.OverlapCircleAll(_attackRange.transform.position, _attackRange.radius);
             foreach (Collider2D collider in colliders)
             {
-                if(!collider.isTrigger && !collider.CompareTag("Player") &&
-                   collider.transform.parent.TryGetComponent(out HealthComponent health))
+                if (!collider.isTrigger && !collider.CompareTag("Player") &&
+                    collider.transform.parent.TryGetComponent(out HealthComponent health))
                 {
                     health.ModifyHealth(-_currentDamage);
                 }
             }
-        }    
+        }
     }
 }

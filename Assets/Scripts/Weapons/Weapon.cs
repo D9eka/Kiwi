@@ -1,9 +1,12 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Weapons
 {
     public abstract class Weapon : MonoBehaviour
     {
+        public WeaponSO WeaponSO { get; set; }
         [SerializeField] protected float _attackDelay;
         [SerializeField] protected WeaponDamageType _mode;
 
@@ -12,8 +15,24 @@ namespace Weapons
         [SerializeField] protected float _minDamage;
         [SerializeField] protected float _maxDamage;
 
+        public float AttackSpeed => 1 / _attackDelay;
+
+        public string DamageInfo
+        {
+            get
+            {
+                return _mode switch
+                {
+                    WeaponDamageType.Static => _damage.ToString(),
+                    WeaponDamageType.Random => _minDamage + "-" + _maxDamage,
+                    _ => "-"
+                };
+            }
+        }
+
+
         public enum WeaponDamageType
-        { 
+        {
             Static,
             Random
         }
@@ -30,12 +49,13 @@ namespace Weapons
             _timeBetweenAttacks += Time.deltaTime;
         }
 
+
         public virtual void Attack()
         {
-            switch (_mode) 
-            { 
+            switch (_mode)
+            {
                 case WeaponDamageType.Static:
-                    _currentDamage = _damage; 
+                    _currentDamage = _damage;
                     break;
                 case WeaponDamageType.Random:
                     _currentDamage = Random.Range(_minDamage, _maxDamage);

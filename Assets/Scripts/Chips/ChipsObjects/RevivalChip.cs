@@ -5,7 +5,7 @@ using UnityEngine;
 public class RevivalChip : Chip
 {
     private float _restoringHealthPercent = 0.2f;
-    private readonly List<float> _restoringHealthPercentLevels = new() { 0.2f, 0.4f, 0.6f };
+    private readonly List<float> _restoringHealthPercentLevels = new List<float> { 0.2f, 0.4f, 0.6f };
 
 
     protected override void SetValues()

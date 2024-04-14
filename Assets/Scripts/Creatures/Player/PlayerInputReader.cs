@@ -13,6 +13,16 @@ namespace Creatures.Player
 
         public EventHandler OnAttack;
         public EventHandler OnWeaponReload;
+        public EventHandler OnUIClose;
+        public EventHandler OnSwitchWeapon;
+        public EventHandler OnSpacebarPressed;
+        public EventHandler OnEnterPressed;
+        public static PlayerInputReader Instance { get; private set; }
+
+        private void Awake()
+        {
+            Instance = this;
+        }
 
 
         public void OnPlayerMove(InputAction.CallbackContext context)
@@ -35,6 +45,30 @@ namespace Creatures.Player
         public void OnPlayerWeaponReload(InputAction.CallbackContext context)
         {
             OnWeaponReload?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void OnPlayerUIClose(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+                OnUIClose?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void OnPlayerSwitchWeapon(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+                OnSwitchWeapon?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void OnPlayerSpacebarPressed(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+                OnSpacebarPressed?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void OnPlayerEnterPressed(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+                OnEnterPressed?.Invoke(this, EventArgs.Empty);
         }
     }
 }

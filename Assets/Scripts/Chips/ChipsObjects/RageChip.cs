@@ -6,8 +6,8 @@ public class RageChip : PassiveChip
 {
     private float _damageIncreasePercent = 0.4f;
     private float _takenDamageIncreasePercent = 0.6f;
-    private readonly List<float> _damageIncreasePercentLevels = new() { 0.4f, 0.5f, 0.6f };
-    private readonly List<float> _takenDamageIncreasePercentLevels = new() { 0.6f, 0.5f, 0.4f };
+    private readonly List<float> _damageIncreasePercentLevels = new List<float> { 0.4f, 0.5f, 0.6f };
+    private readonly List<float> _takenDamageIncreasePercentLevels = new List<float> { 0.6f, 0.5f, 0.4f };
 
 
     protected override void SetValues()

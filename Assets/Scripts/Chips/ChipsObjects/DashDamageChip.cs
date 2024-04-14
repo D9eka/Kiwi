@@ -5,7 +5,7 @@ using UnityEngine;
 public class DashDamageChip : PassiveChip
 {
     private float _dashDamageIncrease = 2f;
-    private readonly List<float> _dashDamageIncreaseLevels = new() { 2, 4 };
+    private readonly List<float> _dashDamageIncreaseLevels = new List<float> { 2, 4 };
 
 
     protected override void SetValues()

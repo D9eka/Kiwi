@@ -14,6 +14,8 @@ namespace Weapons
         [SerializeField] private int _ammoCapacity;
 
         private int ammoCount;
+        public int AmmoCapacity => _ammoCapacity;
+        public int AmmoCount => ammoCount;
 
         private void Start()
         {

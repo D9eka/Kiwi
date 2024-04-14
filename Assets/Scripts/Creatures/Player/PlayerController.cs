@@ -155,7 +155,11 @@ namespace Creatures.Player
             base.UpdateAnimations();
             _animator.SetBool(IS_ON_GROUND_KEY, isGrounded);
         }
-        
+
+        public void SetActiveWeapon(Weapon weapon)
+        {
+            _activeWeapon = weapon;
+        }
     }
 
     [System.Serializable]

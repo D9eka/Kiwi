@@ -18,10 +18,10 @@ public class StairsInteraction : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         var inputReader = GetComponent<PlayerInputReader>();
-        inputReader.OnMove += PlayerInputReader_OnClimb;
+        inputReader.OnMove += OnInputReaderOnClimb;
     }
 
-    private void PlayerInputReader_OnClimb(object sender, Vector2 e)
+    private void OnInputReaderOnClimb(object sender, Vector2 e)
     {
         if (e.y == 0)
         {

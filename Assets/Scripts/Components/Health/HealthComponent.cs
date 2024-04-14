@@ -54,7 +54,7 @@ namespace Components.Health
 
         public void ModifyHealthPercent(float changeValuePercent)
         {
-            ModifyHealth(_maxHealth * health);
+            ModifyHealth(_maxHealth * changeValuePercent);
         }
 
         public (float health, float maxHealth) SaveData()
@@ -69,6 +69,11 @@ namespace Components.Health
             {
                 health += addingValue;
             }
+            OnValueChange?.Invoke(this, new OnValueChangeEventArgs
+            {
+                value = health,
+                maxValue = _maxHealth,
+            });
         }
     }
 }
