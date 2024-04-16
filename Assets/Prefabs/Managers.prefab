@@ -44,7 +44,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53dc9bf014394d5baa9939bd3837c69e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _brokenChipSO: {fileID: 0}
+  _possibleChips:
+  - {fileID: 11400000, guid: 0ac65e86a0ceb5d44859576cc96698d2, type: 2}
+  - {fileID: 11400000, guid: 709b4314da96cee468d77247aec58fe6, type: 2}
+  - {fileID: 11400000, guid: e7fa68496e6b469469e580e9925eb0ab, type: 2}
+  - {fileID: 11400000, guid: b0fb1ad26a41d9d4e83ac89f59102ff6, type: 2}
+  - {fileID: 11400000, guid: 2eda3657fad6f3b428cc2995ac83389e, type: 2}
+  - {fileID: 11400000, guid: 0ac65e86a0ceb5d44859576cc96698d2, type: 2}
+  - {fileID: 11400000, guid: 709b4314da96cee468d77247aec58fe6, type: 2}
+  - {fileID: 11400000, guid: e7fa68496e6b469469e580e9925eb0ab, type: 2}
+  - {fileID: 11400000, guid: b0fb1ad26a41d9d4e83ac89f59102ff6, type: 2}
+  - {fileID: 11400000, guid: 2eda3657fad6f3b428cc2995ac83389e, type: 2}
+  - {fileID: 11400000, guid: 0ac65e86a0ceb5d44859576cc96698d2, type: 2}
+  - {fileID: 11400000, guid: 709b4314da96cee468d77247aec58fe6, type: 2}
+  - {fileID: 11400000, guid: e7fa68496e6b469469e580e9925eb0ab, type: 2}
+  - {fileID: 11400000, guid: b0fb1ad26a41d9d4e83ac89f59102ff6, type: 2}
+  - {fileID: 11400000, guid: 2eda3657fad6f3b428cc2995ac83389e, type: 2}
+  - {fileID: 11400000, guid: 0ac65e86a0ceb5d44859576cc96698d2, type: 2}
+  - {fileID: 11400000, guid: 709b4314da96cee468d77247aec58fe6, type: 2}
+  - {fileID: 11400000, guid: e7fa68496e6b469469e580e9925eb0ab, type: 2}
+  - {fileID: 11400000, guid: b0fb1ad26a41d9d4e83ac89f59102ff6, type: 2}
+  - {fileID: 11400000, guid: 2eda3657fad6f3b428cc2995ac83389e, type: 2}
+  - {fileID: 11400000, guid: 0ac65e86a0ceb5d44859576cc96698d2, type: 2}
+  - {fileID: 11400000, guid: 709b4314da96cee468d77247aec58fe6, type: 2}
+  - {fileID: 11400000, guid: e7fa68496e6b469469e580e9925eb0ab, type: 2}
+  - {fileID: 11400000, guid: b0fb1ad26a41d9d4e83ac89f59102ff6, type: 2}
+  - {fileID: 11400000, guid: 2eda3657fad6f3b428cc2995ac83389e, type: 2}
+  _brokenChipSO: {fileID: 11400000, guid: 2eda3657fad6f3b428cc2995ac83389e, type: 2}
 --- !u!1 &1871438032683279530
 GameObject:
   m_ObjectHideFlags: 0
@@ -98,7 +124,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4892241888743039000}
-  - component: {fileID: 8853813925052373048}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -125,18 +150,6 @@ Transform:
   - {fileID: 1366214301714061669}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8853813925052373048
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4139893807290803082}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ecca5fd8994cc448a387f7d76f89851, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7165571403472728301
 GameObject:
   m_ObjectHideFlags: 0

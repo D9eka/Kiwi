@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ChipManager : MonoBehaviour
 {
+    [SerializeField] private List<ChipSO> _possibleChips = new();
+
     public static ChipManager Instance { get; private set; }
     private List<Chip> _obtainedChips = new();
 
@@ -14,6 +16,9 @@ public class ChipManager : MonoBehaviour
     private RevivalChip _revivalChip;
     private VampirismChip _vampirismChip;
     [SerializeField] private ChipSO _brokenChipSO;
+    public List<ChipSO> PossibleChips => _possibleChips;
+    public List<Chip> ObtainedChips => _obtainedChips;
+    public event EventHandler OnStateChange;
 
     private void Awake()
     {
@@ -31,8 +36,10 @@ public class ChipManager : MonoBehaviour
 
     public void ObtainChip(ChipSO chipSO)
     {
+        // var chip = chipSO.Chip;
         var chip = ChipCreator.Create(chipSO);
         _obtainedChips.Add(chip);
+        if (chip is not BrokenChip) _possibleChips.Remove(chipSO);
         if (chip is UpdatingChip updatingChip)
         {
             _obtainedUpdatingChips.Add(updatingChip);
@@ -40,7 +47,9 @@ public class ChipManager : MonoBehaviour
 
         TrySetChip(chip);
         if (chip is PassiveChip passiveChip) passiveChip.Activate();
+        OnStateChange?.Invoke(this, EventArgs.Empty);
     }
+
     public void ObtainBrokenChip()
     {
         var chip = ChipCreator.Create(_brokenChipSO);
@@ -64,6 +73,7 @@ public class ChipManager : MonoBehaviour
 
         UnsetChip(chip);
         if (chip is PassiveChip passiveChip) passiveChip.Deactivate();
+        OnStateChange?.Invoke(this, EventArgs.Empty);
     }
 
     public bool TryUseShieldChip()

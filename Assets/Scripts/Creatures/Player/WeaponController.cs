@@ -46,34 +46,28 @@ public class WeaponController : MonoBehaviour
         SwitchCurrentWeapon();
     }
 
-    public bool TryEquipWeapon(WeaponSO weaponSO)
+    public void TryEquipWeapon(WeaponSO weaponSO)
     {
         if (weaponSO.IsConsumable)
         {
             if (!_trap)
             {
-                EquipWeapon(weaponSO, ref _trap);
-                return true;
+                WeaponGetConfirmUI.Instance.Open(weaponSO, _trap);
             }
-
-            WeaponChangeConfirmUI.Instance.Open(_trap.WeaponSO, weaponSO, _trap);
-            return false;
+            else WeaponChangeConfirmUI.Instance.Open(_trap.WeaponSO, weaponSO, _trap);
         }
 
-        if (!_firstWeapon)
+        else if (!_firstWeapon)
         {
-            EquipWeapon(weaponSO, ref _firstWeapon);
-            return true;
+            WeaponGetConfirmUI.Instance.Open(weaponSO, _firstWeapon);
         }
 
-        if (!_secondWeapon)
+        else if (!_secondWeapon)
         {
-            EquipWeapon(weaponSO, ref _secondWeapon);
-            return true;
+            WeaponGetConfirmUI.Instance.Open(weaponSO, _secondWeapon);
         }
 
-        WeaponChooseUI.Instance.Open(weaponSO);
-        return false;
+        else WeaponChooseUI.Instance.Open(weaponSO);
     }
 
     private void EquipWeapon(WeaponSO weaponSO, ref Weapon weapon)
@@ -106,7 +100,7 @@ public class WeaponController : MonoBehaviour
         DropWeapon(ref _trap);
     }
 
-    public void SwitchCurrentWeapon()
+    private void SwitchCurrentWeapon()
     {
         if (CurrentWeapon == _firstWeapon)
         {

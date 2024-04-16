@@ -18,6 +18,7 @@ namespace Creatures.Player
         public EventHandler OnSwitchWeapon;
         public EventHandler OnSpacebarPressed;
         public EventHandler OnEnterPressed;
+        public EventHandler OnOpenInventory;
         public static PlayerInputReader Instance { get; private set; }
 
         private void Awake()
@@ -37,7 +38,7 @@ namespace Creatures.Player
             OnJump?.Invoke(this, EventArgs.Empty);
         }
 
-        public void OnPlayerDash(InputAction.CallbackContext context) 
+        public void OnPlayerDash(InputAction.CallbackContext context)
         {
             OnDash?.Invoke(this, EventArgs.Empty);
         }
@@ -80,6 +81,12 @@ namespace Creatures.Player
         {
             if (context.performed)
                 OnEnterPressed?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void OnPlayerOpenInventory(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+                OnOpenInventory?.Invoke(this, EventArgs.Empty);
         }
     }
 }

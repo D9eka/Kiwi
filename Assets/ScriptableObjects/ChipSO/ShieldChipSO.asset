@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1426e17ff26b4aed8678b8b04bfa6bc6, type: 3}
   m_Name: ShieldChipSO
   m_EditorClassIdentifier: 
-  _image: {fileID: 0}
-  _name: Shield
+  _sprite: {fileID: 21300000, guid: 3c1a7b9ae7bb48b4192e739c4cd2472c, type: 3}
+  _name: "\u0429\u0438\u0442"
+  _descriptions:
+  - "\u0429\u0438\u0442 1"
+  - "\u0429\u0438\u0442 2"
+  - "\u0429\u0438\u0442 3"
   _chipType: 3

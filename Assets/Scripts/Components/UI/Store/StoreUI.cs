@@ -66,9 +66,9 @@ namespace Components.UI.Store
         {
             _currentWeaponBlockUI = weaponBlock;
             if (!GameManager.Instance.CanSpendEssence(weaponBlock.Cost)) return;
-            if (!WeaponController.Instance.TryEquipWeapon(weaponBlock.WeaponSO)) return;
+            WeaponController.Instance.TryEquipWeapon(weaponBlock.WeaponSO);
             // WeaponController.Instance.TryEquipWeapon(weaponBlock.WeaponSO);
-            Buy();
+            // Buy();
         }
 
         private void CloseStore()

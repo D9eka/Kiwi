@@ -7253,6 +7253,7 @@ MonoBehaviour:
   _enterAction:
     m_PersistentCalls:
       m_Calls: []
+  _isClosable: 1
 --- !u!1 &7793146090772958171
 GameObject:
   m_ObjectHideFlags: 0

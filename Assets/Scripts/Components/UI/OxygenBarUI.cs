@@ -17,7 +17,7 @@ public class OxygenBarUI : MonoBehaviour
 
     private void OnOxygenValueChanged(object sender, OxygenComponent.OnValueChangeEventArgs e)
     {
-        float oxygenPercent = e.value / e.maxValue;
+        var oxygenPercent = e.value / e.maxValue;
         SetFillerValue(oxygenPercent);
         SetText(e.value);
     }

@@ -10,13 +10,13 @@ namespace Components.Oxygen
         [SerializeField] private float _maxOxygen;
         [SerializeField] private float _decreaseValue = 1f;
         [SerializeField] private float _decreaseTime = 1f;
-        [Space]
-        [SerializeField] private UnityEvent _onRestore;
+        [Space] [SerializeField] private UnityEvent _onRestore;
         [SerializeField] private UnityEvent _onEnd;
 
         private float _oxygen;
 
         public EventHandler<OnValueChangeEventArgs> OnValueChange;
+
         public class OnValueChangeEventArgs : EventArgs
         {
             public float value;
@@ -33,8 +33,8 @@ namespace Components.Oxygen
         {
             _oxygen = _maxOxygen;
 
-            _onRestore?.Invoke(); 
-            
+            _onRestore?.Invoke();
+
             OnValueChange?.Invoke(this, new OnValueChangeEventArgs
             {
                 value = _oxygen,
@@ -54,6 +54,7 @@ namespace Components.Oxygen
                 });
                 yield return new WaitForSeconds(_decreaseTime);
             }
+
             _onEnd?.Invoke();
         }
 
@@ -62,8 +63,10 @@ namespace Components.Oxygen
             _oxygen = Mathf.Min(_oxygen + changeValue, _maxOxygen);
 
             if (changeValue < 0)
+            {
                 _onRestore?.Invoke();
                 _onEnd?.Invoke();
+            }
         }
 
         public void ModifyOxygenPercent(float changeValuePercent)

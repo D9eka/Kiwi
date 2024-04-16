@@ -6,14 +6,15 @@ using UnityEngine;
 
 public abstract class Chip
 {
-    private ChipSO _chipSO;
     protected int maxLevel;
     protected int currentLevel;
+    public ChipSO ChipSO { get; private set; }
 
     public int MaxLevel => maxLevel;
     public int CurrentLevel => currentLevel;
 
     private bool CanBeUpgrade => currentLevel < maxLevel;
+
     //Нужен для того, чтобы обновлять описание чипа
     public event EventHandler OnUpgraded;
 
@@ -46,7 +47,7 @@ public abstract class Chip
 
     public void SetChipSO(ChipSO chipSO)
     {
-        _chipSO = chipSO;
+        ChipSO = chipSO;
     }
 
     protected abstract void SetValues();

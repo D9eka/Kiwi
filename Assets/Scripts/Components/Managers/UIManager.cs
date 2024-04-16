@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance { get; private set; }
     private List<WindowUI> _openedWindows = new();
     private HUD _hud;
+    private WindowUI _inventory;
 
     private void Awake()
     {
@@ -20,7 +21,34 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         PlayerInputReader.Instance.OnUIClose += OnPlayerUIClose;
+        PlayerInputReader.Instance.OnOpenInventory += OnPlayerOpenInventory;
         _hud = HUD.Instance;
+        _inventory = InventoryUI.Instance.GetComponent<WindowUI>();
+    }
+
+    private void OnPlayerOpenInventory(object sender, EventArgs e)
+    {
+        switch (_openedWindows.Count)
+        {
+            case > 0 when !_openedWindows.Contains(_inventory):
+                return;
+            case > 0:
+                TryCloseLastWindow();
+                InventoryUI.Instance.HideInfoBlocks();
+                break;
+            default:
+                OpenNewWindow(_inventory);
+                break;
+            // case > 0 when !_openedWindows.Contains(ChipRewardUI.Instance.GetComponent<WindowUI>()):
+            //     return;
+            // case > 0:
+            //     TryCloseLastWindow();
+            //     // InventoryUI.Instance.HideInfoBlocks();
+            //     break;
+            // default:
+            //     ChipRewardUI.Instance.ShowReward();
+            //     break;
+        }
     }
 
     private void OnPlayerUIClose(object sender, EventArgs e)

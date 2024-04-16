@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1426e17ff26b4aed8678b8b04bfa6bc6, type: 3}
   m_Name: HealthChipSO
   m_EditorClassIdentifier: 
-  _image: {fileID: 0}
-  _name: Health
+  _sprite: {fileID: 21300000, guid: 3bfc12b0ef595234dbcc4c19c2458624, type: 3}
+  _name: "\u0417\u0434\u043E\u0440\u043E\u0432\u044C\u0435"
+  _descriptions:
+  - "\u0417\u0434\u043E\u0440\u043E\u0432\u044C\u0435 1"
+  - "\u0417\u0434\u043E\u0440\u043E\u0432\u044C\u0435 2"
+  - "\u0417\u0434\u043E\u0440\u043E\u0432\u044C\u0435 3"
   _chipType: 2
