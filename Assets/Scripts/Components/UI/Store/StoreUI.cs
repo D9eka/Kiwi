@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Creatures.Player;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -11,6 +13,7 @@ namespace Components.UI.Store
         [SerializeField] private List<WeaponBlockUI> _weaponBlockList;
         [SerializeField, Range(0, 3)] private int _consumableWeaponsCount = 1;
         [SerializeField] private List<WeaponSO> _possibleWeaponList;
+        [SerializeField] private GameObject _soldPhrase;
         private bool _canChangeProduct = true;
         private int _changeProductCost = 1;
         private WeaponBlockUI _currentWeaponBlockUI;
@@ -77,12 +80,18 @@ namespace Components.UI.Store
             Trader.Instance.Disable();
         }
 
+        private void ShowSoldOut()
+        {
+            _soldPhrase.SetActive(true);
+        }
+
         public void Buy()
         {
             GameManager.Instance.TrySpendEssence(_currentWeaponBlockUI.Cost);
             _currentWeaponBlockUI.gameObject.SetActive(false);
             _canChangeProduct = false;
-            // if (_weaponBlockList.Count == 0) CloseStore();
+            var isAnyNotSold = _weaponBlockList.Any(blockUI => blockUI.isActiveAndEnabled);
+            if (!isAnyNotSold) ShowSoldOut();
         }
     }
 }
