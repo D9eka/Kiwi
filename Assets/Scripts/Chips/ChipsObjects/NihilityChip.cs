@@ -15,12 +15,12 @@ public class NihilityChip : PassiveChip
 
     public override void Activate()
     {
-        StatsModifier.brokenChipDamagePercentAdder += _damageIncreasePercent;
+        StatsModifier.BrokenChipDamagePercentAdder += _damageIncreasePercent;
     }
 
     public override void Deactivate()
     {
-        StatsModifier.brokenChipDamagePercentAdder -= _damageIncreasePercent;
+        StatsModifier.BrokenChipDamagePercentAdder -= _damageIncreasePercent;
     }
 
     public NihilityChip(int currentLevel) : base(currentLevel)

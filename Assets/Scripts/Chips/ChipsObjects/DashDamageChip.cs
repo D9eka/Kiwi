@@ -15,12 +15,12 @@ public class DashDamageChip : PassiveChip
 
     public override void Activate()
     {
-        StatsModifier.dashDamageAdder += _dashDamageIncrease;
+        StatsModifier.DashDamageAdder += _dashDamageIncrease;
     }
 
     public override void Deactivate()
     {
-        StatsModifier.dashDamageAdder -= _dashDamageIncrease;
+        StatsModifier.DashDamageAdder -= _dashDamageIncrease;
     }
 
     public DashDamageChip(int currentLevel) : base(currentLevel)

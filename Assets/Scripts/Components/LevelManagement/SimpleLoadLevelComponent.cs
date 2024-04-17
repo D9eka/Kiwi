@@ -20,9 +20,9 @@ namespace Components.LevelManagement
 
         public void Load()
         {
-            PlayerPrefsController.SetPosition(_position);
-            PlayerPrefsController.SetScale(_invertScale ? -1 : 1);
-            PlayerPrefsController.SetPlayerLocation(_sceneName);
+            PlayerPrefsController.SetString(PlayerData.PLAYER_SECTION_KEY, _sceneName);
+            PlayerPrefsController.SetVector2(PlayerData.PLAYER_POSITION_KEY, _position);
+            PlayerPrefsController.SetFloat(PlayerData.PLAYER_SCALE_KEY, _invertScale ? -1 : 1);
 
             SceneManager.LoadScene(_sceneName);
         }

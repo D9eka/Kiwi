@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4179805091844295309}
   - component: {fileID: 1670006882461453664}
   - component: {fileID: 7532848221299874424}
-  - component: {fileID: 5009762491929175219}
+  - component: {fileID: 451804282715281104}
   m_Layer: 0
   m_Name: "\u0421"
   m_TagString: Untagged
@@ -100,9 +100,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 4133382146405081146}
-  _objectToSpawn: {fileID: 223535218090536803, guid: 028f6d403b5201944a773a764d76e714, type: 3}
+  _objectToSpawn: {fileID: 571944651108015522, guid: a2fbdf33fcfdc6144b701e7ebb960469, type: 3}
   _minItems: 1
   _maxItems: 2
+  _initialVelocityXMin: 1
+  _initialVelocityXMax: 10
+  _initialVelocityYMin: 1
+  _initialVelocityYMax: 10
 --- !u!50 &3331991436424982010
 Rigidbody2D:
   serializedVersion: 4
@@ -196,11 +200,11 @@ MonoBehaviour:
   _visual: {fileID: 7642396524029179213}
   _invertScale: 1
   _speed: 7
-  _initialState: 1
+  _initialState: 0
   _vision: {fileID: 2839105192233494839}
   _attacks:
-  - {fileID: 5009762491929175219}
---- !u!114 &5009762491929175219
+  - {fileID: 451804282715281104}
+--- !u!114 &451804282715281104
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -209,11 +213,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2566852659831297125}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b0ce1258d0f5a84db72d82324d94a10, type: 3}
+  m_Script: {fileID: 11500000, guid: a56b578873a860048b4d0134314ea5bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _animationTrigger: attack
-  _damage: 2
+  _damage: 3
   _cooldownTime: 2
   _attackType: 1
   _distance: {fileID: 5032527938305198466}
@@ -283,7 +287,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -2.03, y: 0}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -294,7 +298,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5, y: 5}
+  m_Size: {x: 8.5, y: 5.5}
   m_EdgeRadius: 0
 --- !u!114 &2839105192233494839
 MonoBehaviour:

@@ -14,12 +14,12 @@ public class DiscountChip : PassiveChip
 
     public override void Activate()
     {
-        StatsModifier.priceMultiplier -= _discountIncreasePercent;
+        StatsModifier.PriceMultiplier -= _discountIncreasePercent;
     }
 
     public override void Deactivate()
     {
-        StatsModifier.priceMultiplier += _discountIncreasePercent;
+        StatsModifier.PriceMultiplier += _discountIncreasePercent;
     }
 
     public DiscountChip(int currentLevel) : base(currentLevel)

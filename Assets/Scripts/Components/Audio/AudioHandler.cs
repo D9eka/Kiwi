@@ -6,6 +6,8 @@ namespace Components.Audio
     public class AudioHandler : MonoBehaviour
     {
         [SerializeField] private AudioSource _musicAudioSource;
+        
+        private const string MUSIC_VOLUME_KEY = "MusicVolume";
 
         public static AudioHandler Instance {  get; private set; }
 
@@ -26,7 +28,7 @@ namespace Components.Audio
 
         public void LoadSettings()
         {
-            _musicAudioSource.volume = PlayerPrefsController.GetMusicVolume();
+            _musicAudioSource.volume = PlayerPrefsController.GetFloat(MUSIC_VOLUME_KEY, 50f);
         }
 
         public void PlayMusic(AudioClip clip)

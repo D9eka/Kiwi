@@ -14,14 +14,13 @@ namespace Creatures.Player
     public class PlayerController : Creature
     {
         [Header("Checkers")] 
-        [SerializeField] protected LayerCheck _groundCheck;
+        [SerializeField] private LayerCheck _groundCheck;
         [SerializeField] private CheckCircleOverlap _interactionCheck;
 
         [Header("Jump")] 
-        [SerializeField] protected float _jumpForce;
+        [SerializeField] private float _jumpForce;
 
         [Header("Dash")]
-        [SerializeField] protected int _dashCount;
         [SerializeField] private float _dashForce;
         [SerializeField] private float _dashDrug;
         [SerializeField] private float _dashCooldown;
@@ -60,7 +59,7 @@ namespace Creatures.Player
 
             Active = true;
             _initialGravity = _rigidbody.gravityScale;
-            _dashCounter = _dashCount;
+            _dashCounter = StatsModifier.DashCount;
         }
 
         private void Start()
@@ -185,11 +184,9 @@ namespace Creatures.Player
             _rigidbody.gravityScale = _isOnLadder ? 0 : _initialGravity * GameManager.Instance.Gravity;
         }
 
-        public PlayerData SaveData()
+        public PlayerData GetPlayerData()
         {
-            var healthData = _health.SaveData();
-            return new PlayerData(SceneManager.GetActiveScene().name, transform.position, transform.localScale.x,
-                healthData.health, healthData.maxHealth, true);
+            return new PlayerData(SceneManager.GetActiveScene().name, transform.position, transform.localScale.x);
         }
 
         public override void UpdateSpriteDirection()
@@ -220,30 +217,27 @@ namespace Creatures.Player
     [System.Serializable]
     public struct PlayerData
     {
-        public string Location { get; private set; }
-        public Vector2? Position { get; private set; }
+        public string Section { get; private set; }
+        public Vector2 Position { get; private set; }
         public float Scale { get; private set; }
 
-        public float Health { get; private set; }
-        public float MaxHealth { get; private set; }
+        public const string PLAYER_SECTION_KEY = "PlayerSection";
+        public const string PLAYER_POSITION_KEY = "PlayerPosition";
+        public const string PLAYER_SCALE_KEY = "PlayerScale";
 
-        public bool FirstStart { get; private set; }
 
-        private const float DEFAULT_HEALTH = 100f;
-        private const float DEFAULT_MAX_HEALTH = 100f;
-
-        public PlayerData(string location, Vector2 position, float scale = 1f,
-            float health = DEFAULT_HEALTH, float maxHealth = DEFAULT_MAX_HEALTH,
-            bool firstStart = true)
+        public PlayerData(string section, Vector2 position, float scale = 1f)
         {
-            Location = location;
+            Section = section;
             Position = position;
             Scale = scale;
+        }
 
-            Health = health;
-            MaxHealth = maxHealth;
-
-            FirstStart = firstStart;
+        public void Save()
+        {
+            PlayerPrefsController.SetString(PLAYER_SECTION_KEY, Section);
+            PlayerPrefsController.SetVector2(PLAYER_POSITION_KEY, Position);
+            PlayerPrefsController.SetFloat(PLAYER_SCALE_KEY, Scale);
         }
     }
 }

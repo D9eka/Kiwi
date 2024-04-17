@@ -73,5 +73,19 @@ namespace Components.Oxygen
         {
             ModifyOxygen(_maxOxygen * changeValuePercent);
         }
+
+        public void ChangeOxygenStats(float addingValue)
+        {
+            _maxOxygen += addingValue;
+            if (addingValue > 0)
+            {
+                _oxygen += addingValue;
+            }
+            OnValueChange?.Invoke(this, new OnValueChangeEventArgs
+            {
+                value = _oxygen,
+                maxValue = _maxOxygen,
+            });
+        }
     }
 }

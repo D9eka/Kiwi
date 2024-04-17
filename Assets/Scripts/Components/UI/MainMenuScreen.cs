@@ -15,7 +15,7 @@ namespace Components.UI
             if (_backgroundMusic != null)
                 AudioHandler.Instance.PlayMusic(_backgroundMusic);
 
-            _contunueButton.SetActive(PlayerPrefsController.HaveData());
+            //_contunueButton.SetActive(PlayerPrefsController.HaveData());
         }
     }
 }
