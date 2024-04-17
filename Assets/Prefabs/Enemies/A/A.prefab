@@ -240,8 +240,8 @@ GameObject:
   - component: {fileID: 798836615464244427}
   - component: {fileID: 4701046146067665364}
   - component: {fileID: 8911673926796229105}
-  - component: {fileID: 2450801422020079186}
-  - component: {fileID: 1203783650286141964}
+  - component: {fileID: 240094715960317908}
+  - component: {fileID: 416665197555077005}
   m_Layer: 10
   m_Name: A
   m_TagString: Untagged
@@ -436,9 +436,9 @@ MonoBehaviour:
   _initialState: 1
   _vision: {fileID: 848398845337105280}
   _attacks:
-  - {fileID: 2450801422020079186}
-  - {fileID: 1203783650286141964}
---- !u!114 &2450801422020079186
+  - {fileID: 240094715960317908}
+  - {fileID: 416665197555077005}
+--- !u!114 &240094715960317908
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -447,16 +447,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 6159875691604184327}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b0ce1258d0f5a84db72d82324d94a10, type: 3}
+  m_Script: {fileID: 11500000, guid: a56b578873a860048b4d0134314ea5bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _animationTrigger: attack1
   _damage: 2
-  _cooldownTime: 3
+  _cooldownTime: 4
   _attackType: 1
   _distance: {fileID: 6751777954743933408}
   _initialPosition: {x: 0, y: 0}
---- !u!114 &1203783650286141964
+--- !u!114 &416665197555077005
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -465,7 +465,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6159875691604184327}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b0ce1258d0f5a84db72d82324d94a10, type: 3}
+  m_Script: {fileID: 11500000, guid: a56b578873a860048b4d0134314ea5bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _animationTrigger: attack2

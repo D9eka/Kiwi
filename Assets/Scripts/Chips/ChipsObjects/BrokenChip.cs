@@ -12,12 +12,12 @@ public class BrokenChip : PassiveChip
 
     public override void Activate()
     {
-        StatsModifier.brokenChipsCount += 1;
+        StatsModifier.BrokenChipsCount += 1;
     }
 
     public override void Deactivate()
     {
-        StatsModifier.brokenChipsCount -= 1;
+        StatsModifier.BrokenChipsCount -= 1;
     }
 
     public BrokenChip(int currentLevel) : base(currentLevel)

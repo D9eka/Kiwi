@@ -18,14 +18,14 @@ public class RageChip : PassiveChip
 
     public override void Activate()
     {
-        StatsModifier.damageMultiplier += _damageIncreasePercent;
-        StatsModifier.takenDamageMultiplier += _takenDamageIncreasePercent;
+        StatsModifier.DamageMultiplier += _damageIncreasePercent;
+        StatsModifier.TakenDamageMultiplier += _takenDamageIncreasePercent;
     }
 
     public override void Deactivate()
     {
-        StatsModifier.damageMultiplier -= _damageIncreasePercent;
-        StatsModifier.takenDamageMultiplier -= _takenDamageIncreasePercent;
+        StatsModifier.DamageMultiplier -= _damageIncreasePercent;
+        StatsModifier.TakenDamageMultiplier -= _takenDamageIncreasePercent;
     }
 
     public RageChip(int currentLevel) : base(currentLevel)

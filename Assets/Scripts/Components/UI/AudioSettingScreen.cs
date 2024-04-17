@@ -7,15 +7,17 @@ public class AudioSettingScreen : MonoBehaviour
 {
     [SerializeField] private Slider _volumeSlider;
 
+    private const string MUSIC_VOLUME_KEY = "MusicVolume";
+
     private void Start()
     {
-        _volumeSlider.value = PlayerPrefsController.GetMusicVolume();
-        _volumeSlider.onValueChanged.AddListener(value => SaveVolumeValue(_volumeSlider.value));
+        _volumeSlider.value = PlayerPrefsController.GetFloat(MUSIC_VOLUME_KEY);
+        _volumeSlider.onValueChanged.AddListener(value => Save(_volumeSlider.value));
     }
 
-    private void SaveVolumeValue(float value)
+    private void Save(float value)
     {
-        PlayerPrefsController.SetMusicVolume(value);
+        PlayerPrefsController.SetFloat(MUSIC_VOLUME_KEY, value);
         AudioHandler.Instance.LoadSettings();
     }
 }

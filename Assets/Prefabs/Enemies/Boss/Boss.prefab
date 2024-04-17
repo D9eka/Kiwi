@@ -328,11 +328,11 @@ GameObject:
   - component: {fileID: 6881582310669888389}
   - component: {fileID: 4038560270693553611}
   - component: {fileID: 2285983913233557808}
-  - component: {fileID: 13359389691671560}
-  - component: {fileID: 1766445336412210213}
-  - component: {fileID: 6672192524090572944}
-  - component: {fileID: 8254170256445184389}
-  - component: {fileID: 4330373501941252050}
+  - component: {fileID: 4176079526490347365}
+  - component: {fileID: 5075434065909678834}
+  - component: {fileID: 8775793162275608321}
+  - component: {fileID: 3560969215179325295}
+  - component: {fileID: 5776218534154408060}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -474,7 +474,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 7360026704570269131}
-  _objectToSpawn: {fileID: 223535218090536803, guid: 028f6d403b5201944a773a764d76e714, type: 3}
+  _objectToSpawn: {fileID: 571944651108015522, guid: a2fbdf33fcfdc6144b701e7ebb960469, type: 3}
   _minItems: 25
   _maxItems: 25
   _initialVelocityXMin: 1
@@ -499,12 +499,12 @@ MonoBehaviour:
   _initialState: 1
   _vision: {fileID: 1608022521146417338}
   _attacks:
-  - {fileID: 13359389691671560}
-  - {fileID: 1766445336412210213}
-  - {fileID: 6672192524090572944}
-  - {fileID: 8254170256445184389}
-  - {fileID: 4330373501941252050}
---- !u!114 &13359389691671560
+  - {fileID: 4176079526490347365}
+  - {fileID: 5075434065909678834}
+  - {fileID: 8775793162275608321}
+  - {fileID: 3560969215179325295}
+  - {fileID: 5776218534154408060}
+--- !u!114 &4176079526490347365
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -513,7 +513,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3255570455616325381}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b0ce1258d0f5a84db72d82324d94a10, type: 3}
+  m_Script: {fileID: 11500000, guid: a56b578873a860048b4d0134314ea5bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _animationTrigger: attack1
@@ -522,7 +522,7 @@ MonoBehaviour:
   _attackType: 1
   _distance: {fileID: 4013412004452287825}
   _initialPosition: {x: 0, y: 0}
---- !u!114 &1766445336412210213
+--- !u!114 &5075434065909678834
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -531,16 +531,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 3255570455616325381}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b0ce1258d0f5a84db72d82324d94a10, type: 3}
+  m_Script: {fileID: 11500000, guid: a56b578873a860048b4d0134314ea5bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _animationTrigger: attack2
   _damage: 0
-  _cooldownTime: 15
+  _cooldownTime: 5
   _attackType: 0
   _distance: {fileID: 0}
   _initialPosition: {x: 0, y: 0}
---- !u!114 &6672192524090572944
+--- !u!114 &8775793162275608321
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -549,16 +549,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 3255570455616325381}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b0ce1258d0f5a84db72d82324d94a10, type: 3}
+  m_Script: {fileID: 11500000, guid: a56b578873a860048b4d0134314ea5bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _animationTrigger: attack3
-  _damage: 3
-  _cooldownTime: 5
+  _damage: 5
+  _cooldownTime: 3
   _attackType: 1
   _distance: {fileID: 1819629216810492164}
   _initialPosition: {x: 0, y: 0}
---- !u!114 &8254170256445184389
+--- !u!114 &3560969215179325295
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -567,16 +567,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 3255570455616325381}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b0ce1258d0f5a84db72d82324d94a10, type: 3}
+  m_Script: {fileID: 11500000, guid: a56b578873a860048b4d0134314ea5bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _animationTrigger: attack4
   _damage: 0
-  _cooldownTime: 15
+  _cooldownTime: 10
   _attackType: 0
   _distance: {fileID: 0}
   _initialPosition: {x: 0, y: 0}
---- !u!114 &4330373501941252050
+--- !u!114 &5776218534154408060
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -585,12 +585,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3255570455616325381}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b0ce1258d0f5a84db72d82324d94a10, type: 3}
+  m_Script: {fileID: 11500000, guid: a56b578873a860048b4d0134314ea5bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _animationTrigger: attack5
   _damage: 0
-  _cooldownTime: 15
+  _cooldownTime: 10
   _attackType: 0
   _distance: {fileID: 0}
   _initialPosition: {x: 0, y: 0}

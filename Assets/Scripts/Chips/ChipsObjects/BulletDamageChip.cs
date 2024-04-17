@@ -15,12 +15,12 @@ public class BulletDamageChip : PassiveChip
 
     public override void Activate()
     {
-        StatsModifier.bulletDamageAdder += _bulletDamageIncrease;
+        StatsModifier.BulletDamageAdder += _bulletDamageIncrease;
     }
 
     public override void Deactivate()
     {
-        StatsModifier.bulletDamageAdder -= _bulletDamageIncrease;
+        StatsModifier.BulletDamageAdder -= _bulletDamageIncrease;
     }
 
     public BulletDamageChip(int currentLevel) : base(currentLevel)

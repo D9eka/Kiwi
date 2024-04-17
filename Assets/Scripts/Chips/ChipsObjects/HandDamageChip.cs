@@ -16,12 +16,12 @@ public class HandDamageChip : PassiveChip
 
     public override void Activate()
     {
-        StatsModifier.handDamageAdder += _handDamageIncrease;
+        StatsModifier.HandDamageAdder += _handDamageIncrease;
     }
 
     public override void Deactivate()
     {
-        StatsModifier.handDamageAdder -= _handDamageIncrease;
+        StatsModifier.HandDamageAdder -= _handDamageIncrease;
     }
 
     public HandDamageChip(int currentLevel) : base(currentLevel)

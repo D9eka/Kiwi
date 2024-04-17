@@ -15,12 +15,12 @@ public class SpeedChip : PassiveChip
 
     public override void Activate()
     {
-        StatsModifier.speedMultiplier += _speedIncreasePercent;
+        StatsModifier.SpeedMultiplier += _speedIncreasePercent;
     }
 
     public override void Deactivate()
     {
-        StatsModifier.speedMultiplier -= _speedIncreasePercent;
+        StatsModifier.SpeedMultiplier -= _speedIncreasePercent;
     }
 
     public SpeedChip(int currentLevel) : base(currentLevel)
