@@ -15,7 +15,6 @@ public class ChipSO : ScriptableObject
     public Sprite Sprite => _sprite;
     public string Name => _name;
     public string Description => _descriptions[ChipCreator.Create(this).CurrentLevel - 1];
-
     public ChipType ChipType => _chipType;
     // public Chip Chip => _chip;
 }

@@ -1,51 +1,42 @@
-using System;
-using System.Collections;
+using Components.UI.Cards;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.UIElements;
-using Button = UnityEngine.UI.Button;
 
-public class ChipRewardUI : MonoBehaviour
+namespace Components.UI.Screens
 {
-    [SerializeField] private ChipBlockUI _chipBlockFirst;
-    [SerializeField] private ChipBlockUI _chipBlockSecond;
-    [SerializeField] private ChipBlockUI _chipBlockThird;
-    public static ChipRewardUI Instance { get; private set; }
-
-    private void Awake()
+    public class ChipRewardUI : Screen
     {
-        Instance = this;
-    }
+        [SerializeField] private List<CardUI> _cards;
 
-    private void Start()
-    {
-        // ShowReward();
-    }
+        private List<ChipSO> _chips = new();
 
-    private void GenerateChips()
-    {
-        var chips = Randomiser.GetRandomElements(ChipManager.Instance.PossibleChips, 3);
-        _chipBlockFirst.SetChip(chips[0]);
-        _chipBlockSecond.SetChip(chips[1]);
-        _chipBlockThird.SetChip(chips[2]);
-    }
+        public static ChipRewardUI Instance { get; private set; }
+
+        private void Awake()
+        {
+            Instance = this;
+        }
+
+        private void GenerateChips()
+        {
+            _chips = Randomiser.GetRandomElements(ChipManager.Instance.PossibleChips, _cards.Count);
+            for (int i = 0; i < _cards.Count; i++) 
+            {
+                _cards[i].Fill(_chips[i]);
+            }
+        }
 
 
-    public void Obtain(ChipBlockUI chipBlock)
-    {
-        ChipManager.Instance.ObtainChip(chipBlock.ChipSO);
-        Close();
-    }
+        public void Obtain(CardUI card)
+        {
+            ChipManager.Instance.ObtainChip(_chips[_cards.IndexOf(card)]);
+            UIController.Instance.PopScreen();
+        }
 
-    private void Close()
-    {
-        UIManager.Instance.TryCloseLastWindow();
-    }
-
-    public void ShowReward()
-    {
-        GenerateChips();
-        UIManager.Instance.OpenNewWindow(GetComponent<WindowUI>());
+        public void ShowReward()
+        {
+            GenerateChips();
+            UIController.Instance.PushScreen(this);
+        }
     }
 }

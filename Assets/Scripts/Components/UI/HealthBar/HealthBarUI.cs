@@ -24,7 +24,8 @@ public class HealthBarUI : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (_isStatic) return;
+        if (_isStatic)
+            return;
         transform.localScale = _healthComponent.transform.localScale;
     }
 
@@ -32,7 +33,8 @@ public class HealthBarUI : MonoBehaviour
     {
         var healthPercent = e.value / e.maxValue;
         SetFillerValue(healthPercent);
-        if (_textMeshProUGUI is null) return;
+        if (_textMeshProUGUI is null) 
+            return;
         SetText(e.value, e.maxValue);
     }
 

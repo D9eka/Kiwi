@@ -12,8 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 928ca6e53367faa4aa37c6b43599ba70, type: 3}
   m_Name: GrenageSO
   m_EditorClassIdentifier: 
-  _sprite: {fileID: 21300000, guid: 99cdd327ebc48eb46bfc3e2f5bc12964, type: 3}
-  _weaponPrefab: {fileID: 8650316225956248704, guid: b17d12d3d26b8494aaadb2e8974fc82b, type: 3}
   _name: "\u0413\u0440\u0430\u043D\u0430\u0442\u0430"
-  _description: "\u041E\u043F\u0438\u0441\u0430\u043D\u0438\u0435 \u0433\u0440\u0430\u043D\u0430\u0442\u044B"
-  _isConsumable: 1
+  _description: 
+  _icon: {fileID: 21300000, guid: 0e9d531a558d4f240839bc9e1db04830, type: 3}
+  _price: 15
+  _attackDelay: 3
+  _damageTypeUI: "\u0422\u044F\u0436\u0435\u043B\u044B\u0439"
+  _damageType: 0
+  _damage: 5
+  _minDamage: 0
+  _maxDamage: 0
+  _type: 2
+  _ammoCapacity: 0
+  _bulletSpeed: 0
+  _bulletTTLSeconds: 0
+  _maxAmount: 5
+  _thrownDelay: 1
+  _destroyType: 0
+  _TTLSeconds: 0

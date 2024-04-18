@@ -15,7 +15,7 @@ namespace Weapons
 
         public override void Attack()
         {
-            if (_timeBetweenAttacks < _attackDelay)
+            if (_timeBetweenAttacks < _data.AttackDelay)
                 return;
 
             _timeBetweenAttacks = 0;

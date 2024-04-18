@@ -42,15 +42,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Pause",
-                    "type": "Button",
-                    "id": "ba94064e-b71f-46d2-85bc-2b1b03b24e90",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Attack",
                     "type": "Value",
                     "id": "21501708-1770-4307-ba69-f84ec92f38eb",
@@ -69,45 +60,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "UIClose",
-                    "type": "Button",
-                    "id": "0312e7c5-4ecb-4344-a7e3-a8c719116cf7",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "SwitchWeapon",
-                    "type": "Button",
-                    "id": "907c92ea-24df-4499-b32b-8d59101ade7e",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Spacebar",
                     "type": "Button",
                     "id": "68fb1647-8fc2-4ce0-9aec-45e334d76f35",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Enter",
-                    "type": "Button",
-                    "id": "3e9059f1-cb31-4b65-aa62-897027e96a46",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "OpenInventory",
-                    "type": "Button",
-                    "id": "bb78e5e0-c48a-439c-bb4c-d8950e5956a8",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -183,17 +138,6 @@
                 },
                 {
                     "name": "",
-                    "id": "1a132818-05db-453c-80ef-85106fa7ba9e",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Pause",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "c4445185-ea07-45ad-8956-2de069e0c50f",
                     "path": "<Mouse>/leftButton",
                     "interactions": "Press",
@@ -216,45 +160,12 @@
                 },
                 {
                     "name": "",
-                    "id": "7942c8e0-f1ff-45da-8ff3-9773969fbe62",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "UIClose",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "ca70cab6-46b3-49ec-8cba-a401b9ff6523",
-                    "path": "<Keyboard>/q",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "SwitchWeapon",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "ede95165-6d6b-4a8f-a219-7694154ef9af",
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Spacebar",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "548abb3d-2de2-4166-bc95-392e3fa65dff",
-                    "path": "<Keyboard>/enter",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Enter",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -279,10 +190,107 @@
                     "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "UI",
+            "id": "a0184f35-2001-4b7c-a525-c92ed324544e",
+            "actions": [
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "06885ad4-d205-426b-83de-df7955794c65",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UIClose",
+                    "type": "Button",
+                    "id": "b31d5bbd-4b15-48b1-93a4-fcc045882e29",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SwitchWeapon",
+                    "type": "Button",
+                    "id": "3f818b20-eba0-4b37-b1dd-3982200e0107",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Enter",
+                    "type": "Button",
+                    "id": "d418b037-8229-4615-bc96-0c2e22e4813f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "OpenInventory",
+                    "type": "Button",
+                    "id": "b0d632e2-b2f5-49e0-8e21-7e1512d91c6a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a80f3c1d-67b8-47a4-846f-13bb84bbc9b1",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "ba652142-1ac3-44ee-ab0f-14c26a294306",
+                    "id": "42ffa583-3e47-46ce-8e5f-ef91272b748e",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "UIClose",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ecb93327-7d21-436e-8fe5-be0dc3b3f93c",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "SwitchWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e3947c95-4cfb-4ec6-8c62-2104b94ed2a6",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Enter",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "efeb2655-b11c-434f-a1c1-3c3a68d284a9",
                     "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
