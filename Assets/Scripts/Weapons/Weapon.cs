@@ -14,6 +14,7 @@ namespace Weapons
 
         [SerializeField] protected float _minDamage;
         [SerializeField] protected float _maxDamage;
+        [SerializeField] protected AudioClip _sound;
 
         public float AttackSpeed => 1 / _attackDelay;
 

@@ -34,6 +34,7 @@ namespace Weapons
             _timeBetweenAttacks = 0;
             ammoCount--;
             Debug.Log($"{ammoCount} / {_ammoCapacity}");
+            SoundManager.Instance.PlaySound(_sound);
         }
 
         public void Reload()

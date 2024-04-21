@@ -12,6 +12,7 @@ public class SectionBlockUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _sectionTypeName;
     [SerializeField] private Image _image;
     private SectionTypeSO _sectionType;
+    private SectionSO _section;
 
     public void SetInfo(SectionTypeSO sectionTypeSO)
     {
@@ -19,9 +20,16 @@ public class SectionBlockUI : MonoBehaviour
         _sectionTypeName.text = sectionTypeSO.Name;
         _image.sprite = sectionTypeSO.Image;
     }
+    public void SetInfo(SectionSO sectionSO)
+    {
+        _section = sectionSO;
+        _sectionType = sectionSO.SectionTypeSO;
+        _sectionTypeName.text =  _sectionType.Name;
+        _image.sprite = _sectionType.Image;
+    }
 
     public void MakeChoice()
     {
-        SectionManager.Instance.EnterNextNewRandomSection(_sectionType);
+        SectionManager.Instance.EnterNextNewSection(_section);
     }
 }

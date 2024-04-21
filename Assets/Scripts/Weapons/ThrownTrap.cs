@@ -14,6 +14,7 @@ namespace Weapons
         [SerializeField] private float _ttl;
 
         protected const string ATTACK_KEY = "attack";
+        [SerializeField] protected AudioClip _sound;
 
         public enum TrapDestroyType
         {
@@ -62,6 +63,7 @@ namespace Weapons
             {
                 collider.GetComponentInParent<HealthComponent>().ModifyHealth(-damage);
             }
+            SoundManager.Instance.PlaySound(_sound);
         }
 
         private void DestroyIt()

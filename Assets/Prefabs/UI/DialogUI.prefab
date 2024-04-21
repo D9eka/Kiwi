@@ -636,6 +636,7 @@ GameObject:
   - component: {fileID: 4582504787252223329}
   - component: {fileID: 2568452331766323203}
   - component: {fileID: 7246087522624669392}
+  - component: {fileID: 8732652976663230026}
   m_Layer: 5
   m_Name: DialogUI
   m_TagString: Untagged
@@ -741,7 +742,51 @@ MonoBehaviour:
   _container: {fileID: 6413625072963611046}
   _textSpeed: 0.05
   _content: {fileID: 8451987775748949027}
-  _speakerName: {fileID: 0}
+  _speakerName: {fileID: 884289662379668374}
+--- !u!114 &8732652976663230026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4803617652300660691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afb571693ae6d2c4691341563a206f59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _content: {fileID: 6413625072963611046}
+  _spacebarAction:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7246087522624669392}
+        m_TargetAssemblyTypeName: Components.UI.Dialogs.DialogBoxController, Assembly-CSharp
+        m_MethodName: SkipAll
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _enterAction:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7246087522624669392}
+        m_TargetAssemblyTypeName: Components.UI.Dialogs.DialogBoxController, Assembly-CSharp
+        m_MethodName: OnContinue
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _isClosable: 0
 --- !u!1 &6413625072963611046
 GameObject:
   m_ObjectHideFlags: 0

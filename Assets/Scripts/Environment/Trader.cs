@@ -16,7 +16,7 @@ public class Trader : MonoBehaviour
 
     public void TryShowStore()
     {
-        if (!_haveProduct) return;
+        // if (!_haveProduct) return;
         StoreUI.Instance.Open();
     }
 

@@ -140,4 +140,9 @@ public class WeaponController : MonoBehaviour
     {
         CurrentWeapon.gameObject.SetActive(true);
     }
+
+    public void ForceEquipWeapon()
+    {
+        
+    }
 }

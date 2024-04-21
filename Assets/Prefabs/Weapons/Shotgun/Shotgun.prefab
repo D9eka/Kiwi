@@ -103,6 +103,7 @@ MonoBehaviour:
   _damage: 2
   _minDamage: 2
   _maxDamage: 5
+  _sound: {fileID: 8300000, guid: 3646b5fbfbfdef741b1506ed267d067d, type: 3}
   _bullet: {fileID: 2968767307136606044, guid: 9772ef09c33976f44b680a91f0688560, type: 3}
   _shotPoint: {fileID: 5473191581541652279}
   _speed: 6

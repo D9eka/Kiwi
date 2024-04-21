@@ -532,6 +532,7 @@ GameObject:
   - component: {fileID: 606165322367763895}
   - component: {fileID: 3665773413634274181}
   - component: {fileID: 2761110421658275724}
+  - component: {fileID: 4159717602822900395}
   m_Layer: 5
   m_Name: WeaponBlockUI (1)
   m_TagString: Untagged
@@ -637,6 +638,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4159717602822900395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707394527788408455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e195bc57e2a71ee42924247fb2e3a6ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1860494807760934274
 GameObject:
   m_ObjectHideFlags: 0
@@ -1351,6 +1364,7 @@ GameObject:
   - component: {fileID: 3579770000708991018}
   - component: {fileID: 7504104659132014652}
   - component: {fileID: 772178588120639361}
+  - component: {fileID: 3749006718817722735}
   m_Layer: 5
   m_Name: WeaponBlockUI
   m_TagString: Untagged
@@ -1456,6 +1470,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3749006718817722735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2739734567845652258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e195bc57e2a71ee42924247fb2e3a6ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2777799522764286560
 GameObject:
   m_ObjectHideFlags: 0
@@ -3158,6 +3184,7 @@ MonoBehaviour:
   _enterAction:
     m_PersistentCalls:
       m_Calls: []
+  _isClosable: 0
 --- !u!1 &4649008762812181659
 GameObject:
   m_ObjectHideFlags: 0

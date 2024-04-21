@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04e1c023e1d86334c9ba55787eccb9c1, type: 3}
   m_Name: BossSectionTypeSO
   m_EditorClassIdentifier: 
-  _sectionType: 6
-  _name: Boss Section
+  _sectionType: 7
+  _name: "\u0411\u043E\u0441\u0441"
   _image: {fileID: 21300000, guid: daf0cc541bcab8c4abe0fc456cc705e9, type: 3}

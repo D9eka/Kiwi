@@ -13,6 +13,7 @@ namespace Weapons.Editor
 
         private SerializedProperty _minDamageProperty;
         private SerializedProperty _maxDamageProperty;
+        private SerializedProperty _soundProperty;
 
         private void OnEnable()
         {
@@ -20,15 +21,17 @@ namespace Weapons.Editor
             _modeProperty = serializedObject.FindProperty("_mode");
 
             _damageProperty = serializedObject.FindProperty("_damage");
-            
+
             _minDamageProperty = serializedObject.FindProperty("_minDamage");
             _maxDamageProperty = serializedObject.FindProperty("_maxDamage");
+            _soundProperty = serializedObject.FindProperty("_sound");
         }
 
         public override void OnInspectorGUI()
         {
             EditorGUILayout.PropertyField(_attackDelayProperty);
             EditorGUILayout.PropertyField(_modeProperty);
+            EditorGUILayout.PropertyField(_soundProperty);
             WeaponDamageType mode = (WeaponDamageType)_modeProperty.intValue;
             switch (mode)
             {
@@ -42,6 +45,7 @@ namespace Weapons.Editor
                 default:
                     break;
             }
+
             serializedObject.ApplyModifiedProperties();
         }
     }

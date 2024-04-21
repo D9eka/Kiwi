@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Components.Health;
+using Components.Interactables;
 using Creatures.Player;
 using UnityEngine;
 
@@ -17,6 +18,9 @@ public class MedicalStation : MonoBehaviour
         {
             healthComponent.ModifyHealthPercent(restoringHealthPercent);
         }
+
         _usesCount -= 1;
+        if (_usesCount == 0) GetComponent<InteractableComponent>().Activate(false);
+        SoundManager.Instance.PlaySound(SoundManager.Instance._rechargeHealthSound);
     }
 }

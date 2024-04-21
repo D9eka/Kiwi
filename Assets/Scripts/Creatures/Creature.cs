@@ -37,7 +37,7 @@ namespace Creatures
 
         protected virtual void Move()
         {
-            _rigidbody.velocity = _direction * _speed;
+            _rigidbody.velocity = _direction * _speed + Vector2.down;
         }
 
         protected virtual void UpdateAnimations()

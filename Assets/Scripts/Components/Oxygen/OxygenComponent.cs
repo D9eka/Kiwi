@@ -26,6 +26,7 @@ namespace Components.Oxygen
         private void Start()
         {
             Restore();
+            if (!CurrentSectionManager.Instance.IsOxygenWasting) return;
             StartCoroutine(Decrease());
         }
 

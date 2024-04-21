@@ -20,6 +20,8 @@ namespace Weapons.Editor
         private SerializedProperty _speedProperty;
         private SerializedProperty _ttlProperty;
         private SerializedProperty _ammoCapacityProperty;
+        private SerializedProperty _soundProperty;
+        
 
         private void OnEnable()
         {
@@ -37,13 +39,14 @@ namespace Weapons.Editor
             _speedProperty = serializedObject.FindProperty("_speed");
             _ttlProperty = serializedObject.FindProperty("_ttl");
             _ammoCapacityProperty = serializedObject.FindProperty("_ammoCapacity");
+            _soundProperty = serializedObject.FindProperty("_sound");
         }
 
         public override void OnInspectorGUI()
         {
             EditorGUILayout.PropertyField(_attackDelayProperty);
             EditorGUILayout.PropertyField(_modeProperty);
-
+            EditorGUILayout.PropertyField(_soundProperty);
             WeaponDamageType mode = (WeaponDamageType)_modeProperty.intValue;
             switch (mode)
             {

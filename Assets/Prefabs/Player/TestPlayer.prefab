@@ -482,7 +482,7 @@ MonoBehaviour:
   _dashDrug: 5
   _dashCooldown: 3
   _dashAttack: {fileID: 1838109661711516289}
-  _activeWeapon: {fileID: 63200041990724651}
+  _activeWeapon: {fileID: 887800629664495169}
 --- !u!114 &8128811423238263547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -684,6 +684,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: a0a1e261-6dad-4a49-a9e1-2a2301464a39
     m_ActionName: Player/Dash[/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8128811423238263547}
+        m_TargetAssemblyTypeName: Creatures.Player.PlayerInputReader, Assembly-CSharp
+        m_MethodName: OnPlayerOpenInventory
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: bb78e5e0-c48a-439c-bb4c-d8950e5956a8
+    m_ActionName: Player/OpenInventory[/Keyboard/tab]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -727,7 +743,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weaponHandler: {fileID: 7420506256797602534}
-  _firstWeapon: {fileID: 0}
+  _firstWeapon: {fileID: 887800629664495169}
   _secondWeapon: {fileID: 0}
   _trap: {fileID: 63200041990724651}
 --- !u!114 &4911966356279771189
@@ -877,8 +893,82 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 905434084146398554}
+  - {fileID: 6909344921363885965}
   m_Father: {fileID: 6781221972055980843}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &5919660635142567630
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7420506256797602534}
+    m_Modifications:
+    - target: {fileID: 991978714659166531, guid: 30fdd392a78ec4f499c7e1c8c2e6b4cf, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 991978714659166531, guid: 30fdd392a78ec4f499c7e1c8c2e6b4cf, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 991978714659166531, guid: 30fdd392a78ec4f499c7e1c8c2e6b4cf, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 991978714659166531, guid: 30fdd392a78ec4f499c7e1c8c2e6b4cf, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 991978714659166531, guid: 30fdd392a78ec4f499c7e1c8c2e6b4cf, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 991978714659166531, guid: 30fdd392a78ec4f499c7e1c8c2e6b4cf, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 991978714659166531, guid: 30fdd392a78ec4f499c7e1c8c2e6b4cf, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 991978714659166531, guid: 30fdd392a78ec4f499c7e1c8c2e6b4cf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 991978714659166531, guid: 30fdd392a78ec4f499c7e1c8c2e6b4cf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 991978714659166531, guid: 30fdd392a78ec4f499c7e1c8c2e6b4cf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6817732230846011340, guid: 30fdd392a78ec4f499c7e1c8c2e6b4cf, type: 3}
+      propertyPath: m_Name
+      value: Gun
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 30fdd392a78ec4f499c7e1c8c2e6b4cf, type: 3}
+--- !u!114 &887800629664495169 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6806278258998116495, guid: 30fdd392a78ec4f499c7e1c8c2e6b4cf, type: 3}
+  m_PrefabInstance: {fileID: 5919660635142567630}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7f35b21b33f69547997528ef34374d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &6909344921363885965 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 991978714659166531, guid: 30fdd392a78ec4f499c7e1c8c2e6b4cf, type: 3}
+  m_PrefabInstance: {fileID: 5919660635142567630}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8820813364921973410
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -890,6 +980,10 @@ PrefabInstance:
     - target: {fileID: 1818333890954890389, guid: ad8a6779776f41849a77b0f015a18388, type: 3}
       propertyPath: m_Name
       value: LightningTrap
+      objectReference: {fileID: 0}
+    - target: {fileID: 1818333890954890389, guid: ad8a6779776f41849a77b0f015a18388, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8573002687772295160, guid: ad8a6779776f41849a77b0f015a18388, type: 3}
       propertyPath: m_LocalPosition.x

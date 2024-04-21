@@ -32,7 +32,7 @@ public class EnemySpawner : MonoBehaviour
         TrySetAutoValues();
         TryFixSeparator();
         SetEnemyPoints();
-        if (_sectionType is SectionType.Battle or SectionType.Engineer)
+        if (_sectionType is SectionType.Base or SectionType.Engineer)
         {
             SpawnEnemies();
         }
@@ -48,6 +48,7 @@ public class EnemySpawner : MonoBehaviour
     public void SpawnEnemies()
     {
         if (_currentWave > _wavesCount + 1) return;
+        SoundManager.Instance.PlaySound(SoundManager.Instance._startWaveSound);
         var currentEnemyPoints = (int)Math.Round(_enemyPoints * _separator[_currentWave]);
         while (currentEnemyPoints > 0)
         {

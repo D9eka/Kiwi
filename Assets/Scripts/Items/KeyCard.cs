@@ -8,7 +8,7 @@ public class KeyCard : MonoBehaviour
 {
     private void Start()
     {
-        if (GameManager.Instance._wasKeyCardGenerated) gameObject.SetActive(false);
+        if (GameManager.Instance._wasKeyCardGenerated) Destroy(gameObject);
     }
 
     public void GetKeyCard()

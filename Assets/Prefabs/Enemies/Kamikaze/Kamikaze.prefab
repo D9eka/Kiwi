@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6104106614657039188}
   - component: {fileID: 8279269344601977830}
   - component: {fileID: 1855074008440694659}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -237,8 +237,7 @@ GameObject:
   - component: {fileID: 2935594888512506634}
   - component: {fileID: 194948738284104924}
   - component: {fileID: 8409666718545908501}
-  - component: {fileID: 6345191848795325135}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Kamikaze
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -321,7 +320,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 3525582270877764449}
-  _objectToSpawn: {fileID: 223535218090536803, guid: 028f6d403b5201944a773a764d76e714, type: 3}
+  _objectToSpawn: {fileID: 571944651108015522, guid: a2fbdf33fcfdc6144b701e7ebb960469, type: 3}
   _minItems: 2
   _maxItems: 3
   _initialVelocityXMin: 1
@@ -386,25 +385,7 @@ MonoBehaviour:
   _initialState: 0
   _vision: {fileID: 1836624000995399157}
   _attacks:
-  - {fileID: 6345191848795325135}
---- !u!114 &6345191848795325135
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4416099216000051809}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b0ce1258d0f5a84db72d82324d94a10, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animationTrigger: attack
-  _damage: 8
-  _cooldownTime: 1
-  _attackType: 1
-  _distance: {fileID: 1836624000995399157}
-  _initialPosition: {x: 0, y: 0}
+  - {fileID: 0}
 --- !u!1001 &8235533278932921797
 PrefabInstance:
   m_ObjectHideFlags: 0

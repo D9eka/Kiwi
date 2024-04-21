@@ -4482,6 +4482,7 @@ MonoBehaviour:
   _enterAction:
     m_PersistentCalls:
       m_Calls: []
+  _isClosable: 0
 --- !u!1 &7566838970820484105
 GameObject:
   m_ObjectHideFlags: 0

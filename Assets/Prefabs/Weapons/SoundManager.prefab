@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &470382241083765185
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5755067227570182370}
+  - component: {fileID: 7095860354267830226}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5755067227570182370
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 470382241083765185}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.9298356, y: -2.6124606, z: -1.0418055}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7095860354267830226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 470382241083765185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1742191663333ea4b9f7ff52bbc0dca4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ambienceMusic: {fileID: 8300000, guid: c4ce8612fa5072843b82ca599d3a599b, type: 3}
+  _bossMusic: {fileID: 8300000, guid: 31b2a3707ad1eea4ba4a220e4ce3a288, type: 3}
+  _levelMusic: {fileID: 8300000, guid: 2a3cdd20d6b21f24db99ddbf1b8e0db1, type: 3}
+  _mainHallMusic: {fileID: 8300000, guid: 7311f3b315bb2cb43928da39e0797778, type: 3}
+  _clickGameSound: {fileID: 8300000, guid: f6ad7e6e1aa81e74b97b9855ea9d6092, type: 3}
+  _clickUISound: {fileID: 8300000, guid: 0ec8b553273718e428af6de0bee002d2, type: 3}
+  _rechargeHealthSound: {fileID: 8300000, guid: 2ec4a33cbaa72fa469f69a866df82a53, type: 3}
+  _rechargeOxygenSound: {fileID: 8300000, guid: 96b957b86fe20b547b053eab27810ca6, type: 3}
+  _startWaveSound: {fileID: 8300000, guid: 0ce1169a937ba434b89f835bc65decc3, type: 3}
+  _takeDamageSound: {fileID: 8300000, guid: 60dbc7119e026624b905303bcd1c8b40, type: 3}
+  _upgradeWeaponSound: {fileID: 8300000, guid: 5d732c6459e35c141b3d74a3364b515b, type: 3}
+  _upgradeChipSound: {fileID: 8300000, guid: e5623b5f385239543b245749579159f2, type: 3}
+  _bgm: 0

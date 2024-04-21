@@ -13,6 +13,7 @@ namespace Weapons.Editor
 
         private SerializedProperty _modeProperty;
         private SerializedProperty _ttlProperty;
+        private SerializedProperty _soundProperty;
 
         private void OnEnable()
         {
@@ -20,6 +21,7 @@ namespace Weapons.Editor
 
             _modeProperty = serializedObject.FindProperty("_mode");
             _ttlProperty = serializedObject.FindProperty("_ttl");
+            _soundProperty = serializedObject.FindProperty("_sound");
         }
 
         public override void OnInspectorGUI()
@@ -27,7 +29,7 @@ namespace Weapons.Editor
             EditorGUILayout.PropertyField(_attackRangeProperty);
 
             EditorGUILayout.PropertyField(_modeProperty);
-
+            EditorGUILayout.PropertyField(_soundProperty);
             TrapDestroyType mode = (TrapDestroyType)_modeProperty.intValue;
             switch (mode)
             {

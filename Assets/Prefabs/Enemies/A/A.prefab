@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 6234582902807537815}
   - component: {fileID: 6610664640545286151}
   - component: {fileID: 5157090810912696113}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -240,9 +240,7 @@ GameObject:
   - component: {fileID: 798836615464244427}
   - component: {fileID: 4701046146067665364}
   - component: {fileID: 8911673926796229105}
-  - component: {fileID: 2450801422020079186}
-  - component: {fileID: 1203783650286141964}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -411,7 +409,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 1987677056260318556}
-  _objectToSpawn: {fileID: 223535218090536803, guid: 028f6d403b5201944a773a764d76e714, type: 3}
+  _objectToSpawn: {fileID: 571944651108015522, guid: a2fbdf33fcfdc6144b701e7ebb960469, type: 3}
   _minItems: 3
   _maxItems: 4
   _initialVelocityXMin: 1
@@ -436,44 +434,8 @@ MonoBehaviour:
   _initialState: 1
   _vision: {fileID: 848398845337105280}
   _attacks:
-  - {fileID: 2450801422020079186}
-  - {fileID: 1203783650286141964}
---- !u!114 &2450801422020079186
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6159875691604184327}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b0ce1258d0f5a84db72d82324d94a10, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animationTrigger: attack1
-  _damage: 2
-  _cooldownTime: 3
-  _attackType: 1
-  _distance: {fileID: 6751777954743933408}
-  _initialPosition: {x: 0, y: 0}
---- !u!114 &1203783650286141964
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6159875691604184327}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b0ce1258d0f5a84db72d82324d94a10, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animationTrigger: attack2
-  _damage: 2
-  _cooldownTime: 4
-  _attackType: 0
-  _distance: {fileID: 0}
-  _initialPosition: {x: 0, y: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &6271914966453204056
 GameObject:
   m_ObjectHideFlags: 0

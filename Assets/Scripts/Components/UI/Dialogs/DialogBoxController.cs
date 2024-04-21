@@ -27,7 +27,7 @@ namespace Components.UI.Dialogs
         private Coroutine typingRoutine;
 
         private UnityEvent onFinishDialog;
-        public static DialogBoxController Instance { get; set; }
+        public static DialogBoxController Instance { get; private set; }
         private WindowUI _windowUI;
 
         private void Awake()
@@ -48,7 +48,7 @@ namespace Components.UI.Dialogs
                 return;
             }
 
-            UIManager.Instance.OpenNewWindow(_windowUI);
+            UIManager.Instance.OpenNewWindow(GetComponent<WindowUI>());
             // LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
 
             onStart?.Invoke();
@@ -99,7 +99,9 @@ namespace Components.UI.Dialogs
 
             var isDialogComplete = currentSentence >= data.Sentences.Length;
             if (isDialogComplete)
-                HideDialogBox();
+            {
+                StopDialog();
+            }
             else
 
             {
@@ -108,8 +110,9 @@ namespace Components.UI.Dialogs
             }
         }
 
-        private void HideDialogBox()
+        private void StopDialog()
         {
+            onFinishDialog?.Invoke();
             // _animator.SetBool(IS_OPEN_KEY, false);
             UIManager.Instance.TryCloseLastWindow();
         }

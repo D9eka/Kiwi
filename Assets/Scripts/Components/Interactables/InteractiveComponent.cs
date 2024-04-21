@@ -23,16 +23,16 @@ public class InteractiveComponent : MonoBehaviour
     private void TryInteract()
     {
         if (_interactableComponents.Count == 0) return;
-        _interactableComponents[^1].Interact();
+        _interactableComponents[^1].TryInteract();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.TryGetComponent(out InteractableComponent interactableComponent))
         {
-            if (_interactableComponents.Count > 0) interactableComponent.ShowHintUI(false);
+            if (_interactableComponents.Count > 0) interactableComponent.TryShowHintUI(false);
             _interactableComponents.Add(interactableComponent);
-            interactableComponent.ShowHintUI();
+            interactableComponent.TryShowHintUI();
         }
     }
 
@@ -41,7 +41,7 @@ public class InteractiveComponent : MonoBehaviour
         if (other.TryGetComponent(out InteractableComponent interactableComponent))
         {
             _interactableComponents.Remove(interactableComponent);
-            interactableComponent.ShowHintUI(false);
+            interactableComponent.TryShowHintUI(false);
         }
     }
 }

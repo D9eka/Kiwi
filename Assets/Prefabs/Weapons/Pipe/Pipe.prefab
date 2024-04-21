@@ -104,6 +104,7 @@ MonoBehaviour:
   _damage: 2
   _minDamage: 0
   _maxDamage: 0
+  _sound: {fileID: 8300000, guid: ea1cd1e8549e1344caf104f9186ac687, type: 3}
   _attackRange: {fileID: 4508427545515718180}
 --- !u!95 &8983486523670960742
 Animator:
