@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Components.UI.Dialogs;
+using Components.UI.Screens.Dialogs;
 using UnityEngine;
 using UnityEngine.Events;
 

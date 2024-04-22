@@ -1,41 +1,17 @@
 using System;
 using UnityEngine;
+using static Weapons.WeaponSO;
 using Random = UnityEngine.Random;
 
 namespace Weapons
 {
     public abstract class Weapon : MonoBehaviour
     {
-        public WeaponSO WeaponSO { get; set; }
-        [SerializeField] protected float _attackDelay;
-        [SerializeField] protected WeaponDamageType _mode;
+        [SerializeField] protected WeaponSO _data;
 
-        [SerializeField] private float _damage;
-
-        [SerializeField] protected float _minDamage;
-        [SerializeField] protected float _maxDamage;
-
-        public float AttackSpeed => 1 / _attackDelay;
-
-        public string DamageInfo
-        {
-            get
-            {
-                return _mode switch
-                {
-                    WeaponDamageType.Static => _damage.ToString(),
-                    WeaponDamageType.Random => _minDamage + "-" + _maxDamage,
-                    _ => "-"
-                };
-            }
-        }
-
-
-        public enum WeaponDamageType
-        {
-            Static,
-            Random
-        }
+        public WeaponSO Data => _data;
+        public string Label { get; protected set; }
+        public EventHandler OnChangeLabel;
 
         protected Animator _animator;
 
@@ -52,17 +28,12 @@ namespace Weapons
 
         public virtual void Attack()
         {
-            switch (_mode)
+            _currentDamage = _data.DamageType switch
             {
-                case WeaponDamageType.Static:
-                    _currentDamage = _damage;
-                    break;
-                case WeaponDamageType.Random:
-                    _currentDamage = Random.Range(_minDamage, _maxDamage);
-                    break;
-                default:
-                    break;
-            }
+                WeaponDamageType.Static => _data.Damage,
+                WeaponDamageType.Random => Random.Range(_data.MinDamage, _data.MaxDamage),
+                _ => throw new NotImplementedException(),
+            };
         }
     }
 }

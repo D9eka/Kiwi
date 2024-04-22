@@ -98,16 +98,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7f35b21b33f69547997528ef34374d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackDelay: 0.5
-  _mode: 0
-  _damage: 2
-  _minDamage: 0
-  _maxDamage: 0
+  _data: {fileID: 11400000, guid: 773df1ae366ff6343afad79f23e3005d, type: 2}
   _bullet: {fileID: 2968767307136606044, guid: 3420715a8605dbd429257d18d10f9b91, type: 3}
   _shotPoint: {fileID: 5473191581541652279}
-  _speed: 12
-  _ttl: 5
-  _ammoCapacity: 5
 --- !u!1 &9016657978327565834
 GameObject:
   m_ObjectHideFlags: 0

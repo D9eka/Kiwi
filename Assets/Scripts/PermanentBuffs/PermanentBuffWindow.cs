@@ -1,48 +1,71 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace PermanentBuffs
 {
     public class PermanentBuffWindow : MonoBehaviour
     {
-        [SerializeField] PermanentBuff _activeGain;
+        [SerializeField] PermanentBuff _activeBuff;
         [Space]
         [SerializeField] private TextMeshProUGUI _name;
         [SerializeField] private TextMeshProUGUI _description;
-        [SerializeField] private GameObject _essenceLeftHandler;
-        [SerializeField] private TextMeshProUGUI _essenceLeft;
         [SerializeField] private Button _addEssenceButton;
+        [SerializeField] private TextMeshProUGUI _essenceLeft;
 
         public static PermanentBuffWindow Instance { get; private set; }
 
         private void Awake()
         {
             Instance = this;
-            SetGain(_activeGain);
+            SetBuff(_activeBuff);
         }
 
-        public void SetGain(PermanentBuff gain)
+        public void SetBuff(PermanentBuff buff)
         {
-            _activeGain = gain;
+            if (_activeBuff != null)
+                _activeBuff.OnChangeSpentEssence -= Buff_OnChangeSpentEssence;
 
-            _name.text = gain.Data.Name;
-            _description.text = gain.Data.Description;
+            _activeBuff = buff;
+            _activeBuff.OnChangeSpentEssence += Buff_OnChangeSpentEssence;
+            Fill();
+        }
 
-            int essenceLeft = gain.Data.Price - gain.SpentEssence;
+        private void Buff_OnChangeSpentEssence(object sender, EventArgs e)
+        {
+            Fill();
+        }
+
+        private void Fill()
+        {
+            _name.text = _activeBuff.Data.Name;
+            _description.text = _activeBuff.Data.Description;
+
+            int essenceLeft = _activeBuff.Data.Price - _activeBuff.SpentEssence;
             if (essenceLeft <= 0)
             {
-                _essenceLeftHandler.SetActive(false);
                 _addEssenceButton.gameObject.SetActive(false);
             }
             else
             {
-                _essenceLeftHandler.SetActive(true);
-                _essenceLeft.text = essenceLeft.ToString();
                 _addEssenceButton.gameObject.SetActive(true);
-                _addEssenceButton.onClick.RemoveAllListeners();
-                _addEssenceButton.onClick.AddListener(() => _activeGain.SpendEssence(1));
+                _essenceLeft.text = essenceLeft.ToString();
+                if (GameManager.Instance.TrySpendEssence(_activeBuff.Data.Price - _activeBuff.SpentEssence))
+                {
+                    _addEssenceButton.interactable = true;
+                    EventSystem.current.SetSelectedGameObject(_addEssenceButton.gameObject);
+                }
+                else
+                    _addEssenceButton.interactable = false;
             }
+            LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
+        }
+
+        public void TryBuy()
+        {
+            _activeBuff.SpendEssence();
         }
     }
 }

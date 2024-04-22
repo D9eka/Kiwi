@@ -1,30 +1,69 @@
 using System;
+using Components.UI.Screens.Store;
 using Creatures.Player;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Weapons;
 
 public class WeaponController : MonoBehaviour
 {
     [SerializeField] private Transform _weaponHandler;
-    [SerializeField] private Weapon _firstWeapon;
-    [SerializeField] private Weapon _secondWeapon;
-    [SerializeField] private Weapon _trap;
-    public Weapon CurrentWeapon { get; set; }
-    public Weapon FirstWeapon => _firstWeapon;
-    public Weapon SecondWeapon => _secondWeapon;
-    public Weapon Trap => _trap;
+    [SerializeField] private GameObject _firstWeapon;
+    [SerializeField] private GameObject _secondWeapon;
+    [SerializeField] private GameObject _trap;
 
-    public event EventHandler OnStateChange;
+    private GameObject[] _weaponArray = new GameObject[3];
+    private int _currentWeapon;
+    public Weapon CurrentWeapon => _weaponArray[_currentWeapon] ? _weaponArray[_currentWeapon].GetComponent<Weapon>() : null;
+    public event EventHandler<WeaponPosition> OnStateChange;
     public static WeaponController Instance { get; private set; }
+
+    public enum WeaponPosition
+    {
+        Weapon1 = 0,
+        Weapon2 = 1,
+        Trap = 2
+    }
 
     private void Awake()
     {
         Instance = this;
+
+        int i = 0;
+        foreach (GameObject weapon in new GameObject[]{ _firstWeapon, _secondWeapon, _trap })
+        {
+            if (weapon != null)
+            {
+                GameObject weaponGO = Instantiate(weapon, _weaponHandler);
+                _weaponArray[i] = weaponGO;
+                weaponGO.SetActive(false);
+            }
+            i++;
+        }
+        SwitchWeapon();
+    }
+
+    public void SwitchWeapon(int weaponIndex)
+    {
+        _currentWeapon = weaponIndex;
+        _weaponArray[_currentWeapon].SetActive(true);
+    }
+    public void SwitchWeapon()
+    {
+        do
+            _currentWeapon = (int)Mathf.Repeat(_currentWeapon + 1f, _weaponArray.Length - 1);
+        while (_weaponArray[_currentWeapon] == null);
+
+        SwitchWeapon(_currentWeapon);
+    }
+
+    public void SwitchWeapon(WeaponPosition weaponPosition)
+    {
+        SwitchWeapon((int)weaponPosition);
     }
 
     private void Start()
     {
-        CurrentWeapon = Trap;
         var playerInputReader = PlayerInputReader.Instance;
         playerInputReader.OnSwitchWeapon += OnPlayerSwitchWeapon;
         playerInputReader.OnWeaponReload += OnPlayerWeaponReload;
@@ -33,111 +72,76 @@ public class WeaponController : MonoBehaviour
 
     private void OnPlayerAttack(object sender, EventArgs e)
     {
-        OnStateChange?.Invoke(this, EventArgs.Empty);
+        OnStateChange?.Invoke(this, (WeaponPosition)_currentWeapon);
     }
 
     private void OnPlayerWeaponReload(object sender, EventArgs e)
     {
-        OnStateChange?.Invoke(this, EventArgs.Empty);
+        OnStateChange?.Invoke(this, (WeaponPosition)_currentWeapon);
     }
 
     private void OnPlayerSwitchWeapon(object sender, EventArgs e)
     {
-        SwitchCurrentWeapon();
+        SwitchWeapon();
     }
 
-    public void TryEquipWeapon(WeaponSO weaponSO)
+    public Weapon GetWeapon(WeaponPosition position) 
+        => _weaponArray[(int)position] ? _weaponArray[(int)position].GetComponent<Weapon>() : null; 
+
+    public void TryEquipWeapon(Weapon weapon)
     {
-        if (weaponSO.IsConsumable)
+        if(weapon.Data.Type == WeaponSO.WeaponType.Trap)
         {
-            if (!_trap)
+            if (_weaponArray[(int)WeaponPosition.Trap])
             {
-                WeaponGetConfirmUI.Instance.Open(weaponSO, _trap);
+                WeaponChangeConfirmUI.Instance.Open(weapon, WeaponPosition.Trap);
             }
-            else WeaponChangeConfirmUI.Instance.Open(_trap.WeaponSO, weaponSO, _trap);
+            else
+            {
+                WeaponGetConfirmUI.Instance.Open(weapon, WeaponPosition.Trap);
+            }
         }
-
-        else if (!_firstWeapon)
+        else
         {
-            WeaponGetConfirmUI.Instance.Open(weaponSO, _firstWeapon);
+            if (!_firstWeapon)
+            {
+                WeaponGetConfirmUI.Instance.Open(weapon, WeaponPosition.Weapon1);
+            }
+            else if (!_secondWeapon)
+            {
+                WeaponGetConfirmUI.Instance.Open(weapon, WeaponPosition.Weapon2);
+            }
+            else
+            {
+                WeaponChooseUI.Instance.Open(weapon);
+            }
         }
-
-        else if (!_secondWeapon)
-        {
-            WeaponGetConfirmUI.Instance.Open(weaponSO, _secondWeapon);
-        }
-
-        else WeaponChooseUI.Instance.Open(weaponSO);
     }
 
-    private void EquipWeapon(WeaponSO weaponSO, ref Weapon weapon)
+    public void EquipWeapon(Weapon weapon, int position)
     {
-        if (weapon) DropWeapon(ref weapon);
-        var weaponObject = Instantiate(weaponSO.WeaponPrefab, _weaponHandler);
-        weapon = weaponObject.GetComponent<Weapon>();
-        weapon.WeaponSO = weaponSO;
-        SwitchCurrentWeapon(weapon);
-        OnStateChange?.Invoke(this, EventArgs.Empty);
+        EquipWeapon(weapon, (WeaponPosition)position);
     }
 
-    public void EquipWeapon(WeaponSO weaponSO, Weapon weapon)
+    public void EquipWeapon(Weapon weapon, WeaponPosition position)
     {
-        if (weapon == _firstWeapon) EquipWeapon(weaponSO, ref _firstWeapon);
-        else if (weapon == _secondWeapon) EquipWeapon(weaponSO, ref _secondWeapon);
-        else if (weapon == _trap) EquipWeapon(weaponSO, ref _trap);
+        if (_weaponArray[(int)position] != null)
+            DropWeapon(position);
+
+        GameObject weaponGO = Instantiate(weapon.gameObject, _weaponHandler);
+        _weaponArray[(int)position] = weaponGO;
+        weaponGO.SetActive(false);
     }
 
 
-    private void DropWeapon(ref Weapon weapon)
+    private void DropWeapon(WeaponPosition position)
     {
-        Destroy(weapon.gameObject);
-        weapon = null;
-        OnStateChange?.Invoke(this, EventArgs.Empty);
+        Destroy(_weaponArray[(int)position]);
+        OnStateChange?.Invoke(this, position);
     }
 
-    public void DropConsumableWeapon()
+    public void DropTrap()
     {
-        DropWeapon(ref _trap);
-    }
-
-    private void SwitchCurrentWeapon()
-    {
-        if (CurrentWeapon == _firstWeapon)
-        {
-            if (_secondWeapon is not null) SwitchCurrentWeapon(_secondWeapon);
-            else if (_trap is not null) SwitchCurrentWeapon(_trap);
-        }
-        else if (CurrentWeapon == _secondWeapon)
-        {
-            if (_trap is not null) SwitchCurrentWeapon(_trap);
-            else if (_firstWeapon is not null) SwitchCurrentWeapon(_firstWeapon);
-        }
-        else if (CurrentWeapon == _trap)
-        {
-            if (_firstWeapon is not null) SwitchCurrentWeapon(_firstWeapon);
-            else if (_secondWeapon is not null) SwitchCurrentWeapon(_secondWeapon);
-        }
-
-        PlayerController.Instance.SetActiveWeapon(CurrentWeapon);
-        OnStateChange?.Invoke(this, EventArgs.Empty);
-    }
-
-    private void SwitchCurrentWeapon(Weapon weapon)
-    {
-        HideWeapon();
-        CurrentWeapon = weapon;
-        ShowWeapon();
-        PlayerController.Instance.SetActiveWeapon(CurrentWeapon);
-        OnStateChange?.Invoke(this, EventArgs.Empty);
-    }
-
-    private void HideWeapon()
-    {
-        CurrentWeapon.gameObject.SetActive(false);
-    }
-
-    private void ShowWeapon()
-    {
-        CurrentWeapon.gameObject.SetActive(true);
+        DropWeapon(WeaponPosition.Trap);
     }
 }

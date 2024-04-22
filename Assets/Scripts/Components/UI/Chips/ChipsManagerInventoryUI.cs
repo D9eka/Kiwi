@@ -6,7 +6,6 @@ using UnityEngine.Serialization;
 
 public class ChipsManagerInventoryUI : MonoBehaviour
 {
-    // Start is called before the first frame update
     [SerializeField] private List<ChipIconUI> _chipIcons;
     [SerializeField] private GameObject _chipIconRowPrefab;
     private ChipManager _chipManager;

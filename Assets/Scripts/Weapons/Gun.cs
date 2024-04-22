@@ -6,40 +6,36 @@ namespace Weapons
 {
     public class Gun : Weapon
     {
-        [Header("Bullet")] [SerializeField] private GameObject _bullet;
+        [SerializeField] private GameObject _bullet;
         [SerializeField] private Transform _shotPoint;
 
-        [SerializeField] private float _speed;
-        [SerializeField] private float _ttl;
-        [SerializeField] private int _ammoCapacity;
-
         private int ammoCount;
-        public int AmmoCapacity => _ammoCapacity;
-        public int AmmoCount => ammoCount;
 
-        private void Start()
+        private void Awake()
         {
-            ammoCount = _ammoCapacity;
+
+            ammoCount = _data.AmmoCapacity;
+            Label = $"{ammoCount} / {_data.AmmoCapacity}";
         }
 
         public override void Attack()
         {
             base.Attack();
 
-            if (_timeBetweenAttacks < _attackDelay || ammoCount <= 0)
+            if (_timeBetweenAttacks < _data.AttackDelay || ammoCount <= 0)
                 return;
 
             GameObject bullet = Instantiate(_bullet, _shotPoint.position, transform.rotation);
-            bullet.GetComponent<Bullet>().Initialize(_currentDamage, _speed, _ttl);
+            bullet.GetComponent<Bullet>().Initialize(_currentDamage, _data.BulletSpeed, _data.BulletTTLSeconds);
             _timeBetweenAttacks = 0;
             ammoCount--;
-            Debug.Log($"{ammoCount} / {_ammoCapacity}");
+            Label = $"{ammoCount} / {_data.AmmoCapacity}";
         }
 
         public void Reload()
         {
-            ammoCount = _ammoCapacity;
-            Debug.Log("Reload");
+            ammoCount = _data.AmmoCapacity;
+            Label = $"{ammoCount} / {_data.AmmoCapacity}";
         }
 
         public void UpdateSpriteDirection()

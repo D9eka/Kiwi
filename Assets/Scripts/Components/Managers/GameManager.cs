@@ -28,7 +28,8 @@ public class GameManager : MonoBehaviour
 
     public bool TrySpendEssence(int count)
     {
-        if (!CanSpendEssence(count)) return false;
+        if (!CanSpendEssence(count))
+            return false;
         EssenceCount -= count;
         OnEssenceCountChanged?.Invoke(this, EventArgs.Empty);
         return true;

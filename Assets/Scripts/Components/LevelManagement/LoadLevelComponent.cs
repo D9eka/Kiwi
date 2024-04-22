@@ -60,14 +60,14 @@ namespace Components.LevelManagement
             {
                 case LoadingWindow.Fading:
                     bool waitFading = true;
-                    Fader.Instance.FadeIn(() => waitFading = false);
+                    //Fader.Instance.FadeIn(() => waitFading = false);
 
                     yield return new WaitUntil(() => waitFading == false);
 
                     SceneManager.LoadScene(_sceneName);
 
                     waitFading = true;
-                    Fader.Instance.FadeOut(() => waitFading = false);
+                    //Fader.Instance.FadeOut(() => waitFading = false);
 
                     yield return new WaitUntil(() => waitFading == false);
                     break;

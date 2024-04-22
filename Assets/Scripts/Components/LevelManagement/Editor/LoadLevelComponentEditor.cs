@@ -1,6 +1,4 @@
-﻿using Components.UI.Dialogs;
-using UnityEditor;
-using UnityEngine;
+﻿using UnityEditor;
 
 namespace Components.LevelManagement.Editor
 {

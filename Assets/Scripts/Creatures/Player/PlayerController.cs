@@ -26,9 +26,6 @@ namespace Creatures.Player
         [SerializeField] private float _dashCooldown;
         [SerializeField] private AttackComponent _dashAttack;
 
-        [Header("Weapon")] 
-        [SerializeField] private Weapon _activeWeapon;
-
         private HealthComponent _health;
 
         private float _initialGravity;
@@ -37,6 +34,8 @@ namespace Creatures.Player
         private int _dashCounter;
         private bool _canDashAttack;
         private bool _isDashing;
+
+        private Weapon _activeWeapon => WeaponController.Instance.CurrentWeapon;
 
         private const string IS_ON_GROUND_KEY = "is-on-ground";
 
@@ -206,11 +205,6 @@ namespace Creatures.Player
         {
             base.UpdateAnimations();
             _animator.SetBool(IS_ON_GROUND_KEY, _isGrounded);
-        }
-
-        public void SetActiveWeapon(Weapon weapon)
-        {
-            _activeWeapon = weapon;
         }
     }
 

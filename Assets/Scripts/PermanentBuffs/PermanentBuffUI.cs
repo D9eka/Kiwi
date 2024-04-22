@@ -13,18 +13,18 @@ namespace PermanentBuffs
         [SerializeField] private Slider _price;
         [SerializeField] private TextMeshProUGUI _essenceLeft;
 
-        private PermanentBuff _gain;
+        private PermanentBuff _buff;
 
         private void Awake()
         {
-            _gain = GetComponent<PermanentBuff>();
+            _buff = GetComponent<PermanentBuff>();
             SetData();
         }
 
         private void Start()
         {
-            _gain.OnChangeSpentEssence += Gain_OnChangeSpentEssence;
-            GetComponent<Button>().onClick.AddListener(() => PermanentBuffWindow.Instance.SetGain(_gain));
+            _buff.OnChangeSpentEssence += Gain_OnChangeSpentEssence;
+            GetComponent<Button>().onClick.AddListener(() => PermanentBuffWindow.Instance.SetBuff(_buff));
         }
 
         private void Gain_OnChangeSpentEssence(object sender, EventArgs e)
@@ -34,16 +34,16 @@ namespace PermanentBuffs
 
         public void SetData()
         {
-            _name.text = _gain.Data.Name;
-            _icon.sprite = _gain.Data.Icon;
+            _name.text = _buff.Data.Name;
+            _icon.sprite = _buff.Data.Icon;
             SetEssence();
         }
 
         public void SetEssence()
         {
-            _price.maxValue = _gain.Data.Price;
-            _price.value = _gain.SpentEssence;
-            int essenceLeft = _gain.Data.Price - _gain.SpentEssence;
+            _price.maxValue = _buff.Data.Price;
+            _price.value = _buff.SpentEssence;
+            int essenceLeft = _buff.Data.Price - _buff.SpentEssence;
             if (essenceLeft > 0)
                 _essenceLeft.text = essenceLeft.ToString();
             else

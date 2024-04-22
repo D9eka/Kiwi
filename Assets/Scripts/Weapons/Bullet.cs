@@ -32,7 +32,7 @@ namespace Weapons
             if (collision.isTrigger || collision.CompareTag("Player"))
                 return;
 
-            if (collision.transform.parent.TryGetComponent(out HealthComponent health))
+            if (collision.transform.parent != null && collision.transform.parent.TryGetComponent(out HealthComponent health))
                 health.ModifyHealth(-_damage);
             Destroy(gameObject);
         }

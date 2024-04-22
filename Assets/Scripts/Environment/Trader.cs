@@ -1,7 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Components.UI.Store;
+using Components.UI;
+using Components.UI.Screens.Store;
 using UnityEngine;
 
 public class Trader : MonoBehaviour
@@ -16,8 +14,10 @@ public class Trader : MonoBehaviour
 
     public void TryShowStore()
     {
-        if (!_haveProduct) return;
-        StoreUI.Instance.Open();
+        if (!_haveProduct)
+            return;
+        UIController.Instance.PushScreen(StoreUI.Instance);
+        //StoreUI.Instance.Open();
     }
 
     public void Disable()
