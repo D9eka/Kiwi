@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Components.Health;
+using Creatures.Player;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -9,15 +10,19 @@ using UnityEngine.UI;
 
 public class HealthBarUI : MonoBehaviour
 {
-    // Start is called before the first frame update
     [SerializeField] private Image _filler;
-    [SerializeField] private HealthComponent _healthComponent;
+    [SerializeField] private bool _isPlayer;
     [SerializeField] private bool _isStatic;
     [SerializeField] private TextMeshProUGUI _textMeshProUGUI;
 
+    private HealthComponent _healthComponent;
+
     private void Start()
     {
-        _healthComponent ??= GetComponentInParent<HealthComponent>();
+        if(_isPlayer)
+            _healthComponent = PlayerController.Instance.GetComponent<HealthComponent>();
+        else
+            _healthComponent = GetComponentInParent<HealthComponent>();
         _healthComponent.OnValueChange += OnHealthComponentValueChange;
         _healthComponent.ChangeHealthStats(0);
     }

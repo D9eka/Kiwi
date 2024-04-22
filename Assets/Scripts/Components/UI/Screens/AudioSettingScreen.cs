@@ -5,14 +5,15 @@ using UnityEngine.UI;
 
 namespace Components.UI.Screens
 {
-    public class AudioSettingScreen : Screen
+    public class AudioSettingScreen : ScreenComponent
     {
         [SerializeField] private Slider _volumeSlider;
 
         private const string MUSIC_VOLUME_KEY = "MusicVolume";
 
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
             _volumeSlider.value = PlayerPrefsController.GetFloat(MUSIC_VOLUME_KEY);
             _volumeSlider.onValueChanged.AddListener(value => Save(_volumeSlider.value));
         }

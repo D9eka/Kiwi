@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -59,10 +58,9 @@ namespace Components.UI.Cards
 
         private void FillParent(Transform parent, List<string> values)
         {
-            foreach (GameObject go in parent.GetComponentInParent<RectTransform>())
-            {
-                Destroy(go);
-            }
+            foreach (Transform go in parent.GetComponentsInChildren<Transform>())
+                    if(go != parent)
+                        Destroy(go.gameObject);
 
             foreach (string value in values)
             {

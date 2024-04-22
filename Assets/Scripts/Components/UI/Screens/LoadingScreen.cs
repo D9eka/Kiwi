@@ -1,19 +1,20 @@
-﻿using System.Collections;
-using Unity.VisualScripting;
+﻿using Components.UI.Screens;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Components.UI
 {
-    public class LoadingScreen : MonoBehaviour
+    public class LoadingScreen : ScreenComponent
     {
-        [SerializeField] private GameObject _content;
+        [SerializeField] private GameObject _loadingContent;
         [SerializeField] private Slider _slider;
 
         public static LoadingScreen Instance;
 
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
+
             if(Instance != null) 
             { 
                 Destroy(Instance);
@@ -24,7 +25,7 @@ namespace Components.UI
         public void Activate()
         {
             _slider.value = 0;
-            _content.SetActive(true);
+            _loadingContent.SetActive(true);
         }
 
         public void SetLoadingProgress(float loadingProgress)

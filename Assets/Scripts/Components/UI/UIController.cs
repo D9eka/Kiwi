@@ -1,20 +1,26 @@
-﻿using System;
+﻿using Creatures.Player;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Screen = Components.UI.Screens.Screen;
+using UnityEngine.InputSystem;
+using ScreenComponent = Components.UI.Screens.ScreenComponent;
 
 namespace Components.UI
 {
     public class UIController : MonoBehaviour
     {
-        [SerializeField] private Screen _initialScreen;
+        [SerializeField] private ScreenComponent _initialScreen;
 
         private Canvas _canvas;
-        private Stack<Screen> _screenStack = new Stack<Screen>();
+
+        private Stack<ScreenComponent> _screenStack = new Stack<ScreenComponent>();
+
+        public enum UIEvent
+        {
+            Cancel,
+            Additional,
+            Submit
+        }
 
         public static UIController Instance { get; private set; }
 
@@ -22,6 +28,7 @@ namespace Components.UI
         {
             Instance = this;
             _canvas = GetComponent<Canvas>();
+            _canvas.worldCamera = Camera.main;
         }
 
         private void Start()
@@ -32,28 +39,21 @@ namespace Components.UI
             }
         }
 
-        private void OnCancel()
+        public bool IsScreenInStack(ScreenComponent screen) => _screenStack.Contains(screen);
+
+        public bool IsScreenOnTopOfStack(ScreenComponent screen) => _screenStack.Count > 0 && screen == _screenStack.Peek();
+
+        public void PushScreen(ScreenComponent screen)
         {
-            if (_canvas.enabled && _canvas.gameObject.activeInHierarchy)
+            if(screen.DisablePlayerInput)
             {
-                if (_screenStack.Count != 0)
-                {
-                    PopScreen();
-                }
+                PlayerController.Instance?.GetComponent<PlayerInput>().DeactivateInput();
             }
-        }
-
-        public bool IsScreenInStack(Screen screen) => _screenStack.Contains(screen);
-
-        public bool IsScreenOnTopOfStack(Screen screen) => _screenStack.Count > 0 && screen == _screenStack.Peek();
-
-        public void PushScreen(Screen screen)
-        {
             screen.Enter();
 
             if (_screenStack.Count > 0) 
             { 
-                Screen currentScreen = _screenStack.Peek();
+                ScreenComponent currentScreen = _screenStack.Peek();
 
                 if(currentScreen.ExitOnNewPagePush)
                 {
@@ -67,10 +67,14 @@ namespace Components.UI
         { 
             if (_screenStack.Count > 1) 
             { 
-                Screen screen = _screenStack.Pop();
+                ScreenComponent screen = _screenStack.Pop();
                 screen.Exit();
+                if (screen.DisablePlayerInput)
+                {
+                    PlayerController.Instance?.GetComponent<PlayerInput>().ActivateInput();
+                }
 
-                Screen newCurrentScreen = _screenStack.Peek();
+                ScreenComponent newCurrentScreen = _screenStack.Peek();
                 if (newCurrentScreen.ExitOnNewPagePush)
                 {
                     newCurrentScreen.Enter();
@@ -83,6 +87,29 @@ namespace Components.UI
             for (int i = 1; i < _screenStack.Count; i++)
             {
                 PopScreen();
+            }
+        }
+
+        private void OnCancel()
+        {
+            SendUIEvent(UIEvent.Cancel);
+        }
+
+        private void OnAdditional()
+        {
+            SendUIEvent(UIEvent.Additional);
+        }
+
+        private void OnSubmit()
+        {
+            SendUIEvent(UIEvent.Submit);
+        }
+
+        private void SendUIEvent(UIEvent eventType)
+        {
+            if (_canvas.enabled && _canvas.gameObject.activeInHierarchy && _screenStack.Count != 0)
+            {
+                _screenStack.Peek().InvokeUIEvent(eventType);
             }
         }
     }

@@ -10,6 +10,8 @@ namespace Weapons
         [SerializeField] protected WeaponSO _data;
 
         public WeaponSO Data => _data;
+        public string Label { get; protected set; }
+        public EventHandler OnChangeLabel;
 
         protected Animator _animator;
 
@@ -26,17 +28,12 @@ namespace Weapons
 
         public virtual void Attack()
         {
-            switch (_data.DamageType)
+            _currentDamage = _data.DamageType switch
             {
-                case WeaponDamageType.Static:
-                    _currentDamage = _data.Damage;
-                    break;
-                case WeaponDamageType.Random:
-                    _currentDamage = Random.Range(_data.MinDamage, _data.MaxDamage);
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }
+                WeaponDamageType.Static => _data.Damage,
+                WeaponDamageType.Random => Random.Range(_data.MinDamage, _data.MaxDamage),
+                _ => throw new NotImplementedException(),
+            };
         }
     }
 }

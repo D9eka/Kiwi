@@ -2,7 +2,7 @@
 
 namespace Components.UI.Screens
 {
-    public class HUD : MonoBehaviour
+    public class HUD : ScreenComponent
     {
         public static HUD Instance { get; private set; }
 

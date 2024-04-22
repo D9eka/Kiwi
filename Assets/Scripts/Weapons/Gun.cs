@@ -11,9 +11,11 @@ namespace Weapons
 
         private int ammoCount;
 
-        private void Start()
+        private void Awake()
         {
+
             ammoCount = _data.AmmoCapacity;
+            Label = $"{ammoCount} / {_data.AmmoCapacity}";
         }
 
         public override void Attack()
@@ -27,13 +29,13 @@ namespace Weapons
             bullet.GetComponent<Bullet>().Initialize(_currentDamage, _data.BulletSpeed, _data.BulletTTLSeconds);
             _timeBetweenAttacks = 0;
             ammoCount--;
-            Debug.Log($"{ammoCount} / {_data.AmmoCapacity}");
+            Label = $"{ammoCount} / {_data.AmmoCapacity}";
         }
 
         public void Reload()
         {
             ammoCount = _data.AmmoCapacity;
-            Debug.Log("Reload");
+            Label = $"{ammoCount} / {_data.AmmoCapacity}";
         }
 
         public void UpdateSpriteDirection()

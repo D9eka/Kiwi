@@ -11,9 +11,10 @@ namespace Weapons
 
         private int _amount;
 
-        private void Start()
+        private void Awake()
         {
             _amount = _data.MaxAmount;
+            Label = _amount.ToString();
         }
 
         public override void Attack()
@@ -31,6 +32,7 @@ namespace Weapons
             _timeBetweenAttacks = 0;
 
             _amount--;
+            Label = _amount.ToString();
             if (_amount <= 0)
             {
                 WeaponController.Instance.DropTrap();

@@ -20,12 +20,24 @@ public class WeaponCell : Cell
 
     private void Start()
     {
-        SetCurrentWeapon();
-        Fill(_currentWeapon.Data.Icon);
-
         WeaponController.Instance.OnStateChange += WeaponController_OnStateChange;
 
+        Initialize();
+        
+    }
+
+    private void Initialize()
+    {
+        SetCurrentWeapon();
         Button button = GetComponent<Button>();
+        button.onClick.RemoveAllListeners();
+        if(_currentWeapon == null)
+        {
+            Fill(null);
+            return;
+        }
+
+        Fill(_currentWeapon.Data.Icon, _place == WeaponCellPlace.HUD, _currentWeapon.Label);
         switch (_place)
         {
             case WeaponCellPlace.HUD:
@@ -53,9 +65,6 @@ public class WeaponCell : Cell
     private void WeaponController_OnStateChange(object sender, WeaponController.WeaponPosition e)
     {
         if(e == _weaponPosition)
-        {
-            SetCurrentWeapon();
-            Fill(_currentWeapon.Data.Icon);
-        }
+            Initialize();
     }
 }

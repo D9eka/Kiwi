@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Components.UI.Screens
 {
-    public class InventoryUI : Screen
+    public class InventoryUI : ScreenComponent
     {
         public static InventoryUI Instance { get; private set; }
         [SerializeField] private CardUI _card;

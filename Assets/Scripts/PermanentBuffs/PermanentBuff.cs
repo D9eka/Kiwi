@@ -28,6 +28,11 @@ namespace PermanentBuffs
 
         public abstract void Deactivate();
 
+        public void SpendEssence()
+        {
+            SpendEssence(_data.Price - SpentEssence);
+        }
+
         public void SpendEssence(int spentEssence)
         {
             if (GameManager.Instance.TrySpendEssence(spentEssence))

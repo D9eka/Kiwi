@@ -97,9 +97,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4605f9ae8389fb04ead661868736d635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 2
-  _attackDelay: 2
+  _data: {fileID: 11400000, guid: 40ba11e4c4f8de04da7609269b3b2c34, type: 2}
   _thrownTrap: {fileID: 5430988666539654629, guid: 9c781780ddd7c0144a6d49fc91505a76, type: 3}
-  _thrownTrapAttackDelay: 5
   _throwForce: {x: 5, y: 5}
-  _maxAmount: 6

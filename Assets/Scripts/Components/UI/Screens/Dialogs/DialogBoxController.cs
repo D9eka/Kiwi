@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Components.UI.Screens.Dialogs
 {
-    public class DialogBoxController : Screen
+    public class DialogBoxController : ScreenComponent
     {
         [SerializeField] private GameObject _container;
         [SerializeField] private float _textSpeed = 0.05f;

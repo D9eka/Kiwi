@@ -5,7 +5,7 @@ using static WeaponController;
 
 namespace Components.UI.Screens.Store
 {
-    public class WeaponGetConfirmUI : Screen
+    public class WeaponGetConfirmUI : ScreenComponent
     {
         [SerializeField] private CardUI _card;
 

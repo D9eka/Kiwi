@@ -8,9 +8,9 @@ using Weapons;
 public class WeaponController : MonoBehaviour
 {
     [SerializeField] private Transform _weaponHandler;
-    [SerializeField] private Weapon _firstWeapon;
-    [SerializeField] private Weapon _secondWeapon;
-    [SerializeField] private Weapon _trap;
+    [SerializeField] private GameObject _firstWeapon;
+    [SerializeField] private GameObject _secondWeapon;
+    [SerializeField] private GameObject _trap;
 
     private GameObject[] _weaponArray = new GameObject[3];
     private int _currentWeapon;
@@ -30,11 +30,11 @@ public class WeaponController : MonoBehaviour
         Instance = this;
 
         int i = 0;
-        foreach (Weapon weapon in new Weapon[]{ _firstWeapon, _secondWeapon, _trap })
+        foreach (GameObject weapon in new GameObject[]{ _firstWeapon, _secondWeapon, _trap })
         {
             if (weapon != null)
             {
-                GameObject weaponGO = Instantiate(_firstWeapon.gameObject, _weaponHandler);
+                GameObject weaponGO = Instantiate(weapon, _weaponHandler);
                 _weaponArray[i] = weaponGO;
                 weaponGO.SetActive(false);
             }

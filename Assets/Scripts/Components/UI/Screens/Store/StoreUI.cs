@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Weapons;
 
 namespace Components.UI.Screens.Store
 {
-    public class StoreUI : Screen
+    public class StoreUI : ScreenComponent
     {
         [SerializeField] private List<CardUI> _cardsList;
         [SerializeField, Range(0, 3)] private int _consumableWeaponsCount = 1;
@@ -18,7 +19,7 @@ namespace Components.UI.Screens.Store
         private List<Weapon> weaponsList = new();
         private int _currentIndex;
         private bool _canChangeProduct = StatsModifier.CanChangeReward;
-        private int _changeProductCost = 5;
+        private const int CHANGE_PRODUCT_COST = 5;
 
         public static StoreUI Instance { get; private set; }
 
@@ -27,9 +28,26 @@ namespace Components.UI.Screens.Store
             Instance = this;
         }
 
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
             GenerateWeapons();
+        }
+
+        protected override void FillEventButtons()
+        {
+            if (_haveEventButtons)
+            {
+                foreach (Transform go in _eventsHandler.GetComponentsInChildren<Transform>())
+                    Destroy(go.gameObject);
+
+                if (_cancelEvent != null)
+                    CreateEventButton(CANCEL_EVENT_KEY, _cancelEvent);
+                if (_additionlEvent != null && _canChangeProduct)
+                    CreateEventButton(ADDITIONAL_EVENT_KEY, _additionlEvent);
+                if (_confirmEvent != null)
+                    CreateEventButton(CONFIRM_EVENT_KEY, _confirmEvent);
+            }
         }
 
         private void GenerateWeapons()
@@ -38,7 +56,7 @@ namespace Components.UI.Screens.Store
                 Randomiser.GetRandomElements(_possibleWeaponList.FindAll(
                     weapon => weapon.Data.Type == WeaponSO.WeaponType.Trap), _consumableWeaponsCount);
             var notConsumableWeapons = Randomiser.GetRandomElements(_possibleWeaponList.FindAll(
-                weapon => weapon.Data.Type != WeaponSO.WeaponType.Trap), _cardsList.Count - _consumableWeaponsCount);
+                weapon => weapon.Data.Type != WeaponSO.WeaponType.Trap), _cardsList.Count - _consumableWeaponsCount - 1);
             
             var i = 0;
             foreach (var card in _cardsList)
@@ -60,9 +78,15 @@ namespace Components.UI.Screens.Store
         {
             if (!_canChangeProduct) 
                 return;
-            if (!GameManager.Instance.TrySpendEssence(_changeProductCost)) 
+            if (!GameManager.Instance.TrySpendEssence(CHANGE_PRODUCT_COST)) 
                 return;
             GenerateWeapons();
+        }
+
+        public void TryBuy()
+        {
+            if (EventSystem.current.currentSelectedGameObject.TryGetComponent(out CardUI card))
+                TryBuy(card);
         }
 
         public void TryBuy(CardUI card)
