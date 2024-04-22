@@ -14,10 +14,8 @@ public class Trader : MonoBehaviour
 
     public void TryShowStore()
     {
-        if (!_haveProduct)
-            return;
+        // if (!_haveProduct) return;
         UIController.Instance.PushScreen(StoreUI.Instance);
-        //StoreUI.Instance.Open();
     }
 
     public void Disable()

@@ -20,6 +20,7 @@ namespace Weapons
 
             _timeBetweenAttacks = 0;
             _animator.SetTrigger(ATTACK_KEY);
+            SoundManager.Instance.PlaySound(_sound);
         }
 
         public void OnAttack()

@@ -1,4 +1,5 @@
 ﻿using System;
+using Creatures.Player;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,7 +10,7 @@ namespace Components.Health
         [SerializeField] private float _maxHealth;
         [SerializeField] private UnityEvent _onHeal;
         [SerializeField] private UnityEvent _onDamage;
-        [SerializeField] private UnityEvent _onDie;
+        public UnityEvent _onDie;
 
         private float _health;
 
@@ -30,6 +31,10 @@ namespace Components.Health
                 value = _health,
                 maxValue = _maxHealth,
             });
+            if (TryGetComponent(out PlayerController playerController))
+            {
+                _onDamage.AddListener(() => SoundManager.Instance.PlaySound(SoundManager.Instance._takeDamageSound));
+            }
         }
 
         public void ModifyHealth(float changeValue)
@@ -68,6 +73,7 @@ namespace Components.Health
             {
                 _health += addingValue;
             }
+
             OnValueChange?.Invoke(this, new OnValueChangeEventArgs
             {
                 value = _health,

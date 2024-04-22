@@ -171,6 +171,7 @@ MonoBehaviour:
   _attackRange: {fileID: 1199581426432981321}
   _mode: 1
   _ttl: 45
+  _sound: {fileID: 8300000, guid: a7cd00f02b493a345a94b71dddb30a8d, type: 3}
 --- !u!50 &7696963639730060361
 Rigidbody2D:
   serializedVersion: 4

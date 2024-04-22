@@ -27,14 +27,15 @@ namespace Sections
         public bool _wasSecretSectionFound;
         public SectionTypeSO CurrentSectionType => _openedSections[CurrentSectionIndex].SectionTypeSO;
 
+
         private void Awake()
         {
             Instance = this;
+            _openedSections.Add(_startSection);
         }
 
         private void Start()
         {
-            _openedSections.Add(_startSection);
             FillSectionsDictionary();
         }
 
@@ -65,8 +66,8 @@ namespace Sections
         public void EnterNextNewSection(SectionSO sectionSO)
         {
             CurrentSectionIndex += 1;
-            SceneManager.LoadScene(sectionSO.SectionName);
             _openedSections.Add(sectionSO);
+            SceneManager.LoadScene(sectionSO.SectionName);
         }
 
         public void EnterNextNewRandomSection(SectionTypeSO sectionType)
@@ -156,5 +157,10 @@ namespace Sections
         //     finalSectionTypes.Add(sectionTypeThird);
         //     return finalSectionTypes;
         // }
+        [ContextMenu(nameof(ShowCurrentSection))]
+        public void ShowCurrentSection()
+        {
+            Debug.Log(_openedSections[0]);
+        }
     }
 }

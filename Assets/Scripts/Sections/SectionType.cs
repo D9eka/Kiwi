@@ -6,9 +6,9 @@ namespace Sections
 {
     public enum SectionType
     {
-        Start,
-        Battle,
-        Rest,
+        // Start,
+        Base,
+        Orangery,
         Engineer,
         Challenge,
         Lobby,

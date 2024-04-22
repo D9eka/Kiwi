@@ -8,6 +8,7 @@ namespace Weapons
     public class ThrownTrap : MonoBehaviour
     {
         [SerializeField] private CircleCollider2D _attackRange;
+		[SerializeField] protected AudioClip _sound;
 
         private Rigidbody2D _rigidbody;
         private Animator _animator;
@@ -54,6 +55,7 @@ namespace Weapons
             {
                 collider.GetComponentInParent<HealthComponent>().ModifyHealth(-damage);
             }
+            SoundManager.Instance.PlaySound(_sound);
         }
 
         private void DestroyIt()

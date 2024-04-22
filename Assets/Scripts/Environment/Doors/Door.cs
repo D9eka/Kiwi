@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Components.Interactables;
 using Sections;
 using UnityEngine;
 
@@ -13,14 +15,16 @@ public abstract class Door : MonoBehaviour
     // [SerializeField] private DoorType _doorType;
     private void Start()
     {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
+        // _spriteRenderer = GetComponent<SpriteRenderer>();
     }
+
 
     public void Open()
     {
         IsOpened = true;
         // _spriteRenderer.sprite = _openedDoorSprite;
-        _spriteRenderer.color = Color.white;
+        GetComponent<SpriteRenderer>().color = Color.white;
+        GetComponent<InteractableComponent>().Activate();
     }
 
     public void TryEnter()

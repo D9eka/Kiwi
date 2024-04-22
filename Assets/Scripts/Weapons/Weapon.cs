@@ -12,6 +12,7 @@ namespace Weapons
         public WeaponSO Data => _data;
         public string Label { get; protected set; }
         public EventHandler OnChangeLabel;
+        [SerializeField] protected AudioClip _sound;
 
         protected Animator _animator;
 

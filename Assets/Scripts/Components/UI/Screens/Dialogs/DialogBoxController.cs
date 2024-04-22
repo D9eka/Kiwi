@@ -25,7 +25,7 @@ namespace Components.UI.Screens.Dialogs
         private Coroutine typingRoutine;
 
         private UnityEvent onFinishDialog;
-        public static DialogBoxController Instance { get; set; }
+        public static DialogBoxController Instance { get; private set; }
 
         private void Awake()
         {
@@ -41,7 +41,6 @@ namespace Components.UI.Screens.Dialogs
             }
 
             UIController.Instance.PushScreen(this);
-            // LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
 
             onStart?.Invoke();
             onFinishDialog = onFinish;
@@ -91,7 +90,9 @@ namespace Components.UI.Screens.Dialogs
 
             var isDialogComplete = currentSentence >= data.Sentences.Length;
             if (isDialogComplete)
-                HideDialogBox();
+            {
+                StopDialog();
+            }
             else
 
             {
@@ -100,8 +101,9 @@ namespace Components.UI.Screens.Dialogs
             }
         }
 
-        private void HideDialogBox()
+        private void StopDialog()
         {
+            onFinishDialog?.Invoke();
             // _animator.SetBool(IS_OPEN_KEY, false);
             UIController.Instance.PopScreen();
         }

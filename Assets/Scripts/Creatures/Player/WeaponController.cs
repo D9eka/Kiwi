@@ -144,4 +144,9 @@ public class WeaponController : MonoBehaviour
     {
         DropWeapon(WeaponPosition.Trap);
     }
+
+    public void ForceEquipWeapon()
+    {
+        
+    }
 }

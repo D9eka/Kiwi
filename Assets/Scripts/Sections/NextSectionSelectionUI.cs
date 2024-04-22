@@ -52,4 +52,11 @@ public class NextSectionSelectionUI : MonoBehaviour
                 break;
         }
     }
+
+    public void SetCertainSection(SectionSO sectionSO)
+    {
+        Destroy(_leftChoiceBlock.gameObject);
+        Destroy(_rightChoiceBlock.gameObject);
+        _centerChoiceBlock.SetInfo(sectionSO);
+    }
 }
