@@ -6,10 +6,10 @@ namespace Components.Audio
     public class AudioHandler : MonoBehaviour
     {
         [SerializeField] private AudioSource _musicAudioSource;
-        
+
         private const string MUSIC_VOLUME_KEY = "MusicVolume";
 
-        public static AudioHandler Instance {  get; private set; }
+        public static AudioHandler Instance { get; private set; }
 
         private void Awake()
         {
@@ -18,7 +18,7 @@ namespace Components.Audio
                 Instance = this;
                 DontDestroyOnLoad(gameObject);
             }
-            if(Instance != null && Instance != this)
+            if (Instance != null && Instance != this)
             {
                 Destroy(this);
             }

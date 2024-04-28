@@ -1,5 +1,4 @@
-﻿using Components.Health;
-using Creatures.Player;
+﻿using Creatures.Player;
 using UnityEngine;
 
 namespace Weapons
@@ -10,6 +9,7 @@ namespace Weapons
         [SerializeField] private Vector2 _throwForce;
 
         private int _amount;
+        public int Amount => _amount;
 
         private void Awake()
         {
@@ -23,10 +23,13 @@ namespace Weapons
 
             if (_timeBetweenAttacks < _data.ThrownDelay || _amount <= 0)
                 return;
+        }
 
+        public void OnAttack()
+        {
             float playerLocalScaleX = PlayerController.Instance.transform.localScale.x;
             Vector2 throwForce = _throwForce * playerLocalScaleX;
-            ThrownTrap thrownTrap = Instantiate(_thrownTrap, transform.position, Quaternion.identity)
+            ThrownTrap thrownTrap = Instantiate(_thrownTrap, PlayerController.Instance.ThrownTrapHandler.position, Quaternion.identity)
                 .GetComponent<ThrownTrap>();
             thrownTrap.Initialize(_currentDamage, _data.AttackDelay, _data.DestroyType, _data.TTLSeconds, throwForce);
             _timeBetweenAttacks = 0;

@@ -1,95 +1,52 @@
-using System;
-using System.Collections;
+using Creatures.Enemy;
 using System.Collections.Generic;
 using System.Linq;
-using Sections;
-using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour
+public static class EnemySpawner
 {
-    private const int BASE_ENEMY_POINTS = 30;
-    private const int CHALLENGE_POINTS = 10;
-    private int _enemyPoints;
-    [SerializeField] private int _wavesCount;
-    [SerializeField] private List<float> _separator;
-    private int _currentWave;
-
-    [SerializeField] private List<Transform> _spawnPoints;
-
-    //вместо Transform будет EnemySO или что-то такое
-    [SerializeField] private List<Transform> _enemies;
-    private SectionType _sectionType;
-    public static EnemySpawner Instance { get; private set; }
-
-    private void Awake()
+    public static List<EnemyController>[] GetWaves(int spawnPoints, int wavesCount, EnemyController[] enemies, int maxEnemiesCount)
     {
-        Instance = this;
-    }
-
-    private void Start()
-    {
-        _sectionType = SectionManager.Instance.CurrentSectionType.SectionType;
-        TrySetAutoValues();
-        TryFixSeparator();
-        SetEnemyPoints();
-        if (_sectionType is SectionType.Base or SectionType.Engineer)
+        int minWavePoints = enemies.Select(enemy => enemy.SpawnPointPrice).Min();
+        int[] wavePoints = GetWavesPoints(spawnPoints, wavesCount, minWavePoints);
+        List<EnemyController>[] waves = new List<EnemyController>[wavesCount];
+        for (int i = 0; i < wavesCount; i++)
         {
-            SpawnEnemies();
+            waves[i] = GetWave(wavePoints[0], enemies, maxEnemiesCount);
         }
+        return waves;
     }
 
-    private void SetEnemyPoints()
+    private static int[] GetWavesPoints(int spawnPoints, int wavesCount, int minWavePoints)
     {
-        _enemyPoints = BASE_ENEMY_POINTS + (int)Math.Round(SectionManager.Instance.CurrentSectionIndex * 1.8);
-        if (_sectionType is SectionType.Challenge)
-            _enemyPoints += CHALLENGE_POINTS;
-    }
-
-    public void SpawnEnemies()
-    {
-        if (_currentWave > _wavesCount + 1) return;
-        SoundManager.Instance.PlaySound(SoundManager.Instance._startWaveSound);
-        var currentEnemyPoints = (int)Math.Round(_enemyPoints * _separator[_currentWave]);
-        while (currentEnemyPoints > 0)
+        int availableWavePoints = spawnPoints;
+        int[] wavePoints = new int[wavesCount];
+        for (int i = 0; i < wavesCount - 1; i++)
         {
-            var enemy = Randomiser.GetRandomElement(_enemies);
-            if (enemy.position.x > currentEnemyPoints)
-            {
-                _enemies.Remove(enemy);
-                continue;
-            }
-
-            var spawnPoint = Randomiser.GetRandomElement(_spawnPoints);
-            Instantiate(enemy.gameObject, spawnPoint);
-            currentEnemyPoints -= (int)enemy.position.x;
+            int maxWavePoint = availableWavePoints - ((wavesCount - i - 1) * minWavePoints);
+            int wavePoint = UnityEngine.Random.Range(minWavePoints, maxWavePoint + 1);
+            wavePoints[i] = wavePoint;
+            availableWavePoints -= wavePoint;
         }
-
-        _currentWave += 1;
+        wavePoints[^1] = availableWavePoints;
+        return wavePoints;
     }
 
-    private void TrySetAutoValues()
+    private static List<EnemyController> GetWave(int spawnPoints, EnemyController[] enemies, int maxEnemiesCount)
     {
-        if (_wavesCount == 0) _wavesCount = 1;
-        if (_wavesCount < _separator.Count) _separator = _separator.GetRange(0, _wavesCount);
-        if (_wavesCount > _separator.Count) _separator = new List<float>(_wavesCount);
-    }
-
-    private void TryFixSeparator()
-    {
-        var sum = _separator.Sum();
-        if (sum <= 0)
+        List<EnemyController> wave = new();
+        int availableSpawnPoints = spawnPoints;
+        int minSpawnPoint = enemies.Select(enemy => enemy.SpawnPointPrice).Min();
+        for (int i = 0; i < maxEnemiesCount - 1; i++)
         {
-            for (var i = 0; i < _separator.Count; i++)
-            {
-                _separator[i] = 1 / _separator.Count;
-            }
-
-            return;
+            int maxSpawnPoints = availableSpawnPoints - ((maxEnemiesCount - i - 1) * minSpawnPoint);
+            List<EnemyController> availableEnemies = enemies.Where(enemy => enemy.SpawnPointPrice <= maxSpawnPoints).ToList();
+            EnemyController enemy = Randomiser.GetRandomElement(availableEnemies);
+            wave.Add(enemy);
+            availableSpawnPoints -= enemy.SpawnPointPrice;
         }
-
-        for (var i = 0; i < _separator.Count; i++)
-        {
-            _separator[i] /= sum;
-        }
+        List<EnemyController> lastAvailableEnemies = enemies.Where(enemy => enemy.SpawnPointPrice <= availableSpawnPoints).ToList();
+        EnemyController lastEnemy = Randomiser.GetRandomElement(lastAvailableEnemies);
+        wave.Add(lastEnemy);
+        return wave;
     }
 }

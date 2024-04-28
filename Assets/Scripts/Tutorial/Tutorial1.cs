@@ -1,25 +1,23 @@
+using Sections;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Components.UI.Dialogs;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Tutorial1 : MonoBehaviour
 {
     [SerializeField] private Speaker _beforeBattleSpeaker;
     [SerializeField] private Speaker _afterBattleSpeaker;
 
-    private void OnBattleOver(object sender, EventArgs e)
-    {
-        StartDialogAfterBattle();
-    }
 
 
     private void Start()
     {
-        CurrentSectionManager.Instance.OnBattleOver += OnBattleOver;
+        Section.Instance.OnEndSpawnWaves += Section_OnEndSpawnWaves;
         _beforeBattleSpeaker.StartSpeak();
+    }
+
+    private void Section_OnEndSpawnWaves(object sender, EventArgs e)
+    {
+        StartDialogAfterBattle();
     }
 
     public void StartDialog(Speaker speaker)

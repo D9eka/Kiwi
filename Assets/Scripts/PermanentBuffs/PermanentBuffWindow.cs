@@ -52,7 +52,7 @@ namespace PermanentBuffs
             {
                 _addEssenceButton.gameObject.SetActive(true);
                 _essenceLeft.text = essenceLeft.ToString();
-                if (GameManager.Instance.TrySpendEssence(_activeBuff.Data.Price - _activeBuff.SpentEssence))
+                if (MyGameManager.TrySpendEssence(_activeBuff.Data.Price - _activeBuff.SpentEssence))
                 {
                     _addEssenceButton.interactable = true;
                     EventSystem.current.SetSelectedGameObject(_addEssenceButton.gameObject);

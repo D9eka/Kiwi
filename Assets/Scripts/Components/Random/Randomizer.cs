@@ -1,7 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Sections;
 using UnityEngine;
 
 public static class Randomiser
@@ -27,18 +24,6 @@ public static class Randomiser
             answerList.Add(element);
             newList.Remove(element);
         }
-
         return answerList;
-    }
-
-    public static SectionSO GetRandomNotSecretSection(List<SectionSO> list)
-    {
-        var section = GetRandomElement(list);
-        while (section.ContainsSecret)
-        {
-            section = GetRandomElement(list);
-        }
-
-        return section;
     }
 }

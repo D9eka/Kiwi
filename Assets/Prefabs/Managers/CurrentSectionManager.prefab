@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4188411098364246271}
-  - component: {fileID: 6632317272395658455}
+  - component: {fileID: 5620941921906727290}
   m_Layer: 0
   m_Name: CurrentSectionManager
   m_TagString: Untagged
@@ -25,14 +25,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 168503256774000219}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.188298, y: -0.24922562, z: -0.040623188}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6632317272395658455
+--- !u!114 &5620941921906727290
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,10 +41,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 168503256774000219}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ce767ca8d1fa3d419f9893367908e4f, type: 3}
+  m_Script: {fileID: 11500000, guid: 05020fd0546bd764b876597bb1144835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isCompleted: 0
-  _isBattleOver: 0
-  _hasAdditionalCompleteConditions: 1
-  _isOxygenWasting: 0
+  _data: {fileID: 0}
+  _startDoor: {fileID: 0}
+  _endDoor: {fileID: 0}
+  _secretDoor: {fileID: 0}
+  _enemies:
+  - {fileID: 8911673926796229105, guid: def4d288102e7364f80944fa44982fb2, type: 3}
+  - {fileID: 8216914747631476452, guid: 34331ff52d541974ab2c5ba687fdd3c7, type: 3}
+  - {fileID: 8409666718545908501, guid: 42ad99256e958964b84bf5506834880b, type: 3}
+  - {fileID: 7532848221299874424, guid: f58b1629ba73b5b42a34b7308de511bf, type: 3}
+  _enemySpawnPositions: []

@@ -1,16 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
+using Sections;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class ControlPanel : MonoBehaviour
 {
-    [SerializeField] private SecretSectionDoorIn _secretSectionDoor;
-    
+    private Door _secretDoor;
+
+    private void Start()
+    {
+        _secretDoor = Section.Instance.SecretDoor;
+    }
+
     public void TryOpenSecretDoor()
     {
-        if (_secretSectionDoor.IsOpened) return;
-        if (!GameManager.Instance.TryUseKeyCard(1)) return;
-        _secretSectionDoor.Open();
+        if (_secretDoor.IsOpened || !MyGameManager.TryUseKeyCard(1))
+            return;
+        _secretDoor.Open();
     }
 }

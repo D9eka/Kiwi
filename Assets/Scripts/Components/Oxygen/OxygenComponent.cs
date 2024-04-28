@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sections;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,7 +11,7 @@ namespace Components.Oxygen
         [SerializeField] private float _maxOxygen;
         [SerializeField] private float _decreaseValue = 1f;
         [SerializeField] private float _decreaseTime = 1f;
-        [Space] [SerializeField] private UnityEvent _onRestore;
+        [Space][SerializeField] private UnityEvent _onRestore;
         [SerializeField] private UnityEvent _onEnd;
 
         private float _oxygen;
@@ -26,7 +27,8 @@ namespace Components.Oxygen
         private void Start()
         {
             Restore();
-            if (!CurrentSectionManager.Instance.IsOxygenWasting) return;
+            if (!Section.Instance.TypeSO.IsOxygenWasting)
+                return;
             StartCoroutine(Decrease());
         }
 

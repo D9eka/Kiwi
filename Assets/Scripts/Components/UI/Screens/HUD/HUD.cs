@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace Components.UI.Screens
+﻿namespace Components.UI.Screens
 {
     public class HUD : ScreenComponent
     {

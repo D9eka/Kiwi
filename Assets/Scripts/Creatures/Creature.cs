@@ -1,5 +1,4 @@
-﻿using Components.ColliderBased;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Creatures
 {

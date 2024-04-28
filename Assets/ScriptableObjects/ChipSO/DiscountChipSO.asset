@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1426e17ff26b4aed8678b8b04bfa6bc6, type: 3}
   m_Name: DiscountChipSO
   m_EditorClassIdentifier: 
-  _sprite: {fileID: 21300000, guid: a126179cbf009c642908136dc3065770, type: 3}
-  _name: "\u0421\u043A\u0438\u0434\u043A\u0430"
+  _sprite: {fileID: 21300000, guid: 26aff731decd6584fa613f822d6d7a9a, type: 3}
+  _name: "\u042D\u043A\u043E\u043D\u043E\u043C\u043D\u043E\u0441\u0442\u044C"
   _descriptions:
-  - "\u0421\u043A\u0438\u0434\u043A\u0430 1"
-  - "\u0421\u043A\u0438\u0434\u043A\u0430 2"
-  - "\u0421\u043A\u0438\u0434\u043A\u0430 3"
+  - "\u0421\u043D\u0438\u0436\u0430\u0435\u0442 \u0446\u0435\u043D\u044B \u043D\u0430
+    15%"
+  - "\u0421\u043D\u0438\u0436\u0430\u0435\u0442 \u0446\u0435\u043D\u044B \u043D\u0430
+    30%"
   _chipType: 1

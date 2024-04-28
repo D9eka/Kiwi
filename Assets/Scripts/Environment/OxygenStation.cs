@@ -1,8 +1,6 @@
+using Components.Interactables;
 using Components.Oxygen;
 using Creatures.Player;
-using System.Collections;
-using System.Collections.Generic;
-using Components.Interactables;
 using UnityEngine;
 
 public class OxygenStation : MonoBehaviour

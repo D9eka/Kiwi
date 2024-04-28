@@ -1,6 +1,5 @@
 ﻿using Creatures.Player;
 using System;
-using TMPro;
 using UnityEngine;
 
 namespace PermanentBuffs
@@ -35,7 +34,7 @@ namespace PermanentBuffs
 
         public void SpendEssence(int spentEssence)
         {
-            if (GameManager.Instance.TrySpendEssence(spentEssence))
+            if (MyGameManager.TrySpendEssence(spentEssence))
             {
                 SpentEssence += spentEssence;
                 OnChangeSpentEssence?.Invoke(this, EventArgs.Empty);

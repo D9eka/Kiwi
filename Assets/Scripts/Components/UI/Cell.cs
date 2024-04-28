@@ -14,7 +14,7 @@ namespace Components.UI
         {
             _icon.sprite = icon;
             _labelHandler.SetActive(needLabel);
-            if(needLabel)
+            if (needLabel)
                 _label.text = label;
         }
     }

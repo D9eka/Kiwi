@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class BrokenChip : PassiveChip
 {
     private const int MAX_LEVEL = 1;

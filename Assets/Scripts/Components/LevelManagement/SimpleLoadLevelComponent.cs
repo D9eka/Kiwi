@@ -1,12 +1,4 @@
-﻿using Components.UI;
-using Creatures.Player;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEditor.PackageManager.UI;
+﻿using Creatures.Player;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnComponents : MonoBehaviour
@@ -20,11 +18,11 @@ public class SpawnComponents : MonoBehaviour
     {
         int itemsCount = (int)Random.Range(_minItems, _maxItems);
 
-        for(int i = 0; i < itemsCount; i++)
+        for (int i = 0; i < itemsCount; i++)
         {
             Vector2 initialVelocity = new Vector2(Random.Range(_initialVelocityXMin, _initialVelocityXMax), Random.Range(_initialVelocityYMin, _initialVelocityYMax));
             GameObject item = Instantiate(_objectToSpawn, _target.position, Quaternion.identity);
             item.GetComponent<Rigidbody2D>().velocity = initialVelocity;
         }
-    }    
+    }
 }

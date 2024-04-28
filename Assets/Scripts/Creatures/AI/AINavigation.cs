@@ -1,10 +1,5 @@
-﻿using Creatures.Player;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Creatures.AI
@@ -14,10 +9,18 @@ namespace Creatures.AI
         [SerializeField] protected float _patrollingThreshold = 0.25f;
         [SerializeField] protected float _setTargetThreshold = 1.5f;
 
-        [Header("Patrolling")] [SerializeField]
-        protected GameObject[] _points;
+        [Header("Patrolling")]
+        [SerializeField] protected GameObject[] _points;
+        [Header("Chasing")]
+        [SerializeField] protected float _chasingOffset = 1f;
 
-        [Header("Chasing")] [SerializeField] protected float _chasingOffset = 1f;
+        protected bool _active;
+
+        public virtual void Initialize(GameObject[] points)
+        {
+            _points = points;
+            _active = true;
+        }
 
         public abstract void SetTarget(Vector2 target);
 

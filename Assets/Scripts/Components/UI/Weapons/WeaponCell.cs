@@ -1,6 +1,7 @@
 using Components.UI;
 using Components.UI.Screens;
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using Weapons;
@@ -21,20 +22,21 @@ public class WeaponCell : Cell
     private void Start()
     {
         WeaponController.Instance.OnStateChange += WeaponController_OnStateChange;
-
-        Initialize();
-        
+        StartCoroutine(
+                Initialize());
     }
 
-    private void Initialize()
+    private IEnumerator Initialize()
     {
+        yield return new WaitForFixedUpdate();
+
         SetCurrentWeapon();
         Button button = GetComponent<Button>();
         button.onClick.RemoveAllListeners();
-        if(_currentWeapon == null)
+        if (_currentWeapon == null)
         {
             Fill(null);
-            return;
+            yield break;
         }
 
         Fill(_currentWeapon.Data.Icon, _place == WeaponCellPlace.HUD, _currentWeapon.Label);
@@ -64,7 +66,7 @@ public class WeaponCell : Cell
 
     private void WeaponController_OnStateChange(object sender, WeaponController.WeaponPosition e)
     {
-        if(e == _weaponPosition)
-            Initialize();
+        if (e == _weaponPosition && gameObject.activeSelf)
+            StartCoroutine(Initialize());
     }
 }

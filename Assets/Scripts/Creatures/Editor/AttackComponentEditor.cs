@@ -1,6 +1,5 @@
 ﻿using UnityEditor;
 using static Creatures.AttackComponent;
-using static Weapons.Weapon;
 
 namespace Creatures.Enemy.Editor
 {

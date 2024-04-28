@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using UnityEngine;
 using static Weapons.WeaponSO;
@@ -12,7 +13,6 @@ namespace Weapons
         public WeaponSO Data => _data;
         public string Label { get; protected set; }
         public EventHandler OnChangeLabel;
-        [SerializeField] protected AudioClip _sound;
 
         protected Animator _animator;
 
@@ -26,7 +26,6 @@ namespace Weapons
             _timeBetweenAttacks += Time.deltaTime;
         }
 
-
         public virtual void Attack()
         {
             _currentDamage = _data.DamageType switch
@@ -35,6 +34,8 @@ namespace Weapons
                 WeaponDamageType.Random => Random.Range(_data.MinDamage, _data.MaxDamage),
                 _ => throw new NotImplementedException(),
             };
+            if (_data.Sound != null)
+                SoundManager.Instance.PlaySound(_data.Sound);
         }
     }
 }

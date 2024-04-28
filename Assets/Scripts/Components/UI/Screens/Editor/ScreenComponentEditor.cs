@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Components.UI.Screens.Editor
+﻿namespace Components.UI.Screens.Editor
 {
     public class ScreenComponentEditor : UnityEditor.Editor
     {

@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: GunSO
   m_EditorClassIdentifier: 
   _name: "\u041F\u0438\u0441\u0442\u043E\u043B\u0435\u0442"
+  _animKey: gun
   _description: 
   _icon: {fileID: 21300000, guid: 2a383338c2583f24eb5de90e278cac29, type: 3}
+  _sound: {fileID: 8300000, guid: f5b05ef81d8624547b753f39bf2703ad, type: 3}
   _price: 20
   _attackDelay: 0.5
   _damageTypeUI: "\u042D\u043D\u0435\u0440\u0433\u0435\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0439"
@@ -24,7 +26,7 @@ MonoBehaviour:
   _maxDamage: 0
   _type: 1
   _ammoCapacity: 5
-  _bulletSpeed: 3
+  _bulletSpeed: 10
   _bulletTTLSeconds: 5
   _maxAmount: 0
   _thrownDelay: 0

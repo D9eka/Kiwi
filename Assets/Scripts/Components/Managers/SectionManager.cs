@@ -1,166 +1,228 @@
+using Components.UI;
+using Components.UI.Screens;
+using DataService;
+using Extensions;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
-using Random = UnityEngine.Random;
 
 namespace Sections
 {
     public class SectionManager : MonoBehaviour
     {
-        [SerializeField] private List<SectionSO> _sections = new();
-
-        // [SerializeField] private SectionSO _secretSection;
-        [SerializeField] private SectionSO _startSection;
-
+        [SerializeField] private List<SectionSO> _sections;
+        [SerializeField] private SectionTypeSO _finalSectionType;
+        [SerializeField] private SectionTypeSO _secretSectionType;
 
         private List<SectionSO> _openedSections = new();
         private SectionSO _secretSection;
+        private bool _isInSecretSection;
+
+        private Dictionary<SectionTypeSO, List<SectionSO>> _sectionDictionary = new();
+
+        private bool _isLoading;
+
+        private const int INITIAL_SPAWN_POINTS = 30;
+        private const int MAX_ROOMS = 8;
+
+        public enum SectionSpawnPosition
+        {
+            Start,
+            End,
+            Secret
+        }
+
         public int OpenedSectionsCount => _openedSections.Count;
         public int CurrentSectionIndex { get; private set; }
+        public bool NeedStartWave { get; private set; }
 
-        private Dictionary<SectionTypeSO, List<SectionSO>> _usualSectionDictionary = new();
-        private List<SectionSO> _possibleSecretSections = new();
         public static SectionManager Instance { get; private set; }
-        public bool _wasSecretSectionFound;
+        public int SecretDoorSectionIndex = -1;
         public SectionTypeSO CurrentSectionType => _openedSections[CurrentSectionIndex].SectionTypeSO;
-
+        
+        public EventHandler OnStartLoadingSection;
+        public EventHandler OnFinishLoadingSection;
 
         private void Awake()
         {
+            if (Instance != null)
+            {
+                Destroy(gameObject);
+                return;
+            }
             Instance = this;
-            _openedSections.Add(_startSection);
         }
 
         private void Start()
         {
+            if (_openedSections.Count == 0)
+                _openedSections.Add(Section.Instance.Data);
             FillSectionsDictionary();
+            ChipRewardUI.Instance.OnPlayerChooseChip += ChipRewardUI_OnPlayerChooseChip;
         }
 
         private void FillSectionsDictionary()
         {
             foreach (var section in _sections)
             {
-                var sectionType = section.SectionTypeSO;
-
-                if (!_usualSectionDictionary.ContainsKey(sectionType))
-                    _usualSectionDictionary.Add(sectionType, new List<SectionSO>());
-
-                _usualSectionDictionary[sectionType].Add(section);
+                SectionTypeSO sectionType = section.SectionTypeSO;
+                if (!_sectionDictionary.ContainsKey(sectionType))
+                    _sectionDictionary.Add(sectionType, new List<SectionSO>());
+                _sectionDictionary[sectionType].Add(section);
             }
+        }
+
+        private void ChipRewardUI_OnPlayerChooseChip(object sender, EventArgs e)
+        {
+            List<SectionTypeSO> _possibleSectionTypes = GetRandomSectionTypes();
+            UIController.Instance.PushScreen(NextSectionSelectionUI.Instance);
+            NextSectionSelectionUI.Instance.SetTypes(_possibleSectionTypes);
+        }
+
+        public int GetSpawnPoints(SectionTypeSO sectionSO)
+        {
+            return INITIAL_SPAWN_POINTS + Mathf.RoundToInt(CurrentSectionIndex * 1.8f) + sectionSO.SpawnPointBonus;
+        }
+
+        private void LoadSection(SectionSO sectionSO, SectionSpawnPosition position)
+        {
+            if (_isLoading)
+                return;
+            _isLoading = true;
+            StartCoroutine(LoadSectionRoutine(sectionSO, position));
+        }
+
+        private IEnumerator LoadSectionRoutine(SectionSO sectionSO, SectionSpawnPosition position)
+        {
+            UIController.Instance.PushScreen(LoadingScreen.Instance);
+            yield return new WaitForSeconds(1f);
+            NeedStartWave = position == SectionSpawnPosition.Start;
+            Save();
+            Vector2 playerPosition = position switch
+            {
+                SectionSpawnPosition.Start => sectionSO.StartPosition,
+                SectionSpawnPosition.End => sectionSO.EndPosition,
+                SectionSpawnPosition.Secret => sectionSO.SecretPosition,
+                _ => throw new NotImplementedException()
+            };
+            OnStartLoadingSection?.Invoke(this, EventArgs.Empty);
+            new SceneManager().LoadScene(sectionSO.SectionName, playerPosition, position != SectionSpawnPosition.Start);
+            _isLoading = false;
         }
 
         public void EnterSecretSection()
         {
-            _secretSection ??= Randomiser.GetRandomElement(_possibleSecretSections);
-            SceneManager.LoadScene(_secretSection.SectionName);
+            _isInSecretSection = true;
+            _secretSection = _secretSection != null ? _secretSection : Randomiser.GetRandomElement(_sectionDictionary.Where(data => data.Key.SectionType == SectionType.Secret)
+                                                                                                                     .Select(data => data.Value)
+                                                                                                                     .First());
+            LoadSection(_secretSection, SectionSpawnPosition.Start);
         }
 
-        public void ExitSecretSection()
+        public void EnterPreviousSection()
         {
-            SceneManager.LoadScene(_openedSections[CurrentSectionIndex].SectionName);
+            if (CurrentSectionIndex < 1)
+                return;
+            if (!_isInSecretSection)
+                CurrentSectionIndex -= 1;
+            _isInSecretSection = false;
+            LoadSection(_openedSections[CurrentSectionIndex], SectionSpawnPosition.End);
         }
 
-        public void EnterNextNewSection(SectionSO sectionSO)
+        public void EnterNextSection()
         {
-            CurrentSectionIndex += 1;
-            _openedSections.Add(sectionSO);
-            SceneManager.LoadScene(sectionSO.SectionName);
-        }
-
-        public void EnterNextNewRandomSection(SectionTypeSO sectionType)
-        {
-            if (_wasSecretSectionFound)
-                EnterNextNewSection(Randomiser.GetRandomNotSecretSection(_usualSectionDictionary[sectionType]));
-            EnterNextNewSection(Randomiser.GetRandomElement(_usualSectionDictionary[sectionType]));
-        }
-
-        // public void EnterNextNewRandomSectionType(List<SectionTypeSO> sectionTypeList)
-        // {
-        //     EnterNextNewRandomSection(Randomiser.GetRandomElement(sectionTypeList));
-        // }
-
-        public void EnterNextOpenedSection()
-        {
-            CurrentSectionIndex += 1;
-            SceneManager.LoadScene(_openedSections[CurrentSectionIndex].SectionName);
-        }
-
-        public void EnterPreviousOpenedSection()
-        {
-            CurrentSectionIndex -= 1;
-            SceneManager.LoadScene(_openedSections[CurrentSectionIndex].SectionName);
-        }
-
-        public List<SectionTypeSO> GetRandomSectionTypes(int count)
-        {
-            if (count < 1)
+            if (CurrentSectionIndex < _openedSections.Count - 1 && _openedSections[CurrentSectionIndex + 1] != null)
             {
-                Debug.LogError("Count less than 1");
-                return new List<SectionTypeSO>();
+                CurrentSectionIndex += 1;
+                LoadSection(_openedSections[CurrentSectionIndex], SectionSpawnPosition.Start);
             }
-
-            if (count > 3)
+            else
             {
-                Debug.LogError("Count more than 3 ");
-                return new List<SectionTypeSO>();
+                UIController.Instance.PushScreen(ChipRewardUI.Instance);
             }
+        }
 
-            var finalSectionTypes = new List<SectionTypeSO>();
-            var keys = _usualSectionDictionary.Keys.ToList();
+        public void EnterNextSection(SectionTypeSO sectionTypeSO)
+        {
+            List<SectionSO> availableSections = _sectionDictionary[sectionTypeSO].Where(sectionSO => !_openedSections.Contains(sectionSO)).ToList();
+            if (availableSections.Count == 0)
+                availableSections = _sectionDictionary[sectionTypeSO];
+            _openedSections.Add(Randomiser.GetRandomElement(availableSections));
+            CurrentSectionIndex += 1;
+            LoadSection(_openedSections[CurrentSectionIndex], SectionSpawnPosition.Start);
+        }
+
+        private List<SectionTypeSO> GetRandomSectionTypes()
+        {
+            List<SectionTypeSO> finalSectionTypes = new List<SectionTypeSO>();
+            List<SectionTypeSO> keys = _sectionDictionary.Keys.ToList();
+            if (CurrentSectionIndex == MAX_ROOMS)
+            {
+                finalSectionTypes.Add(_finalSectionType);
+                return finalSectionTypes;
+            }
             keys.Remove(CurrentSectionType);
-            while (finalSectionTypes.Count < count)
-            {
-                var randomIndex = Random.Range(0, keys.Count);
-                var sectionType = keys[randomIndex];
-                finalSectionTypes.Add(sectionType);
-                keys.Remove(keys[randomIndex]);
-            }
-
-            return finalSectionTypes;
+            keys.Remove(_secretSectionType);
+            keys.Remove(_finalSectionType);
+            int count = Mathf.Min(3, keys.Count);
+            return Randomiser.GetRandomElements(keys, count);
         }
 
-        // public List<SectionTypeSO> GetRandomSectionTypesOld(int count)
-        // {
-        //     if (count < 1)
-        //     {
-        //         Debug.LogError("Count less than 1");
-        //         return new List<SectionTypeSO>();
-        //     }
-        //
-        //     if (count > 3)
-        //     {
-        //         Debug.LogError("Count more than 3 ");
-        //         return new List<SectionTypeSO>();
-        //     }
-        //
-        //     // Выглядит ужасно, но поскольку это вероятно не понадобится, пока что не заморачивался
-        //     var finalSectionTypes = new List<SectionTypeSO>();
-        //     var sectionTypeFirstIndex = Random.Range(0, _possibleRandomSectionTypes.Count);
-        //     var sectionTypeFirst = _possibleRandomSectionTypes[sectionTypeFirstIndex];
-        //     finalSectionTypes.Add(sectionTypeFirst);
-        //     if (count == 1) return finalSectionTypes;
-        //     var newPossibleRandomSectionTypes =
-        //         _possibleRandomSectionTypes.Take(sectionTypeFirstIndex)
-        //             .Concat(_possibleRandomSectionTypes.Skip(sectionTypeFirstIndex + 1)).ToList();
-        //     var sectionTypeSecondIndex = Random.Range(0, newPossibleRandomSectionTypes.Count);
-        //     var sectionTypeSecond = newPossibleRandomSectionTypes[sectionTypeSecondIndex];
-        //     finalSectionTypes.Add(sectionTypeSecond);
-        //     if (count == 2) return finalSectionTypes;
-        //     newPossibleRandomSectionTypes =
-        //         newPossibleRandomSectionTypes.Take(sectionTypeSecondIndex)
-        //             .Concat(newPossibleRandomSectionTypes.Skip(sectionTypeSecondIndex + 1)).ToList();
-        //     var sectionTypeThirdIndex = Random.Range(0, newPossibleRandomSectionTypes.Count);
-        //     var sectionTypeThird = newPossibleRandomSectionTypes[sectionTypeThirdIndex];
-        //     finalSectionTypes.Add(sectionTypeThird);
-        //     return finalSectionTypes;
-        // }
         [ContextMenu(nameof(ShowCurrentSection))]
         public void ShowCurrentSection()
         {
             Debug.Log(_openedSections[0]);
         }
+
+        private void Save()
+        {
+            /*
+            SectionManagerData data = new SectionManagerData(_openedSections, CurrentSectionIndex, NeedStartWave, SecretDoorSectionIndex);
+            JsonDataService.Save(data);
+            */
+            SectionManagerData.OpenedSections = _openedSections;
+            SectionManagerData.CurrentSectionIndex = CurrentSectionIndex;
+            SectionManagerData.NeedStartWave = NeedStartWave;
+            SectionManagerData.SecretDoorSectionIndex = SecretDoorSectionIndex;
+        }
+
+        private void Load()
+        {
+            /*
+            if (JsonDataService.TryLoad(this, out SectionManagerData data))
+            {
+                _openedSections = data.OpenedSections;
+                CurrentSectionIndex = data.CurrentSectionIndex;
+                NeedStartWave = data.NeedStartWave;
+                SecretDoorSectionIndex = data.SecretDoorSectionIndex;
+            }
+            */
+            if (SectionManagerData.OpenedSections != null)
+            {
+                _openedSections = SectionManagerData.OpenedSections;
+                CurrentSectionIndex = SectionManagerData.CurrentSectionIndex;
+                NeedStartWave = SectionManagerData.NeedStartWave;
+                SecretDoorSectionIndex = SectionManagerData.SecretDoorSectionIndex;
+            }
+        }
+    }
+
+    public static class SectionManagerData
+    {
+        public static List<SectionSO> OpenedSections;
+        public static int CurrentSectionIndex;
+        public static bool NeedStartWave;
+        public static int SecretDoorSectionIndex;
+        /*
+        public SectionManagerData(List<SectionSO> openedSections, int currentSectionIndex, bool needStartWave, int secretDoorSectionIndex)
+        {
+            OpenedSections = openedSections;
+            CurrentSectionIndex = currentSectionIndex;
+            NeedStartWave = needStartWave;
+            SecretDoorSectionIndex = secretDoorSectionIndex;
+        }*/
     }
 }

@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 2830936069182280467}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.45, y: -0.51, z: 0}
+  m_LocalPosition: {x: -0.647, y: 0.566, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -156,8 +156,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0b516d732de1cbf44867d40e87c2c96d, type: 3}
+  m_SortingOrder: 4
+  m_Sprite: {fileID: 21300000, guid: 347d4c91c3451e944a527fe78d35a9a1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -200,8 +200,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.46118295}
-  m_Size: {x: 1, y: 1.0776341}
+  m_Offset: {x: 0, y: 0.73}
+  m_Size: {x: 1, y: 1.5}
   m_Direction: 0
 --- !u!95 &5157090810912696113
 Animator:
@@ -411,7 +411,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 1987677056260318556}
-  _objectToSpawn: {fileID: 223535218090536803, guid: 028f6d403b5201944a773a764d76e714, type: 3}
+  _objectToSpawn: {fileID: 571944651108015522, guid: a2fbdf33fcfdc6144b701e7ebb960469, type: 3}
   _minItems: 3
   _maxItems: 4
   _initialVelocityXMin: 1
@@ -431,8 +431,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _visual: {fileID: 4373071457283724453}
-  _invertScale: 0
+  _invertScale: 1
   _speed: 5
+  _spawnPointPrice: 0
   _initialState: 1
   _vision: {fileID: 848398845337105280}
   _attacks:
@@ -501,7 +502,7 @@ Transform:
   m_GameObject: {fileID: 6271914966453204056}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4, y: -0.4, z: 0}
+  m_LocalPosition: {x: -5.33, y: 1.85, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -550,7 +551,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 10, y: 1.23}
+  m_Size: {x: 15, y: 4}
   m_EdgeRadius: 0
 --- !u!114 &848398845337105280
 MonoBehaviour:
@@ -638,7 +639,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4342157715527689863, guid: 7d7da8e7c44548741943d61e88901edb, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.7
+      value: 1.923
       objectReference: {fileID: 0}
     - target: {fileID: 4342157715527689863, guid: 7d7da8e7c44548741943d61e88901edb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

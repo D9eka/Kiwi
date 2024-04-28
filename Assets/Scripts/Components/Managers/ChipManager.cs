@@ -23,7 +23,6 @@ public class ChipManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        // DontDestroyOnLoad(gameObject);
     }
 
     private void Update()
@@ -36,7 +35,6 @@ public class ChipManager : MonoBehaviour
 
     public void ObtainChip(ChipSO chipSO)
     {
-        // var chip = chipSO.Chip;
         var chip = ChipCreator.Create(chipSO);
         _obtainedChips.Add(chip);
         if (chip is not BrokenChip) _possibleChips.Remove(chipSO);

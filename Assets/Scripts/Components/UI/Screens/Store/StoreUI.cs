@@ -1,10 +1,11 @@
 using Components.UI.Cards;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using Weapons;
 
 namespace Components.UI.Screens.Store
@@ -16,7 +17,7 @@ namespace Components.UI.Screens.Store
         [SerializeField] private List<Weapon> _possibleWeaponList;
         [SerializeField] private GameObject _soldPhrase;
 
-        private List<Weapon> weaponsList = new();
+        private List<Weapon> _weaponsList = new();
         private int _currentIndex;
         private bool _canChangeProduct = StatsModifier.CanChangeReward;
         private const int CHANGE_PRODUCT_COST = 5;
@@ -31,54 +32,41 @@ namespace Components.UI.Screens.Store
         protected override void Start()
         {
             base.Start();
-            GenerateWeapons();
+            StartCoroutine(GenerateWeapons());
         }
 
-        protected override void FillEventButtons()
+        private IEnumerator GenerateWeapons()
         {
-            if (_haveEventButtons)
-            {
-                foreach (Transform go in _eventsHandler.GetComponentsInChildren<Transform>())
-                    Destroy(go.gameObject);
+            yield return new WaitForFixedUpdate();
+            Weapon[] equippedWeapons = WeaponController.Instance.EquippedWeapons;
+            List<Weapon> allowedWeapons = _possibleWeaponList.Where(weapon => !equippedWeapons.Contains(weapon)).ToList();
 
-                if (_cancelEvent != null)
-                    CreateEventButton(CANCEL_EVENT_KEY, _cancelEvent);
-                if (_additionlEvent != null && _canChangeProduct)
-                    CreateEventButton(ADDITIONAL_EVENT_KEY, _additionlEvent);
-                if (_confirmEvent != null)
-                    CreateEventButton(CONFIRM_EVENT_KEY, _confirmEvent);
-            }
-        }
-
-        private void GenerateWeapons()
-        {
-            var consumableWeapons =
-                Randomiser.GetRandomElements(_possibleWeaponList.FindAll(
-                    weapon => weapon.Data.Type == WeaponSO.WeaponType.Trap), _consumableWeaponsCount);
-            var notConsumableWeapons = Randomiser.GetRandomElements(_possibleWeaponList.FindAll(
-                weapon => weapon.Data.Type != WeaponSO.WeaponType.Trap), _cardsList.Count - _consumableWeaponsCount - 1);
-            
-            var i = 0;
-            foreach (var card in _cardsList)
+            _weaponsList = new List<Weapon>();
+            for (int i = 0; i < _cardsList.Count; i++)
             {
-                if (i < notConsumableWeapons.Count)
+                Weapon weapon;
+                List<Weapon> traps = allowedWeapons.Where(weapon => weapon.Data.Type == WeaponSO.WeaponType.Trap).ToList();
+                List<Weapon> otherWeapon = allowedWeapons.Where(weapon => weapon.Data.Type != WeaponSO.WeaponType.Trap).ToList();
+                if (_cardsList.Count - i - 1 < _consumableWeaponsCount && traps.Count > 0)
                 {
-                    weaponsList.Add(notConsumableWeapons[i]);
-                    card.Fill(notConsumableWeapons[i], true);
-                    i++;
-                    continue;
+                    weapon = Randomiser.GetRandomElement(traps);
                 }
+                else
+                {
+                    weapon = Randomiser.GetRandomElement(otherWeapon);
+                }
+                _weaponsList.Add(weapon);
+                allowedWeapons.Remove(weapon);
 
-                weaponsList.Add(consumableWeapons[i - notConsumableWeapons.Count]);
-                card.Fill(consumableWeapons[i - notConsumableWeapons.Count], true);
+                _cardsList[i].Fill(weapon);
+                _cardsList[i].GetComponent<Button>().onClick.RemoveAllListeners();
+                _cardsList[i].GetComponent<Button>().onClick.AddListener(() => TryBuy(i));
             }
         }
 
         public void TryChangeProduct()
         {
-            if (!_canChangeProduct) 
-                return;
-            if (!GameManager.Instance.TrySpendEssence(CHANGE_PRODUCT_COST)) 
+            if (!_canChangeProduct || !MyGameManager.TrySpendEssence(CHANGE_PRODUCT_COST))
                 return;
             GenerateWeapons();
         }
@@ -86,21 +74,14 @@ namespace Components.UI.Screens.Store
         public void TryBuy()
         {
             if (EventSystem.current.currentSelectedGameObject.TryGetComponent(out CardUI card))
-                TryBuy(card);
+                TryBuy(_cardsList.IndexOf(card));
         }
 
-        public void TryBuy(CardUI card)
+        public void TryBuy(int weaponIndex)
         {
-            _currentIndex = _cardsList.IndexOf(card);
-            if (!GameManager.Instance.CanSpendEssence(weaponsList[_currentIndex].Data.Price))
+            if (!MyGameManager.CanSpendEssence(_weaponsList[weaponIndex].Data.Price))
                 return;
-            WeaponController.Instance.TryEquipWeapon(weaponsList[_currentIndex]);
-        }
-
-        public override void Exit()
-        {
-            Trader.Instance.Disable();
-            base.Exit();
+            WeaponController.Instance.TryEquipWeapon(_weaponsList[weaponIndex]);
         }
 
         private void ShowSoldOut()
@@ -110,11 +91,11 @@ namespace Components.UI.Screens.Store
 
         public void Buy()
         {
-            GameManager.Instance.TrySpendEssence(weaponsList[_currentIndex].Data.Price);
+            MyGameManager.TrySpendEssence(_weaponsList[_currentIndex].Data.Price);
             _cardsList[_currentIndex].gameObject.SetActive(false);
             _canChangeProduct = false;
             var isAnyNotSold = _cardsList.Any(cardUI => cardUI.isActiveAndEnabled);
-            if (!isAnyNotSold) 
+            if (!isAnyNotSold)
                 ShowSoldOut();
         }
     }

@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using Creatures.Enemy;
 using UnityEngine;
 
 public class BossVisual : MonoBehaviour
@@ -7,13 +6,23 @@ public class BossVisual : MonoBehaviour
     [SerializeField] SpawnComponents _attack2Spawner;
     [SerializeField] SpawnComponents _attack5Spawner;
 
+    public void StartAttack1()
+    {
+        transform.parent.GetComponent<BossEnemyController>().Attack1();
+    }
+
     public void Attack2Spawn()
     {
         _attack2Spawner.Spawn();
+    }
+
+    public void Attack3Invoke()
+    {
+        MyGameManager.InvertGravity();
     }
 
     public void Attack5Spawn()
     {
         _attack5Spawner.Spawn();
     }
- }
+}

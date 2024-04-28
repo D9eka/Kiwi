@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 namespace Components.Interactables
@@ -8,32 +7,12 @@ namespace Components.Interactables
     {
         [SerializeField] private UnityEvent _action;
         [SerializeField] private GameObject _hintUI;
-        [SerializeField] private CurrentSectionManager _currentSectionManager;
-        [SerializeField] private bool _canBeInteracted;
-
-        private void Awake()
-        {
-            if (_currentSectionManager is not null)
-                _currentSectionManager.OnBattleOver += OnBattleOver;
-        }
-
-        private void Start()
-        {
-            if (_currentSectionManager is null)
-            {
-                _currentSectionManager ??= CurrentSectionManager.Instance;
-                _currentSectionManager.OnBattleOver += OnBattleOver;
-            }
-        }
-
-        private void OnBattleOver(object sender, EventArgs e)
-        {
-            Activate();
-        }
+        [SerializeField] private bool _canBeInteracted = true;
 
         public void TryInteract()
         {
-            if (!_canBeInteracted) return;
+            if (!_canBeInteracted)
+                return;
             _action?.Invoke();
             Debug.Log(name + "interacted");
         }
@@ -47,6 +26,11 @@ namespace Components.Interactables
         public void Activate(bool isActivated = true)
         {
             _canBeInteracted = isActivated;
+        }
+
+        public void Deactivate()
+        {
+            _canBeInteracted = false;
         }
     }
 }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Components.Health;
 using Components.Interactables;
 using Creatures.Player;
@@ -12,7 +10,7 @@ public class MedicalStation : MonoBehaviour
 
     public void TryRestoreHealth(int cost)
     {
-        if (_usesCount <= 0 || !GameManager.Instance.TrySpendEssence(cost))
+        if (_usesCount <= 0 || !MyGameManager.TrySpendEssence(cost))
             return;
         if (PlayerController.Instance.TryGetComponent<HealthComponent>(out var healthComponent))
         {

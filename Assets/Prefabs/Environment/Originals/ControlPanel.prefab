@@ -177,7 +177,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4142bbcd8a9d15e4c9450cb1013e3bb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _secretSectionDoor: {fileID: 0}
 --- !u!114 &1728888594106954582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,7 +194,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7144983599529496334}
         m_TargetAssemblyTypeName: ControlPanel, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: TryOpenSecretDoor
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -206,6 +205,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   _hintUI: {fileID: 589993739964691}
+  _canBeInteracted: 1
 --- !u!1001 &4987314084735567143
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -214,6 +214,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8261588817296831159}
     m_Modifications:
+    - target: {fileID: 69772289588402133, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 542869935550734785, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 542869935550734785, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 2.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 542869935550734785, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.915
+      objectReference: {fileID: 0}
+    - target: {fileID: 542869935550734785, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.00000011920929
+      objectReference: {fileID: 0}
     - target: {fileID: 4411661053117704302, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -240,7 +260,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4411661053117704302, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 2.1
+      value: 2.6472
       objectReference: {fileID: 0}
     - target: {fileID: 4411661053117704302, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
       propertyPath: m_SizeDelta.y
@@ -297,6 +317,18 @@ PrefabInstance:
     - target: {fileID: 4986724095694279732, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
       propertyPath: m_Name
       value: InteractableUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 4986724095694279732, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7352129922303584613, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
+      propertyPath: m_text
+      value: "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0434\u0432\u0435\u0440\u044C"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8422808490391758182, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.0902004
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

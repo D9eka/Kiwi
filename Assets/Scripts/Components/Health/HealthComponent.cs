@@ -1,5 +1,5 @@
-﻿using System;
-using Creatures.Player;
+﻿using Creatures.Player;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -33,7 +33,7 @@ namespace Components.Health
             });
             if (TryGetComponent(out PlayerController playerController))
             {
-                _onDamage.AddListener(() => SoundManager.Instance.PlaySound(SoundManager.Instance._takeDamageSound));
+                //_onDamage.AddListener(() => SoundManager.Instance.PlaySound(SoundManager.Instance._takeDamageSound));
             }
         }
 

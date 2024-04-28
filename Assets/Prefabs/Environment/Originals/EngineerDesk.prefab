@@ -177,7 +177,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e73e37e2adc5d674296a1f3fbe5aa001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _chipUpgradeMenuUI: {fileID: 0}
 --- !u!114 &1510927058031339507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,7 +194,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1985522551236471152}
         m_TargetAssemblyTypeName: EngineerDesk, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: OpenChipUpgradeMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -206,6 +205,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   _hintUI: {fileID: 8758596451525720405}
+  _canBeInteracted: 1
 --- !u!1001 &4375438583810682209
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -214,6 +214,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7430852466543548756}
     m_Modifications:
+    - target: {fileID: 69772289588402133, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 542869935550734785, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 2.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 542869935550734785, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.158
+      objectReference: {fileID: 0}
     - target: {fileID: 4411661053117704302, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -240,7 +252,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4411661053117704302, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 2.1
+      value: 2.6
       objectReference: {fileID: 0}
     - target: {fileID: 4411661053117704302, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
       propertyPath: m_SizeDelta.y
@@ -280,7 +292,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4411661053117704302, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.84399414
+      value: -0.13
       objectReference: {fileID: 0}
     - target: {fileID: 4411661053117704302, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -297,6 +309,18 @@ PrefabInstance:
     - target: {fileID: 4986724095694279732, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
       propertyPath: m_Name
       value: InteractableUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 4986724095694279732, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7352129922303584613, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
+      propertyPath: m_text
+      value: "\u0423\u043B\u0443\u0447\u0448\u0438\u0442\u044C \u0447\u0438\u043F\u044B"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8422808490391758182, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.0836
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

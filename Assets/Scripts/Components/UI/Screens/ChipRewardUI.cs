@@ -1,7 +1,9 @@
 using Components.UI.Cards;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Components.UI.Screens
 {
@@ -13,6 +15,8 @@ namespace Components.UI.Screens
         private bool _canChangeProduct = StatsModifier.CanChangeReward;
         private const int CHANGE_PRODUCT_COST = 5;
 
+
+        public EventHandler OnPlayerChooseChip;
         public static ChipRewardUI Instance { get; private set; }
 
         private void Awake()
@@ -20,26 +24,16 @@ namespace Components.UI.Screens
             Instance = this;
         }
 
-        protected override void FillEventButtons()
+        protected override void Start()
         {
-            if (_haveEventButtons)
-            {
-                foreach (Transform go in _eventsHandler.GetComponentsInChildren<Transform>())
-                    Destroy(go.gameObject);
-
-                if (_cancelEvent != null)
-                    CreateEventButton(CANCEL_EVENT_KEY, _cancelEvent);
-                if (_additionlEvent != null && _canChangeProduct)
-                    CreateEventButton(ADDITIONAL_EVENT_KEY, _additionlEvent);
-                if (_confirmEvent != null)
-                    CreateEventButton(CONFIRM_EVENT_KEY, _confirmEvent);
-            }
+            base.Start();
+            GenerateChips();
         }
 
         private void GenerateChips()
         {
             _chips = Randomiser.GetRandomElements(ChipManager.Instance.PossibleChips, _cards.Count);
-            for (int i = 0; i < _cards.Count; i++) 
+            for (int i = 0; i < _cards.Count; i++)
             {
                 _cards[i].Fill(_chips[i]);
             }
@@ -47,9 +41,7 @@ namespace Components.UI.Screens
 
         public void TryChangeProduct()
         {
-            if (!_canChangeProduct)
-                return;
-            if (!GameManager.Instance.TrySpendEssence(CHANGE_PRODUCT_COST))
+            if (!_canChangeProduct || !MyGameManager.TrySpendEssence(CHANGE_PRODUCT_COST))
                 return;
             GenerateChips();
         }
@@ -57,19 +49,13 @@ namespace Components.UI.Screens
         public void Obtain()
         {
             if (EventSystem.current.currentSelectedGameObject.TryGetComponent(out CardUI card))
-                Obtain(card);
+                Obtain(_cards.IndexOf(card));
         }
 
-        public void Obtain(CardUI card)
+        public void Obtain(int chipIndex)
         {
-            ChipManager.Instance.ObtainChip(_chips[_cards.IndexOf(card)]);
-            UIController.Instance.PopScreen();
-        }
-
-        public void ShowReward()
-        {
-            GenerateChips();
-            UIController.Instance.PushScreen(this);
+            ChipManager.Instance.ObtainChip(_chips[chipIndex]);
+            OnPlayerChooseChip?.Invoke(this, EventArgs.Empty);
         }
     }
 }

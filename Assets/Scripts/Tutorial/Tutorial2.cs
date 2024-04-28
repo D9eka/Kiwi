@@ -1,9 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Components.UI.Dialogs;
+
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Tutorial2 : MonoBehaviour
 {

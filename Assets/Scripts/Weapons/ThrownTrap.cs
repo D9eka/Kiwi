@@ -8,7 +8,7 @@ namespace Weapons
     public class ThrownTrap : MonoBehaviour
     {
         [SerializeField] private CircleCollider2D _attackRange;
-		[SerializeField] protected AudioClip _sound;
+        [SerializeField] protected AudioClip _sound;
 
         private Rigidbody2D _rigidbody;
         private Animator _animator;
@@ -25,7 +25,7 @@ namespace Weapons
         }
 
         public void Initialize(float damage, float attackDelay, TrapDestroyType destroyType, float ttl, Vector2 force)
-        { 
+        {
             _damage = damage;
             _destroyType = destroyType;
 
@@ -50,7 +50,7 @@ namespace Weapons
             if (_destroyType == TrapDestroyType.TimeLimit)
                 damage += (_damage / 2) * colliders.Count(collider => collider.GetComponent<ThrownTrap>() != null);
 
-            foreach (Collider2D collider in colliders.Where(collider => 
+            foreach (Collider2D collider in colliders.Where(collider =>
                      !collider.isTrigger && collider.GetComponentInParent<HealthComponent>() != null))
             {
                 collider.GetComponentInParent<HealthComponent>().ModifyHealth(-damage);

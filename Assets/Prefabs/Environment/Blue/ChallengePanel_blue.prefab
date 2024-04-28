@@ -8,6 +8,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3369725520338611807, guid: 9c1d683ed56344c43887a5800f33deae, type: 3}
+      propertyPath: _action.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7683500997803217802}
+    - target: {fileID: 3369725520338611807, guid: 9c1d683ed56344c43887a5800f33deae, type: 3}
+      propertyPath: _action.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TryActivateChallenge
+      objectReference: {fileID: 0}
     - target: {fileID: 6176344462988468312, guid: 9c1d683ed56344c43887a5800f33deae, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.58
@@ -50,10 +58,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8695812244056713954, guid: 9c1d683ed56344c43887a5800f33deae, type: 3}
       propertyPath: m_Name
-      value: ChallengePanel Variant
+      value: ChallengePanel_blue
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c1d683ed56344c43887a5800f33deae, type: 3}
+--- !u!114 &7683500997803217802 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4670388895675801054, guid: 9c1d683ed56344c43887a5800f33deae, type: 3}
+  m_PrefabInstance: {fileID: 3058448300526325332}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6d9c440d76d8844f96166689d6fa08a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

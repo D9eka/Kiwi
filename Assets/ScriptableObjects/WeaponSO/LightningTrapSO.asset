@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: LightningTrapSO
   m_EditorClassIdentifier: 
   _name: "\u041B\u043E\u0432\u0443\u0448\u043A\u0430 \u043C\u043E\u043B\u043D\u0438\u044F"
+  _animKey: lightning-trap
   _description: "\u041E\u0441\u043E\u0431\u0435\u043D\u043D\u043E\u0441\u0442\u044C:
     \u0435\u0441\u043B\u0438 \u0440\u044F\u0434\u043E\u043C \u0435\u0441\u0442\u044C
     \u0442\u0430\u043A\u0430\u044F \u0436\u0435 \u043B\u043E\u0432\u0443\u0448\u043A\u0430(\u043A\u0438),
     \u0443\u0440\u043E\u043D \u0443\u0432\u0435\u043B\u0438\u0447\u0438\u0432\u0430\u0435\u0442\u0441\u044F."
   _icon: {fileID: 21300000, guid: 522a01ef38248364da55ff66e34637d9, type: 3}
+  _sound: {fileID: 0}
   _price: 25
   _attackDelay: 2
   _damageTypeUI: "\u042D\u043D\u0435\u0440\u0433\u0435\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0439"
@@ -29,6 +31,7 @@ MonoBehaviour:
   _ammoCapacity: 0
   _bulletSpeed: 0
   _bulletTTLSeconds: 0
+  _thrownTrapSound: {fileID: 8300000, guid: a7cd00f02b493a345a94b71dddb30a8d, type: 3}
   _maxAmount: 6
   _thrownDelay: 1
   _destroyType: 1
