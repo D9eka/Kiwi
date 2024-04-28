@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Creatures.Enemy
+﻿namespace Creatures.Enemy
 {
     public class KamikazeEnemyController : EnemyController
     {
@@ -24,11 +18,6 @@ namespace Creatures.Enemy
             base.OnAttack();
 
             Destroy(gameObject);
-        }
-
-        private void OnDestroy()
-        {
-            GetComponent<SpawnComponents>().Spawn();
         }
     }
 }

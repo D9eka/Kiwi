@@ -1,6 +1,7 @@
 using Components.ColliderBased;
 using Components.Health;
 using Extensions;
+using Player;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -13,11 +14,11 @@ namespace Creatures.Player
     [RequireComponent(typeof(HealthComponent))]
     public class PlayerController : Creature
     {
-        [Header("Checkers")] 
+        [Header("Checkers")]
         [SerializeField] private LayerCheck _groundCheck;
         [SerializeField] private CheckCircleOverlap _interactionCheck;
 
-        [Header("Jump")] 
+        [Header("Jump")]
         [SerializeField] private float _jumpForce;
 
         [Header("Dash")]
@@ -26,6 +27,12 @@ namespace Creatures.Player
         [SerializeField] private float _dashCooldown;
         [SerializeField] private AttackComponent _dashAttack;
 
+        [Header("Attack")]
+        [SerializeField] private AttackComponent _punchAttack;
+        [SerializeField] private Transform _weaponHandler;
+        [SerializeField] private Transform _thrownTrapHandler;
+
+        private PlayerVisual _playerVisual;
         private HealthComponent _health;
 
         private float _initialGravity;
@@ -35,11 +42,23 @@ namespace Creatures.Player
         private bool _canDashAttack;
         private bool _isDashing;
 
-        private Weapon _activeWeapon => WeaponController.Instance.CurrentWeapon;
+        private Weapon _activeWeapon => WeaponController.Instance?.CurrentWeapon;
 
         private const string IS_ON_GROUND_KEY = "is-on-ground";
+        private const string JUMP_KEY = "jump";
+        private const string ENTER_LADDER_KEY = "enter-ladder";
+        private const string EXIT_LADDER_KEY = "exit-ladder";
+        private const string IS_ON_LADDER_KEY = "is-on-ladder";
 
+        private const string ATTACK_KEY = "attack";
+        private const string RELOAD_KEY = "reload";
+
+        public Transform WeaponHandler => _weaponHandler;
+        public Transform ThrownTrapHandler => _thrownTrapHandler;
+        public PlayerVisual Visual => _playerVisual;
         public bool Active { get; private set; }
+
+        public EventHandler<bool> OnChangeLadderState;
 
         public static PlayerController Instance { get; private set; }
 
@@ -54,6 +73,7 @@ namespace Creatures.Player
 
             Instance = this;
 
+            _playerVisual = _visual.GetComponent<PlayerVisual>();
             _health = GetComponent<HealthComponent>();
 
             Active = true;
@@ -71,6 +91,8 @@ namespace Creatures.Player
 
             inputReader.OnAttack += PlayerInputReader_OnAttack;
             inputReader.OnWeaponReload += PlayerInputReader_OnWeaponReload;
+
+            _playerVisual.OnFinishPuchAttackAnimation += PlayerVisual_OnPunchAnimationEnd;
         }
 
         #region Events
@@ -99,21 +121,41 @@ namespace Creatures.Player
 
         private void PlayerInputReader_OnAttack(object sender, EventArgs e)
         {
-            if (!_isOnLadder && _activeWeapon != null && _activeWeapon.gameObject.activeSelf)
+            if (_isOnLadder)
+                return;
+            if (_activeWeapon != null && _activeWeapon.gameObject.activeSelf)
+            {
                 _activeWeapon.Attack();
+                if (_activeWeapon is Melee || (_activeWeapon is Trap trap && trap.Amount > 0))
+                {
+                    _animator.SetTrigger($"{_activeWeapon.Data.AnimKey}-{ATTACK_KEY}");
+                }
+            }
+            else if (_punchAttack.CanAttack)
+                _animator.SetTrigger(_punchAttack.Attack());
         }
 
         private void PlayerInputReader_OnWeaponReload(object sender, EventArgs e)
         {
             if (_activeWeapon != null && _activeWeapon is Gun gun)
-                gun.Reload();
+            {
+                _animator.SetTrigger($"{gun.Data.AnimKey}-{RELOAD_KEY}");
+            }
         }
 
+        private void PlayerVisual_OnPunchAnimationEnd(object sender, EventArgs e)
+        {
+            foreach(HealthComponent health in _punchAttack.OnAttack())
+            {
+                if (health != _health)
+                    health.ModifyHealth(_punchAttack.Damage);
+            }
+        }
         #endregion
 
         protected override void Update()
         {
-            if(_isDashing)
+            if (_isDashing)
                 return;
 
             _isGrounded = _groundCheck.IsTouchingLayer;
@@ -127,7 +169,7 @@ namespace Creatures.Player
         protected override void Move()
         {
             float xVelocity = _direction.x * _speed;
-            float yVelocity = _isOnLadder ? _direction.y * _speed * GameManager.Instance.Gravity : _rigidbody.velocity.y;
+            float yVelocity = _isOnLadder ? _direction.y * _speed * MyGameManager.Gravity : _rigidbody.velocity.y;
             _rigidbody.velocity = new Vector2(xVelocity, yVelocity);
         }
 
@@ -135,7 +177,8 @@ namespace Creatures.Player
         {
             if (_isGrounded || _isOnLadder)
             {
-                _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, GameManager.Instance.Gravity * _jumpForce);
+                _animator.SetTrigger(JUMP_KEY);
+                _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, MyGameManager.Gravity * _jumpForce);
             }
         }
 
@@ -180,7 +223,10 @@ namespace Creatures.Player
         public void SetLadderState(bool state)
         {
             _isOnLadder = state;
-            _rigidbody.gravityScale = _isOnLadder ? 0 : _initialGravity * GameManager.Instance.Gravity;
+            _animator.SetTrigger(_isOnLadder ? ENTER_LADDER_KEY : EXIT_LADDER_KEY);
+            _animator.SetBool(IS_ON_LADDER_KEY, _isOnLadder);
+            _rigidbody.gravityScale = _isOnLadder ? 0 : _initialGravity * MyGameManager.Gravity;
+            OnChangeLadderState?.Invoke(this, _isOnLadder);
         }
 
         public PlayerData GetPlayerData()

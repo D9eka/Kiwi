@@ -1,6 +1,4 @@
 using Creatures.Player;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LookAtPlayerController : MonoBehaviour
@@ -16,7 +14,7 @@ public class LookAtPlayerController : MonoBehaviour
 
     private void Update()
     {
-        float scaleX = invertScale ? - Mathf.Abs(transform.localScale.x) : Mathf.Abs(transform.localScale.x);
+        float scaleX = invertScale ? -Mathf.Abs(transform.localScale.x) : Mathf.Abs(transform.localScale.x);
         transform.localScale = new Vector2(
             transform.position.x < player.position.x ? scaleX : -scaleX,
             transform.localScale.y);

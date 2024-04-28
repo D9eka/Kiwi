@@ -1,11 +1,6 @@
-﻿using Creatures;
-using Creatures.AI;
-using Creatures.Enemy;
-using Creatures.Player;
-using Pathfinding;
+﻿using Creatures.Player;
 using System;
 using System.Collections;
-using System.Linq;
 using UnityEngine;
 
 namespace Creatures.AI
@@ -44,7 +39,7 @@ namespace Creatures.AI
 
         private void Update()
         {
-            if (!_followEnabled || Vector2.Distance(transform.position, _target) < _threshold)
+            if (!_active && !_followEnabled || Vector2.Distance(transform.position, _target) < _threshold)
             {
                 _creature.SetDirection(Vector2.zero);
                 return;
@@ -68,6 +63,9 @@ namespace Creatures.AI
 
         private IEnumerator DoPatrol()
         {
+            if (!_active)
+                yield return new WaitUntil(() => _active == true);
+
             _target = _points[_patrollingPointIndex].transform.position;
             while (enabled)
             {
@@ -82,18 +80,6 @@ namespace Creatures.AI
 
         public override Vector2 GetChasingPoint()
         {
-            if (PlayerController.Instance.transform.position.x < _points[0].transform.position.x)
-            {
-                OnChasing?.Invoke(this, false);
-                return _points[0].transform.position;
-            }
-
-            if (PlayerController.Instance.transform.position.x > _points[^1].transform.position.x)
-            {
-                OnChasing?.Invoke(this, false);
-                return _points[^1].transform.position;
-            }
-
             OnChasing?.Invoke(this, true);
             return new Vector2(PlayerController.Instance.transform.position.x - _chasingOffset * transform.localScale.x,
                                transform.position.y);

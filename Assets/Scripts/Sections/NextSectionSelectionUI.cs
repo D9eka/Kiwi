@@ -1,62 +1,56 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Components.UI.Cards;
 using Sections;
-using TMPro;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class NextSectionSelectionUI : MonoBehaviour
+namespace Components.UI.Screens
 {
-    [SerializeField] private SectionBlockUI _leftChoiceBlock;
-    [SerializeField] private SectionBlockUI _centerChoiceBlock;
-    [SerializeField] private SectionBlockUI _rightChoiceBlock;
-    private int _count;
-    public static NextSectionSelectionUI Instance { get; private set; }
-
-    private void Awake()
+    public class NextSectionSelectionUI : ScreenComponent
     {
-        Instance = this;
-    }
+        [SerializeField] private List<CardUI> _cardsList;
 
-    private void Start()
-    {
-        gameObject.SetActive(false);
-    }
+        private SectionTypeSO[] _sectionTypes;
+        public static NextSectionSelectionUI Instance { get; private set; }
 
-    public void ShowChoice()
-    {
-        gameObject.SetActive(true);
-    }
-
-    public void SetTypes(List<SectionTypeSO> sectionTypes)
-    {
-        _count = sectionTypes.Count;
-        switch (_count)
+        private void Awake()
         {
-            case 1:
-                Destroy(_leftChoiceBlock.gameObject);
-                Destroy(_rightChoiceBlock.gameObject);
-                _centerChoiceBlock.SetInfo(sectionTypes[0]);
-                break;
-            case 2:
-                Destroy(_centerChoiceBlock.gameObject);
-                _leftChoiceBlock.SetInfo(sectionTypes[0]);
-                _rightChoiceBlock.SetInfo(sectionTypes[1]);
-                break;
-            default:
-                _leftChoiceBlock.SetInfo(sectionTypes[0]);
-                _centerChoiceBlock.SetInfo(sectionTypes[1]);
-                _rightChoiceBlock.SetInfo(sectionTypes[2]);
-                break;
+            Instance = this;
+            _sectionTypes = new SectionTypeSO[_cardsList.Count];
         }
-    }
 
-    public void SetCertainSection(SectionSO sectionSO)
-    {
-        Destroy(_leftChoiceBlock.gameObject);
-        Destroy(_rightChoiceBlock.gameObject);
-        _centerChoiceBlock.SetInfo(sectionSO);
+        public void SetTypes(List<SectionTypeSO> sectionTypes)
+        {
+            _sectionTypes = sectionTypes.ToArray();
+            for (int i = 0; i < _cardsList.Count; i++)
+            {
+                if (i < sectionTypes.Count)
+                {
+                    _cardsList[i].gameObject.SetActive(true);
+                    _cardsList[i].Fill(sectionTypes[i]);
+                }
+                else
+                {
+                    _cardsList[i].gameObject.SetActive(false);
+                }
+            }
+        }
+
+        public void Choose()
+        {
+            if (EventSystem.current.currentSelectedGameObject != null &&
+                EventSystem.current.currentSelectedGameObject.TryGetComponent(out CardUI card))
+                Choose(_cardsList.IndexOf(card));
+        }
+
+        public void Choose(int sectionIndex)
+        {
+            if (sectionIndex < _cardsList.Count)
+            {
+                SectionManager.Instance.EnterNextSection(_sectionTypes[sectionIndex]);
+                UIController.Instance.PopScreen();
+            }
+        }
     }
 }

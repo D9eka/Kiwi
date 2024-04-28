@@ -1,4 +1,5 @@
 ﻿using Components.Health;
+using Creatures.Player;
 using UnityEngine;
 
 namespace Weapons
@@ -32,7 +33,9 @@ namespace Weapons
             if (collision.isTrigger || collision.CompareTag("Player"))
                 return;
 
-            if (collision.transform.parent != null && collision.transform.parent.TryGetComponent(out HealthComponent health))
+            if (collision.transform.parent != null && 
+                collision.transform.parent.TryGetComponent(out HealthComponent health) && 
+                health != PlayerController.Instance.GetComponent<HealthComponent>())
                 health.ModifyHealth(-_damage);
             Destroy(gameObject);
         }

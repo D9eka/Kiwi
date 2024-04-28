@@ -12,7 +12,7 @@ namespace Components.ColliderBased
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if(!collision.isTrigger && collision.GetComponentInParent<PlayerController>() != null)
+            if (!collision.isTrigger && collision.GetComponentInParent<PlayerController>() != null)
                 OnPlayerEnterTrigger?.Invoke(this, EventArgs.Empty);
         }
 

@@ -30,7 +30,7 @@ namespace Creatures.Player
             return defaultValue;
         }
 
-        public static void SetBool(string key, bool state) 
+        public static void SetBool(string key, bool state)
         {
             PlayerPrefs.SetInt(key, state ? 1 : 0);
         }

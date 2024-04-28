@@ -1,8 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Components.Interactables;
 using Creatures.Player;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class InteractiveComponent : MonoBehaviour

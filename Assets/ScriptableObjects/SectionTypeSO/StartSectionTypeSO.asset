@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04e1c023e1d86334c9ba55787eccb9c1, type: 3}
   m_Name: StartSectionTypeSO
   m_EditorClassIdentifier: 
-  _sectionType: 0
   _name: Start Section
-  _image: {fileID: 21300000, guid: 17ec502a22018ec4aa4943c3afed52e4, type: 3}
+  _sectionType: 0
+  _image: {fileID: 0}
+  _wavesCount: 0
+  _spawnPointBonus: 0
+  _isOxygenWasting: 1

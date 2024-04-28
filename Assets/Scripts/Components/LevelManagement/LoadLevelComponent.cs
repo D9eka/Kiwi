@@ -1,8 +1,8 @@
-﻿using System.Collections;
+﻿using Components.UI;
+using Creatures.Player;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Components.UI;
-using Creatures.Player;
 
 namespace Components.LevelManagement
 {
@@ -33,7 +33,7 @@ namespace Components.LevelManagement
         public void Load()
         {
             PlayerController.Instance.GetPlayerData().Save();
-            switch(_mode)
+            switch (_mode)
             {
                 case LoadingMode.Manually:
                     PlayerPrefsController.SetString(PlayerData.PLAYER_SECTION_KEY, _sceneName);
@@ -56,7 +56,7 @@ namespace Components.LevelManagement
 
         private IEnumerator LoadAsync()
         {
-            switch(_window)
+            switch (_window)
             {
                 case LoadingWindow.Fading:
                     bool waitFading = true;
@@ -74,11 +74,11 @@ namespace Components.LevelManagement
                 case LoadingWindow.Screen:
                     AsyncOperation loadAsync = SceneManager.LoadSceneAsync(_sceneName);
                     loadAsync.allowSceneActivation = false;
-                    LoadingScreen.Instance.Activate();
+                    //LoadingScreen.Instance.Activate();
 
                     while (!loadAsync.isDone)
                     {
-                        LoadingScreen.Instance.SetLoadingProgress(loadAsync.progress);
+                        //LoadingScreen.Instance.SetLoadingProgress(loadAsync.progress);
 
                         if (loadAsync.progress >= 0.9f && !loadAsync.allowSceneActivation)
                         {

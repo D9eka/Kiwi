@@ -1746,9 +1746,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2709688116777894882, guid: 18c521887cfb6bb409ee418c1143ed78, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2709688116777894882, guid: 18c521887cfb6bb409ee418c1143ed78, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2709688116777894882, guid: 18c521887cfb6bb409ee418c1143ed78, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2709688116777894882, guid: 18c521887cfb6bb409ee418c1143ed78, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2709688116777894882, guid: 18c521887cfb6bb409ee418c1143ed78, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 99.555
+      objectReference: {fileID: 0}
+    - target: {fileID: 2709688116777894882, guid: 18c521887cfb6bb409ee418c1143ed78, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4000361889591090313, guid: 18c521887cfb6bb409ee418c1143ed78, type: 3}
       propertyPath: m_Name
       value: UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 4093153873978218173, guid: 18c521887cfb6bb409ee418c1143ed78, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4093153873978218173, guid: 18c521887cfb6bb409ee418c1143ed78, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4108006338120002837, guid: 18c521887cfb6bb409ee418c1143ed78, type: 3}
       propertyPath: _healthComponent

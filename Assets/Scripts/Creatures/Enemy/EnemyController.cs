@@ -1,6 +1,8 @@
 ﻿using Components.ColliderBased;
 using Components.Health;
+using Creatures.AI;
 using Creatures.Player;
+using Sections;
 using System.Linq;
 using UnityEngine;
 
@@ -8,6 +10,7 @@ namespace Creatures.Enemy
 {
     public class EnemyController : Creature
     {
+        [SerializeField] protected int _spawnPointPrice;
         [SerializeField] protected EnemyState _initialState;
         [Space]
         [SerializeField] protected ColliderTrigger _vision;
@@ -27,6 +30,8 @@ namespace Creatures.Enemy
 
         private const string PATROLLING_TRIGGER = "patrolling";
         private const string CHASING_TRIGGER = "chasing";
+
+        public int SpawnPointPrice => _spawnPointPrice;
 
         protected override void Awake()
         {
@@ -82,12 +87,6 @@ namespace Creatures.Enemy
                 return;
             }
 
-            if (_state == EnemyState.Chasing && !_seePlayer)
-            {
-                StartInitialState();
-                return;
-            }
-
             if (_activeAttack == null)
             {
                 ChooseAttack();
@@ -133,6 +132,11 @@ namespace Creatures.Enemy
                 health.ModifyHealth(-_activeAttack.Damage);
             }
             _activeAttack = null;
+        }
+
+        protected virtual void OnDestroy()
+        {
+            Section.Instance.ReduseSpawnedEnemiesCount();
         }
     }
 }

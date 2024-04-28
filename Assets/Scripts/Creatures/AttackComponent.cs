@@ -37,7 +37,7 @@ namespace Creatures
         private void Start()
         {
             switch (_attackType)
-            { 
+            {
                 case AttackComponentType.Simple:
                     _canAttackPlayer = true;
                     break;

@@ -1,11 +1,9 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ChipsManagerHUD_UI : MonoBehaviour
 {
-    // Start is called before the first frame update
     [SerializeField] private List<ChipIconUI> _chipIcons;
     [SerializeField] private GameObject _chipIconPrefab;
     private ChipManager _chipManager;
@@ -14,6 +12,7 @@ public class ChipsManagerHUD_UI : MonoBehaviour
     {
         _chipManager = ChipManager.Instance;
         _chipManager.OnStateChange += OnChipManagerStateChange;
+        SetChipsInfo();
     }
 
     private void OnChipManagerStateChange(object sender, EventArgs e)

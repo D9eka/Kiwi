@@ -10,11 +10,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1728888594106954582, guid: 71b83c37b2615e841bd0a5e41e433a10, type: 3}
       propertyPath: _action.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: 
+      value: TryOpenSecretDoor
       objectReference: {fileID: 0}
     - target: {fileID: 7675452549573812084, guid: 71b83c37b2615e841bd0a5e41e433a10, type: 3}
       propertyPath: m_Name
-      value: ControlPanel Variant
+      value: ControlPanel_blue
       objectReference: {fileID: 0}
     - target: {fileID: 8261588817296831159, guid: 71b83c37b2615e841bd0a5e41e433a10, type: 3}
       propertyPath: m_LocalPosition.x

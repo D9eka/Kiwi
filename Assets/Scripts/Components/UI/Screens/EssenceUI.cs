@@ -5,19 +5,17 @@ using UnityEngine;
 public class EssenceUI : MonoBehaviour
 {
     private TextMeshProUGUI _textMeshProUGUI;
-    private GameManager _gameManager;
 
     void Start()
     {
         _textMeshProUGUI = GetComponentInChildren<TextMeshProUGUI>();
-        _gameManager = GameManager.Instance;
-        _gameManager.OnEssenceCountChanged += OnGameManagerEssenceCountChanged;
-        _gameManager.GetEssence(0);
+        MyGameManager.OnEssenceCountChanged += OnGameManagerEssenceCountChanged;
+        MyGameManager.GetEssence(0);
     }
 
     private void OnGameManagerEssenceCountChanged(object sender, EventArgs e)
     {
-        SetText(GameManager.Instance.EssenceCount);
+        SetText(MyGameManager.EssenceCount);
     }
 
     private void SetText(int count)

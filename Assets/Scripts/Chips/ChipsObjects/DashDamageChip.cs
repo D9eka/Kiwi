@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class DashDamageChip : PassiveChip
 {
@@ -30,6 +28,6 @@ public class DashDamageChip : PassiveChip
 
     public DashDamageChip()
     {
-        maxLevel = _dashDamageIncreaseLevels.Count;;
+        maxLevel = _dashDamageIncreaseLevels.Count; ;
     }
 }

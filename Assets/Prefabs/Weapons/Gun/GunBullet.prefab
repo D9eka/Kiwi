@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -2993382545573399700}
   - component: {fileID: 6047708096849591739}
   - component: {fileID: 8110416022437227300}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: GunBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,13 +75,13 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: ec7d346b6daf9bf468ca2443ad816afc, type: 3}
+  m_SortingOrder: 6
+  m_Sprite: {fileID: 21300000, guid: cc234cd331609c340906b68c62c4ce3b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.8222656, y: 0.58203125}
+  m_Size: {x: 0.06852213, y: 0.048502605}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -150,8 +150,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.06852213, y: 0.048502605}
-    newSize: {x: 0.8222656, y: 0.58203125}
+    oldSize: {x: 0.2578125, y: 0.25}
+    newSize: {x: 0.06852213, y: 0.048502605}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0

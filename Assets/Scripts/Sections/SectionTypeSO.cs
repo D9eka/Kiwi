@@ -1,19 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using Sections;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 
 [CreateAssetMenu]
 public class SectionTypeSO : ScriptableObject
 {
-    // Start is called before the first frame update
-    [SerializeField] private SectionType _sectionType;
     [SerializeField] private string _name;
-    [SerializeField] private Sprite _image;
+    [SerializeField] private SectionType _sectionType;
+    //[SerializeField] private Sprite _image;
+    [Space]
+    [SerializeField] private int _wavesCount = 3;
+    [SerializeField] private int _spawnPointBonus;
+    [Space]
+    [SerializeField] private bool _isOxygenWasting = true;
 
     public SectionType SectionType => _sectionType;
     public string Name => _name;
-    public Sprite Image => _image;
+    //public Sprite Image => _image;
+
+    public int WavesCount => _wavesCount;
+    public int SpawnPointBonus => _spawnPointBonus;
+
+    public bool IsOxygenWasting => _isOxygenWasting;
 }

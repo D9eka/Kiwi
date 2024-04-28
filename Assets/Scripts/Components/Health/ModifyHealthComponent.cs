@@ -8,7 +8,7 @@ namespace Components.Health
 
         public void ModifyHealth(GameObject target)
         {
-            if(target.transform.parent.TryGetComponent<HealthComponent>(out var healthComponent))
+            if (target.transform.parent.TryGetComponent<HealthComponent>(out var healthComponent))
                 healthComponent.ModifyHealth(_healthDelta);
         }
     }

@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: ShotgunSO
   m_EditorClassIdentifier: 
   _name: "\u0414\u0440\u043E\u0431\u043E\u0432\u0438\u043A"
+  _animKey: shotgun
   _description: 
   _icon: {fileID: 21300000, guid: e619024f29e28684d8ab2546459bd0bf, type: 3}
+  _sound: {fileID: 8300000, guid: 3646b5fbfbfdef741b1506ed267d067d, type: 3}
   _price: 25
   _attackDelay: 0.5
   _damageTypeUI: "\u0422\u044F\u0436\u0435\u043B\u044B\u0439"
@@ -24,7 +26,7 @@ MonoBehaviour:
   _maxDamage: 5
   _type: 1
   _ammoCapacity: 5
-  _bulletSpeed: 4
+  _bulletSpeed: 15
   _bulletTTLSeconds: 5
   _maxAmount: 0
   _thrownDelay: 0

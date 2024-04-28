@@ -28,7 +28,7 @@ namespace Components.LevelManagement.Editor
             EditorGUILayout.PropertyField(_windowProperty);
             EditorGUILayout.PropertyField(_modeProperty);
             EditorGUILayout.PropertyField(_cleanPlayerPrefsProperty);
- 
+
             LoadingMode mode = (LoadingMode)_modeProperty.intValue;
             switch (mode)
             {

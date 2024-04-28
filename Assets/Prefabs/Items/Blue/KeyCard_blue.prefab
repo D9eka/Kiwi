@@ -50,11 +50,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 798207447494405467, guid: 2a932c19b368fe54f8cf2cd5f4c65e43, type: 3}
       propertyPath: _action.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: 
+      value: GetKeyCard
       objectReference: {fileID: 0}
     - target: {fileID: 2652395813479769398, guid: 2a932c19b368fe54f8cf2cd5f4c65e43, type: 3}
       propertyPath: m_Name
-      value: KeyCard Variant
+      value: KeyCard_blue
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

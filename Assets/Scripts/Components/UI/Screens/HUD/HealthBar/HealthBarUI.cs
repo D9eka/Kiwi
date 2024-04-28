@@ -1,11 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Components.Health;
 using Creatures.Player;
+using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class HealthBarUI : MonoBehaviour
@@ -19,7 +16,7 @@ public class HealthBarUI : MonoBehaviour
 
     private void Start()
     {
-        if(_isPlayer)
+        if (_isPlayer)
             _healthComponent = PlayerController.Instance.GetComponent<HealthComponent>();
         else
             _healthComponent = GetComponentInParent<HealthComponent>();
@@ -38,7 +35,7 @@ public class HealthBarUI : MonoBehaviour
     {
         var healthPercent = e.value / e.maxValue;
         SetFillerValue(healthPercent);
-        if (_textMeshProUGUI is null) 
+        if (_textMeshProUGUI is null)
             return;
         SetText(e.value, e.maxValue);
     }

@@ -110,17 +110,18 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8049175926875074744}
         m_TargetAssemblyTypeName: MedicalStation, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: TryRestoreHealth
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 7
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
   _hintUI: {fileID: 1124714583630876907}
+  _canBeInteracted: 1
 --- !u!1 &3810869352365602624
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,6 +214,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8388127758489334411}
     m_Modifications:
+    - target: {fileID: 542869935550734785, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 542869935550734785, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.179
+      objectReference: {fileID: 0}
     - target: {fileID: 4411661053117704302, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -239,7 +248,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4411661053117704302, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 2.1
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 4411661053117704302, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
       propertyPath: m_SizeDelta.y
@@ -300,6 +309,14 @@ PrefabInstance:
     - target: {fileID: 4986724095694279732, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7352129922303584613, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
+      propertyPath: m_text
+      value: "\u0410\u043A\u0442\u0438\u0432\u0438\u0440\u043E\u0432\u0430\u0442\u044C"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8422808490391758182, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.9550001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -34,15 +34,16 @@ namespace Components.UI.Screens
 
         protected virtual void Start()
         {
-            FillEventButtons();
         }
 
         protected virtual void FillEventButtons()
         {
+            /*
             if (_haveEventButtons)
             {
-                foreach (Transform go in _eventsHandler.GetComponentsInChildren<Transform>())
-                    Destroy(go.gameObject);
+                Transform[] spawnedEvents = _eventsHandler.GetComponentsInChildren<Transform>();
+                for (int i = 0; i < spawnedEvents.Length; i++)
+                    Destroy(spawnedEvents[i].gameObject);
 
                 if (_cancelEvent != null)
                     CreateEventButton(CANCEL_EVENT_KEY, _cancelEvent);
@@ -51,6 +52,7 @@ namespace Components.UI.Screens
                 if (_confirmEvent != null)
                     CreateEventButton(CONFIRM_EVENT_KEY, _confirmEvent);
             }
+            */
         }
 
         protected void CreateEventButton(string eventKey, ScreenEventComponent screenEvent)
@@ -62,6 +64,7 @@ namespace Components.UI.Screens
         public virtual void Enter()
         {
             _content.SetActive(true);
+            FillEventButtons();
 
             if (_firstFocusItem != null)
             {

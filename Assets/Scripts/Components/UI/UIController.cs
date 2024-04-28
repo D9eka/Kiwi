@@ -1,4 +1,6 @@
 ﻿using Creatures.Player;
+using Sections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -26,6 +28,11 @@ namespace Components.UI
 
         private void Awake()
         {
+            if (Instance != null)
+            {
+                Destroy(gameObject);
+                return;
+            }
             Instance = this;
             _canvas = GetComponent<Canvas>();
             _canvas.worldCamera = Camera.main;
@@ -33,7 +40,7 @@ namespace Components.UI
 
         private void Start()
         {
-            if(_initialScreen != null)
+            if (_initialScreen != null)
             {
                 PushScreen(_initialScreen);
             }
@@ -45,17 +52,17 @@ namespace Components.UI
 
         public void PushScreen(ScreenComponent screen)
         {
-            if(screen.DisablePlayerInput)
+            if (screen.DisablePlayerInput)
             {
                 PlayerController.Instance?.GetComponent<PlayerInput>().DeactivateInput();
             }
             screen.Enter();
 
-            if (_screenStack.Count > 0) 
-            { 
+            if (_screenStack.Count > 0)
+            {
                 ScreenComponent currentScreen = _screenStack.Peek();
 
-                if(currentScreen.ExitOnNewPagePush)
+                if (currentScreen.ExitOnNewPagePush)
                 {
                     currentScreen.Exit();
                 }
@@ -63,10 +70,10 @@ namespace Components.UI
             _screenStack.Push(screen);
         }
 
-        public void PopScreen() 
-        { 
-            if (_screenStack.Count > 1) 
-            { 
+        public void PopScreen()
+        {
+            if (_screenStack.Count > 1)
+            {
                 ScreenComponent screen = _screenStack.Pop();
                 screen.Exit();
                 if (screen.DisablePlayerInput)

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Trader : MonoBehaviour
 {
-    private bool _haveProduct = true;
     public static Trader Instance { get; private set; }
 
     private void Awake()
@@ -14,12 +13,6 @@ public class Trader : MonoBehaviour
 
     public void TryShowStore()
     {
-        // if (!_haveProduct) return;
         UIController.Instance.PushScreen(StoreUI.Instance);
-    }
-
-    public void Disable()
-    {
-        _haveProduct = false;
     }
 }

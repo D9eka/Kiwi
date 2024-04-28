@@ -19,14 +19,11 @@ namespace Weapons
                 return;
 
             _timeBetweenAttacks = 0;
-            _animator.SetTrigger(ATTACK_KEY);
-            SoundManager.Instance.PlaySound(_sound);
         }
 
         public void OnAttack()
         {
             base.Attack();
-
             Collider2D[] colliders = Physics2D.OverlapCircleAll(_attackRange.transform.position, _attackRange.radius);
             foreach (Collider2D collider in colliders)
             {

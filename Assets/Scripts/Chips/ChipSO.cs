@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [CreateAssetMenu]
 public class ChipSO : ScriptableObject
 {
     [SerializeField] private Sprite _sprite;
     [SerializeField] private string _name;
-    [SerializeField] private List<string> _descriptions = new ();
+    [SerializeField] private List<string> _descriptions = new();
 
     [SerializeField] private ChipType _chipType;
 

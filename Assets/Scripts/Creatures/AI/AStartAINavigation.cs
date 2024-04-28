@@ -1,7 +1,4 @@
-﻿using Creatures;
-using Creatures.AI;
-using Creatures.Enemy;
-using Creatures.Player;
+﻿using Creatures.Player;
 using Pathfinding;
 using System;
 using System.Collections;
@@ -63,7 +60,7 @@ namespace Creatures.AI
 
         private void UpdatePath()
         {
-            if (_target != null && _seeker.IsDone())
+            if (_active && _target != null && _seeker.IsDone())
             {
                 _seeker.StartPath(transform.position, _target.transform.position, OnPathComplete);
                 _currentWaypoint = 0;

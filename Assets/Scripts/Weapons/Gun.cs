@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using Creatures.Player;
 using Extensions;
-using Creatures.Player;
+using UnityEngine;
 
 namespace Weapons
 {
@@ -30,11 +30,12 @@ namespace Weapons
             _timeBetweenAttacks = 0;
             ammoCount--;
             Label = $"{ammoCount} / {_data.AmmoCapacity}";
-            SoundManager.Instance.PlaySound(_sound);
         }
 
         public void Reload()
         {
+            if (ammoCount == _data.AmmoCapacity)
+                return;
             ammoCount = _data.AmmoCapacity;
             Label = $"{ammoCount} / {_data.AmmoCapacity}";
         }
@@ -45,9 +46,9 @@ namespace Weapons
             transform.eulerAngles = new Vector3(0, 0, angle);
 
             if (PlayerController.Instance.transform.localScale.x > 0)
-                transform.localScale = new Vector2(1f, 1f * GameManager.Instance.Gravity);
+                transform.localScale = new Vector2(1f, 1f * MyGameManager.Gravity);
             else
-                transform.localScale = new Vector2(-1f, -1f * GameManager.Instance.Gravity);
+                transform.localScale = new Vector2(-1f, -1f * MyGameManager.Gravity);
         }
     }
 }

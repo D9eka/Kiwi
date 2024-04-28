@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04e1c023e1d86334c9ba55787eccb9c1, type: 3}
   m_Name: BossSectionTypeSO
   m_EditorClassIdentifier: 
+  _name: "\u041A\u043E\u043C\u0430\u043D\u0434\u043D\u044B\u0439 \u043C\u043E\u0441\u0442\u0438\u043A"
   _sectionType: 7
-  _name: "\u0411\u043E\u0441\u0441"
-  _image: {fileID: 21300000, guid: daf0cc541bcab8c4abe0fc456cc705e9, type: 3}
+  _image: {fileID: 0}
+  _wavesCount: 0
+  _spawnPointBonus: 0
+  _isOxygenWasting: 1

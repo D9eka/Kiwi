@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: PipeSO
   m_EditorClassIdentifier: 
   _name: "\u0422\u0440\u0443\u0431\u0430"
+  _animKey: pipe
   _description: "\u041E\u0441\u043E\u0431\u0435\u043D\u043D\u043E\u0441\u0442\u044C:
     \u041D\u0435\u0431\u043E\u043B\u044C\u0448\u043E\u0439 \u0448\u0430\u043D\u0441
     \u043E\u0433\u043B\u0443\u0447\u0438\u0442\u044C \u043F\u0440\u043E\u0442\u0438\u0432\u043D\u0438\u043A\u0430"
   _icon: {fileID: 21300000, guid: ebf1aba4952a93f40857dad1b046292b, type: 3}
+  _sound: {fileID: 8300000, guid: ea1cd1e8549e1344caf104f9186ac687, type: 3}
   _price: 5
   _attackDelay: 0.5
   _damageTypeUI: "\u0422\u044F\u0436\u0435\u043B\u044B\u0439"

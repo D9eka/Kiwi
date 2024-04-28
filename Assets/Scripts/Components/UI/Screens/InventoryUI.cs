@@ -1,8 +1,4 @@
 using Components.UI.Cards;
-using Components.UI.Screens;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Components.UI.Screens
