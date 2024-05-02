@@ -1,4 +1,3 @@
-using Newtonsoft.Json;
 using System;
 using UnityEngine;
 using static Weapons.WeaponSO;
@@ -35,7 +34,7 @@ namespace Weapons
                 _ => throw new NotImplementedException(),
             };
             if (_data.Sound != null)
-                SoundManager.Instance.PlaySound(_data.Sound);
+                SoundManager.Instance?.PlaySound(_data.Sound);
         }
     }
 }

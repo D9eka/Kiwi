@@ -183,7 +183,7 @@ Transform:
   m_GameObject: {fileID: 2788023571798777530}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.225, y: 0.65, z: 0}
+  m_LocalPosition: {x: 0.495, y: 0.65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -223,7 +223,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.25
+  m_Radius: 0.5
 --- !u!114 &4474675092392222837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,7 +238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animationTrigger: attack
   _damage: 2
-  _cooldownTime: 1.5
+  _cooldownTime: 1
   _attackType: 1
   _distance: {fileID: 4349740555685565521}
   _initialPosition: {x: 0, y: 0}
@@ -523,7 +523,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 473fbe68f03715c46801089ad823e653, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 20
+  _maxHealth: 50
   _onHeal:
     m_PersistentCalls:
       m_Calls: []
@@ -533,17 +533,16 @@ MonoBehaviour:
   _onDie:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1117736556313764536}
-        m_TargetAssemblyTypeName: Components.LevelManagement.ReloadLevelComponent,
-          Assembly-CSharp
-        m_MethodName: Reload
+      - m_Target: {fileID: 7800418188557290762}
+        m_TargetAssemblyTypeName: Creatures.Creature, Assembly-CSharp
+        m_MethodName: Die
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: death
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!50 &625049755043302509
@@ -791,6 +790,54 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 4d2820b5-ec4d-4cfb-9b44-dc9d65f2bdae
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8128811423238263547}
+        m_TargetAssemblyTypeName: Creatures.Player.PlayerInputReader, Assembly-CSharp
+        m_MethodName: OnPlayerSelectFirstWeapon
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 3e0bea14-89aa-4502-b93a-d7d8d5df0605
+    m_ActionName: Player/SelectFirstWeapon[/Keyboard/1]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8128811423238263547}
+        m_TargetAssemblyTypeName: Creatures.Player.PlayerInputReader, Assembly-CSharp
+        m_MethodName: OnPlayerSelectSecondWeapon
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 93d5226a-96b6-4605-8eac-5172a892405e
+    m_ActionName: Player/SelectSecondWeapon[/Keyboard/2]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8128811423238263547}
+        m_TargetAssemblyTypeName: Creatures.Player.PlayerInputReader, Assembly-CSharp
+        m_MethodName: OnPlayerSelectTrap
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 260d9bac-99af-4c83-9a62-bf5998f715d8
+    m_ActionName: Player/SelectTrap[/Keyboard/3]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -820,7 +867,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 531f20c87520c85409a7c58610738f39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isNeededOffset: 1
 --- !u!114 &4911966356279771189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -842,10 +888,9 @@ MonoBehaviour:
   _onEnd:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1117736556313764536}
-        m_TargetAssemblyTypeName: Components.LevelManagement.ReloadLevelComponent,
-          Assembly-CSharp
-        m_MethodName: Reload
+      - m_Target: {fileID: 7800418188557290762}
+        m_TargetAssemblyTypeName: Creatures.Creature, Assembly-CSharp
+        m_MethodName: Die
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -867,8 +912,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82fb417cd65ef264abee02143cc1ff13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _firstWeapon: {fileID: 6817732230846011340, guid: 30fdd392a78ec4f499c7e1c8c2e6b4cf, type: 3}
-  _secondWeapon: {fileID: 6817732230846011340, guid: bfbd7ae2fdc7c8d47acef19a8d69817a, type: 3}
+  _firstWeapon: {fileID: 0}
+  _secondWeapon: {fileID: 0}
   _trap: {fileID: 8650316225956248704, guid: b17d12d3d26b8494aaadb2e8974fc82b, type: 3}
   _weaponsSO:
   - {fileID: 11400000, guid: a102424d5d14133448e295520957c3e5, type: 2}
@@ -876,12 +921,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 40ba11e4c4f8de04da7609269b3b2c34, type: 2}
   - {fileID: 11400000, guid: 4608a9b7716738e42822efa5e299b8c2, type: 2}
   - {fileID: 11400000, guid: 867455f2d2c1868468367ae40840e733, type: 2}
-  _weaponsGO:
-  - {fileID: 8650316225956248704, guid: b17d12d3d26b8494aaadb2e8974fc82b, type: 3}
-  - {fileID: 6817732230846011340, guid: 30fdd392a78ec4f499c7e1c8c2e6b4cf, type: 3}
-  - {fileID: 1818333890954890389, guid: ad8a6779776f41849a77b0f015a18388, type: 3}
-  - {fileID: 1544835037449901283, guid: db6add590d2738d4086ccfcdf1b71eb4, type: 3}
-  - {fileID: 6817732230846011340, guid: bfbd7ae2fdc7c8d47acef19a8d69817a, type: 3}
 --- !u!1 &6482806922410286275
 GameObject:
   m_ObjectHideFlags: 0
@@ -964,7 +1003,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _layer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 10304
 --- !u!1 &8196722172424175297
 GameObject:
   m_ObjectHideFlags: 0

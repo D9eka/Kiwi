@@ -28,8 +28,6 @@ public class ChipsManagerInventoryUI : MonoBehaviour
             {
                 CreateNewRow();
             }
-
-            Debug.Log(_chipIcons[i]);
             _chipIcons[i].SetInfo(_chipManager.ObtainedChips[i].ChipSO);
         }
     }

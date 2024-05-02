@@ -5,9 +5,6 @@ namespace Weapons
 {
     public class Trap : Weapon
     {
-        [SerializeField] private ThrownTrap _thrownTrap;
-        [SerializeField] private Vector2 _throwForce;
-
         private int _amount;
         public int Amount => _amount;
 
@@ -28,10 +25,7 @@ namespace Weapons
         public void OnAttack()
         {
             float playerLocalScaleX = PlayerController.Instance.transform.localScale.x;
-            Vector2 throwForce = _throwForce * playerLocalScaleX;
-            ThrownTrap thrownTrap = Instantiate(_thrownTrap, PlayerController.Instance.ThrownTrapHandler.position, Quaternion.identity)
-                .GetComponent<ThrownTrap>();
-            thrownTrap.Initialize(_currentDamage, _data.AttackDelay, _data.DestroyType, _data.TTLSeconds, throwForce);
+            Instantiate(_data.ThrownTrapPrefab, PlayerController.Instance.ThrownTrapHandler.position, Quaternion.identity);
             _timeBetweenAttacks = 0;
 
             _amount--;

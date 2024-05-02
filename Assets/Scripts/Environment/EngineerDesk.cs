@@ -1,11 +1,11 @@
-using System;
+using Components.UI;
+using Components.UI.Screens;
 using UnityEngine;
 
 public class EngineerDesk : MonoBehaviour
 {
     public void OpenChipUpgradeMenu()
     {
-        throw new NotImplementedException();
-        //_chipUpgradeMenuUI.SetActive(true);
+        UIController.Instance.PushScreen(UpdateChipUI.Instance);
     }
 }

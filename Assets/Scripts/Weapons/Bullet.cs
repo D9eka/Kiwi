@@ -30,13 +30,18 @@ namespace Weapons
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.isTrigger || collision.CompareTag("Player"))
+            if (collision.isTrigger ||
+                (collision.transform.parent != null && collision.transform.parent.TryGetComponent<PlayerController>(out PlayerController player)))
                 return;
 
-            if (collision.transform.parent != null && 
-                collision.transform.parent.TryGetComponent(out HealthComponent health) && 
+            if (collision.transform.parent != null &&
+                collision.transform.parent.TryGetComponent(out HealthComponent health) &&
                 health != PlayerController.Instance.GetComponent<HealthComponent>())
-                health.ModifyHealth(-_damage);
+            {
+                float damage = StatsModifier.GetModifiedDamage(_damage, DamageType.Bullet);
+                health.ModifyHealth(-damage);
+                MyGameManager.AddAmountDamage(damage);
+            }
             Destroy(gameObject);
         }
     }

@@ -29,7 +29,8 @@ namespace Components.UI.Screens.Store
 
         public void Choose()
         {
-            if (EventSystem.current.currentSelectedGameObject.TryGetComponent(out CardUI card))
+            if (EventSystem.current.currentSelectedGameObject != null &&
+                EventSystem.current.currentSelectedGameObject.TryGetComponent(out CardUI card))
                 Choose(card);
         }
 

@@ -59,7 +59,7 @@ MonoBehaviour:
     UnityEvent:
       m_PersistentCalls:
         m_Calls: []
-  _additionlEvent:
+  _additionalEvent:
     Label: 
     UnityEvent:
       m_PersistentCalls:
@@ -71,9 +71,6 @@ MonoBehaviour:
         m_Calls: []
   _haveEventButtons: 0
   _eventsHandler: {fileID: 0}
-  _screenEventPrefab: {fileID: 0}
-  _loadingContent: {fileID: 0}
-  _slider: {fileID: 0}
 --- !u!1 &2566409871396565223
 GameObject:
   m_ObjectHideFlags: 0
@@ -141,7 +138,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430..."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8394dc2b651f8604099dabb35ca53993, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -205,7 +202,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1001 &3235773109331099033

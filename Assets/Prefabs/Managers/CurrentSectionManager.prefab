@@ -50,7 +50,7 @@ MonoBehaviour:
   _secretDoor: {fileID: 0}
   _enemies:
   - {fileID: 8911673926796229105, guid: def4d288102e7364f80944fa44982fb2, type: 3}
-  - {fileID: 8216914747631476452, guid: 34331ff52d541974ab2c5ba687fdd3c7, type: 3}
+  - {fileID: 1492591817600184905, guid: 34331ff52d541974ab2c5ba687fdd3c7, type: 3}
   - {fileID: 8409666718545908501, guid: 42ad99256e958964b84bf5506834880b, type: 3}
   - {fileID: 7532848221299874424, guid: f58b1629ba73b5b42a34b7308de511bf, type: 3}
   _enemySpawnPositions: []

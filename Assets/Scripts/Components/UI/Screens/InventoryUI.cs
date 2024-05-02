@@ -19,6 +19,7 @@ namespace Components.UI.Screens
         private void Awake()
         {
             Instance = this;
+            HideInfoBlocks();
         }
 
         public void HideInfoBlocks()

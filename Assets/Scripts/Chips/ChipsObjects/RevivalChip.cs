@@ -21,9 +21,10 @@ public class RevivalChip : Chip
         maxLevel = _restoringHealthPercentLevels.Count;
     }
 
-    public void Revive()
+    public float Revive()
     {
         ChipManager.Instance.RemoveChip(this);
         ChipManager.Instance.ObtainBrokenChip();
+        return _restoringHealthPercent;
     }
 }

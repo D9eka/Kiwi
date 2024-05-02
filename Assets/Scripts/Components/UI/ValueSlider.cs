@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,7 +8,7 @@ namespace Components.UI
 {
     public class ValueSlider : MonoBehaviour
     {
-        [SerializeField] private string[] _values;
+        [SerializeField] private List<string> _values;
         [SerializeField] private ValueSliderInitialValue _initialValue;
         [Space]
         [SerializeField] private Button _previousButton;
@@ -23,14 +25,31 @@ namespace Components.UI
 
         public string Value => _values[_selectedValue];
 
-        public void SetValues(string[] values)
+        public EventHandler<string> OnChangeValue;
+
+        public void SetValues(List<string> values)
         {
+            if (values == null || values.Count == 0)
+                return;
+
             _selectedValue = 0;
             _values = values;
-            Awake();
+            SetValueIndex();
         }
 
         private void Awake()
+        {
+            SetValueIndex();
+            _previousButton.onClick.AddListener(() => ModifyValueIndex(-1));
+            _nextButton.onClick.AddListener(() => ModifyValueIndex(1));
+        }
+
+        public void ModifyValueIndex(int modifier)
+        {
+            SetValueIndex(_selectedValue + modifier);
+        }
+
+        private void SetValueIndex()
         {
             switch (_initialValue)
             {
@@ -38,24 +57,22 @@ namespace Components.UI
                     _selectedValue = 0;
                     break;
                 case ValueSliderInitialValue.Last:
-                    _selectedValue = _values.Length - 1;
+                    _selectedValue = _values.Count - 1;
                     break;
                 default:
                     break;
             }
-            SetValue(_selectedValue);
-
-            _previousButton.onClick.AddListener(() => SetValue(_selectedValue - 1));
-            _nextButton.onClick.AddListener(() => SetValue(_selectedValue + 1));
+            SetValueIndex(_selectedValue);
         }
 
-        private void SetValue(int valueIndex)
+        public void SetValueIndex(int valueIndex)
         {
-            if (_selectedValue == valueIndex || valueIndex < 0 || valueIndex >= _values.Length)
+            if (_selectedValue == valueIndex || valueIndex < 0 || valueIndex >= _values.Count)
                 return;
 
             _selectedValue = valueIndex;
             _value.text = _values[_selectedValue];
+            OnChangeValue?.Invoke(this, _values[_selectedValue]);
         }
     }
 }

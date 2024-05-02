@@ -1,6 +1,4 @@
 ﻿using Components.UI.Screens;
-using UnityEngine;
-using UnityEngine.UI;
 
 namespace Components.UI
 {

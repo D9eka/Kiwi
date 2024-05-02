@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1426e17ff26b4aed8678b8b04bfa6bc6, type: 3}
   m_Name: BrokenChipSO
   m_EditorClassIdentifier: 
-  _sprite: {fileID: 0}
+  _sprite: {fileID: 21300000, guid: daa675ca550a83240837fefb8cec2ca4, type: 3}
   _name: "\u041F\u043E\u0432\u0440\u0435\u0436\u0434\u0451\u043D\u043D\u044B\u0439
     \u0447\u0438\u043F"
   _descriptions:

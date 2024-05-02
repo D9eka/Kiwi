@@ -1,5 +1,4 @@
-﻿using Creatures.AI;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Creatures.Enemy.States
 {

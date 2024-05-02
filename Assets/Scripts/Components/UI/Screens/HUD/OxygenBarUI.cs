@@ -10,9 +10,13 @@ public class OxygenBarUI : MonoBehaviour
     [SerializeField] private Image _filler;
     [SerializeField] private TextMeshProUGUI _textMeshProUGUI;
 
+    private OxygenComponent _oxygen;
+
     private void Start()
     {
-        PlayerController.Instance.GetComponent<OxygenComponent>().OnValueChange += OnOxygenValueChanged;
+        _oxygen = PlayerController.Instance.GetComponent<OxygenComponent>();
+        _oxygen.OnValueChange += OnOxygenValueChanged;
+        _oxygen.ChangeOxygenStats(0);
     }
 
     private void OnOxygenValueChanged(object sender, OxygenComponent.OnValueChangeEventArgs e)

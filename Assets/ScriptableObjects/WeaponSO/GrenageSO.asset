@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: GrenageSO
   m_EditorClassIdentifier: 
   _name: "\u0413\u0440\u0430\u043D\u0430\u0442\u0430"
+  _prefab: {fileID: 8650316225956248704, guid: b17d12d3d26b8494aaadb2e8974fc82b, type: 3}
   _animKey: grenade
   _description: 
   _icon: {fileID: 21300000, guid: 0e9d531a558d4f240839bc9e1db04830, type: 3}
@@ -28,6 +29,7 @@ MonoBehaviour:
   _ammoCapacity: 0
   _bulletSpeed: 0
   _bulletTTLSeconds: 0
+  _thrownTrapPrefab: {fileID: 2524155478991193705, guid: 14e1d6f79f5258848a161dea93ab1768, type: 3}
   _thrownTrapSound: {fileID: 8300000, guid: 30523be51a4e470498ce1e3ef756256a, type: 3}
   _maxAmount: 5
   _thrownDelay: 1

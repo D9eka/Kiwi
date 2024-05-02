@@ -22,8 +22,12 @@ public class WeaponCell : Cell
     private void Start()
     {
         WeaponController.Instance.OnStateChange += WeaponController_OnStateChange;
-        StartCoroutine(
-                Initialize());
+        StartCoroutine(Initialize());
+    }
+
+    private void OnEnable()
+    {
+        StartCoroutine(Initialize());
     }
 
     private IEnumerator Initialize()
@@ -31,15 +35,15 @@ public class WeaponCell : Cell
         yield return new WaitForFixedUpdate();
 
         SetCurrentWeapon();
-        Button button = GetComponent<Button>();
-        button.onClick.RemoveAllListeners();
         if (_currentWeapon == null)
         {
             Fill(null);
             yield break;
         }
 
-        Fill(_currentWeapon.Data.Icon, _place == WeaponCellPlace.HUD, _currentWeapon.Label);
+        Fill(_currentWeapon.Data.Icon, _place == WeaponCellPlace.HUD && _currentWeapon.Data.Type != WeaponSO.WeaponType.Melee, _currentWeapon.Label);
+        Button button = GetComponent<Button>();
+        button.onClick.RemoveAllListeners();
         switch (_place)
         {
             case WeaponCellPlace.HUD:
@@ -58,15 +62,9 @@ public class WeaponCell : Cell
         _currentWeapon = WeaponController.Instance.GetWeapon(_weaponPosition);
     }
 
-    protected override void Fill(Sprite icon, bool needLabel = false, string label = null)
-    {
-        _icon.color = _currentWeapon == null ? new Color(0, 0, 0, 0) : Color.white;
-        base.Fill(icon, needLabel, label);
-    }
-
     private void WeaponController_OnStateChange(object sender, WeaponController.WeaponPosition e)
     {
-        if (e == _weaponPosition && gameObject.activeSelf)
+        if (e == _weaponPosition && gameObject.activeInHierarchy)
             StartCoroutine(Initialize());
     }
 }

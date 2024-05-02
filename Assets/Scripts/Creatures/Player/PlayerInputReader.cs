@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static WeaponController;
 
 namespace Creatures.Player
 {
@@ -14,7 +15,7 @@ namespace Creatures.Player
         public EventHandler OnAttack;
         public EventHandler OnWeaponReload;
         public EventHandler OnUIClose;
-        public EventHandler OnSwitchWeapon;
+        public EventHandler<WeaponPosition> OnSwitchWeapon;
         public EventHandler OnSpacebarPressed;
         public EventHandler OnEnterPressed;
         public EventHandler OnOpenInventory;
@@ -34,28 +35,32 @@ namespace Creatures.Player
 
         public void OnPlayerJump(InputAction.CallbackContext context)
         {
-            OnJump?.Invoke(this, EventArgs.Empty);
+            if (context.performed)
+                OnJump?.Invoke(this, EventArgs.Empty);
         }
 
         public void OnPlayerDash(InputAction.CallbackContext context)
         {
-            OnDash?.Invoke(this, EventArgs.Empty);
+            if (context.performed)
+                OnDash?.Invoke(this, EventArgs.Empty);
         }
 
         public void OnPlayerInteract(InputAction.CallbackContext context)
         {
-            if (context.canceled)
+            if (context.performed)
                 OnInteract?.Invoke(this, EventArgs.Empty);
         }
 
         public void OnPlayerAttack(InputAction.CallbackContext context)
         {
-            OnAttack?.Invoke(this, EventArgs.Empty);
+            if (context.performed)
+                OnAttack?.Invoke(this, EventArgs.Empty);
         }
 
         public void OnPlayerWeaponReload(InputAction.CallbackContext context)
         {
-            OnWeaponReload?.Invoke(this, EventArgs.Empty);
+            if (context.performed)
+                OnWeaponReload?.Invoke(this, EventArgs.Empty);
         }
 
         public void OnPlayerUIClose(InputAction.CallbackContext context)
@@ -64,10 +69,22 @@ namespace Creatures.Player
                 OnUIClose?.Invoke(this, EventArgs.Empty);
         }
 
-        public void OnPlayerSwitchWeapon(InputAction.CallbackContext context)
+        public void OnPlayerSelectFirstWeapon(InputAction.CallbackContext context)
         {
             if (context.performed)
-                OnSwitchWeapon?.Invoke(this, EventArgs.Empty);
+                OnSwitchWeapon?.Invoke(this, WeaponPosition.Weapon1);
+        }
+
+        public void OnPlayerSelectSecondWeapon(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+                OnSwitchWeapon?.Invoke(this, WeaponPosition.Weapon2);
+        }
+
+        public void OnPlayerSelectTrap(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+                OnSwitchWeapon?.Invoke(this, WeaponPosition.Trap);
         }
 
         public void OnPlayerSpacebarPressed(InputAction.CallbackContext context)

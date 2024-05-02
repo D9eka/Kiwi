@@ -1,4 +1,5 @@
 ﻿using Creatures.AI;
+using Creatures.Player;
 using UnityEngine;
 
 namespace Creatures.Enemy.States
@@ -9,13 +10,12 @@ namespace Creatures.Enemy.States
         {
             AINavigation navigation = animator.GetComponentInParent<AINavigation>();
             navigation.StartNavigation();
-            navigation.SetTarget(navigation.GetChasingPoint());
+            navigation.SetTarget(PlayerController.Instance.transform);
         }
 
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             AINavigation navigation = animator.GetComponentInParent<AINavigation>();
-            navigation.SetTarget(navigation.GetChasingPoint());
         }
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

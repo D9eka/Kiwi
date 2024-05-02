@@ -8,6 +8,7 @@ namespace Creatures.AI
     public class SimpleAINavigation : AINavigation
     {
         private Vector2 _target;
+        private Transform _targetTransform;
         private float _threshold;
         private bool _followEnabled;
         private int _patrollingPointIndex;
@@ -35,6 +36,11 @@ namespace Creatures.AI
         public override void SetTarget(Vector2 target)
         {
             _target = target;
+        }
+
+        public override void SetTarget(Transform target)
+        {
+            _targetTransform = target;
         }
 
         private void Update()

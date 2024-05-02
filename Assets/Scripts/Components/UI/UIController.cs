@@ -1,9 +1,6 @@
 ﻿using Creatures.Player;
-using Sections;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using ScreenComponent = Components.UI.Screens.ScreenComponent;
 
@@ -68,6 +65,7 @@ namespace Components.UI
                 }
             }
             _screenStack.Push(screen);
+            Canvas.ForceUpdateCanvases();
         }
 
         public void PopScreen()

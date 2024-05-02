@@ -6,6 +6,7 @@ namespace Weapons
     public class WeaponSO : ScriptableObject
     {
         [SerializeField] private string _name;
+        [SerializeField] private GameObject _prefab;
         [SerializeField] private string _animKey;
         [SerializeField] private string _description;
         [SerializeField] private Sprite _icon;
@@ -24,6 +25,7 @@ namespace Weapons
         [SerializeField] private float _bulletSpeed;
         [SerializeField] private float _bulletTTLSeconds;
 
+        [SerializeField] private GameObject _thrownTrapPrefab;
         [SerializeField] private AudioClip _thrownTrapSound;
         [SerializeField] private int _maxAmount;
         [SerializeField] private float _thrownDelay;
@@ -50,11 +52,12 @@ namespace Weapons
         }
 
         public string Name => _name;
+        public GameObject Prefab => _prefab;
         public string AnimKey => _animKey;
         public string Description => _description;
         public Sprite Icon => _icon;
         public AudioClip Sound => _sound;
-        public int Price => _price;
+        public int Price => StatsModifier.GetModifiedPrice(_price);
 
         public float AttackDelay => _attackDelay;
         public string DamageTypeUI => _damageTypeUI;
@@ -68,6 +71,7 @@ namespace Weapons
         public float BulletSpeed => _bulletSpeed;
         public float BulletTTLSeconds => _bulletTTLSeconds;
 
+        public GameObject ThrownTrapPrefab => _thrownTrapPrefab;
         public AudioClip ThrownTrapSound => _thrownTrapSound;
         public int MaxAmount => _maxAmount;
         public float ThrownDelay => _thrownDelay;

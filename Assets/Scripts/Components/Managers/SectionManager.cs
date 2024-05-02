@@ -1,6 +1,5 @@
 using Components.UI;
 using Components.UI.Screens;
-using DataService;
 using Extensions;
 using System;
 using System.Collections;
@@ -42,17 +41,12 @@ namespace Sections
         public static SectionManager Instance { get; private set; }
         public int SecretDoorSectionIndex = -1;
         public SectionTypeSO CurrentSectionType => _openedSections[CurrentSectionIndex].SectionTypeSO;
-        
+
         public EventHandler OnStartLoadingSection;
         public EventHandler OnFinishLoadingSection;
 
         private void Awake()
         {
-            if (Instance != null)
-            {
-                Destroy(gameObject);
-                return;
-            }
             Instance = this;
         }
 
@@ -61,6 +55,7 @@ namespace Sections
             if (_openedSections.Count == 0)
                 _openedSections.Add(Section.Instance.Data);
             FillSectionsDictionary();
+            Load();
             ChipRewardUI.Instance.OnPlayerChooseChip += ChipRewardUI_OnPlayerChooseChip;
         }
 
@@ -77,6 +72,7 @@ namespace Sections
 
         private void ChipRewardUI_OnPlayerChooseChip(object sender, EventArgs e)
         {
+            MyGameManager.RoomPassed++;
             List<SectionTypeSO> _possibleSectionTypes = GetRandomSectionTypes();
             UIController.Instance.PushScreen(NextSectionSelectionUI.Instance);
             NextSectionSelectionUI.Instance.SetTypes(_possibleSectionTypes);
@@ -92,15 +88,16 @@ namespace Sections
             if (_isLoading)
                 return;
             _isLoading = true;
+            UIController.Instance.PushScreen(LoadingScreen.Instance);
             StartCoroutine(LoadSectionRoutine(sectionSO, position));
         }
 
         private IEnumerator LoadSectionRoutine(SectionSO sectionSO, SectionSpawnPosition position)
         {
-            UIController.Instance.PushScreen(LoadingScreen.Instance);
-            yield return new WaitForSeconds(1f);
+            OnStartLoadingSection?.Invoke(this, EventArgs.Empty);
             NeedStartWave = position == SectionSpawnPosition.Start;
             Save();
+            yield return new WaitForFixedUpdate();
             Vector2 playerPosition = position switch
             {
                 SectionSpawnPosition.Start => sectionSO.StartPosition,
@@ -108,7 +105,6 @@ namespace Sections
                 SectionSpawnPosition.Secret => sectionSO.SecretPosition,
                 _ => throw new NotImplementedException()
             };
-            OnStartLoadingSection?.Invoke(this, EventArgs.Empty);
             new SceneManager().LoadScene(sectionSO.SectionName, playerPosition, position != SectionSpawnPosition.Start);
             _isLoading = false;
         }
@@ -116,20 +112,27 @@ namespace Sections
         public void EnterSecretSection()
         {
             _isInSecretSection = true;
-            _secretSection = _secretSection != null ? _secretSection : Randomiser.GetRandomElement(_sectionDictionary.Where(data => data.Key.SectionType == SectionType.Secret)
-                                                                                                                     .Select(data => data.Value)
-                                                                                                                     .First());
+            _secretSection = _secretSection != null ? _secretSection :
+                             Randomiser.GetRandomElement(_sectionDictionary.Where(data => data.Key.SectionType == SectionType.Secret)
+                                                                           .Select(data => data.Value)
+                                                                           .First());
             LoadSection(_secretSection, SectionSpawnPosition.Start);
         }
 
         public void EnterPreviousSection()
         {
-            if (CurrentSectionIndex < 1)
+            if (CurrentSectionIndex <= 1)
                 return;
-            if (!_isInSecretSection)
+            if (_isInSecretSection)
+            {
+                _isInSecretSection = false;
+                LoadSection(_openedSections[CurrentSectionIndex], SectionSpawnPosition.Secret);
+            }
+            else
+            {
                 CurrentSectionIndex -= 1;
-            _isInSecretSection = false;
-            LoadSection(_openedSections[CurrentSectionIndex], SectionSpawnPosition.End);
+                LoadSection(_openedSections[CurrentSectionIndex], SectionSpawnPosition.End);
+            }
         }
 
         public void EnterNextSection()
@@ -138,6 +141,10 @@ namespace Sections
             {
                 CurrentSectionIndex += 1;
                 LoadSection(_openedSections[CurrentSectionIndex], SectionSpawnPosition.Start);
+            }
+            else if (CurrentSectionIndex == 0)
+            {
+                EnterNextSection(_sectionDictionary.Keys.First(key => key.SectionType == SectionType.Base));
             }
             else
             {
@@ -155,7 +162,7 @@ namespace Sections
             LoadSection(_openedSections[CurrentSectionIndex], SectionSpawnPosition.Start);
         }
 
-        private List<SectionTypeSO> GetRandomSectionTypes()
+        public List<SectionTypeSO> GetRandomSectionTypes()
         {
             List<SectionTypeSO> finalSectionTypes = new List<SectionTypeSO>();
             List<SectionTypeSO> keys = _sectionDictionary.Keys.ToList();
@@ -164,7 +171,8 @@ namespace Sections
                 finalSectionTypes.Add(_finalSectionType);
                 return finalSectionTypes;
             }
-            keys.Remove(CurrentSectionType);
+            if (CurrentSectionType.SectionType != SectionType.Base)
+                keys.Remove(CurrentSectionType);
             keys.Remove(_secretSectionType);
             keys.Remove(_finalSectionType);
             int count = Mathf.Min(3, keys.Count);
@@ -179,31 +187,20 @@ namespace Sections
 
         private void Save()
         {
-            /*
-            SectionManagerData data = new SectionManagerData(_openedSections, CurrentSectionIndex, NeedStartWave, SecretDoorSectionIndex);
-            JsonDataService.Save(data);
-            */
             SectionManagerData.OpenedSections = _openedSections;
             SectionManagerData.CurrentSectionIndex = CurrentSectionIndex;
+            SectionManagerData.IsInSecretSection = _isInSecretSection;
             SectionManagerData.NeedStartWave = NeedStartWave;
             SectionManagerData.SecretDoorSectionIndex = SecretDoorSectionIndex;
         }
 
         private void Load()
         {
-            /*
-            if (JsonDataService.TryLoad(this, out SectionManagerData data))
-            {
-                _openedSections = data.OpenedSections;
-                CurrentSectionIndex = data.CurrentSectionIndex;
-                NeedStartWave = data.NeedStartWave;
-                SecretDoorSectionIndex = data.SecretDoorSectionIndex;
-            }
-            */
             if (SectionManagerData.OpenedSections != null)
             {
                 _openedSections = SectionManagerData.OpenedSections;
                 CurrentSectionIndex = SectionManagerData.CurrentSectionIndex;
+                _isInSecretSection = SectionManagerData.IsInSecretSection;
                 NeedStartWave = SectionManagerData.NeedStartWave;
                 SecretDoorSectionIndex = SectionManagerData.SecretDoorSectionIndex;
             }
@@ -214,6 +211,7 @@ namespace Sections
     {
         public static List<SectionSO> OpenedSections;
         public static int CurrentSectionIndex;
+        public static bool IsInSecretSection;
         public static bool NeedStartWave;
         public static int SecretDoorSectionIndex;
         /*
@@ -224,5 +222,14 @@ namespace Sections
             NeedStartWave = needStartWave;
             SecretDoorSectionIndex = secretDoorSectionIndex;
         }*/
+
+        public static void Clear()
+        {
+            OpenedSections = null;
+            CurrentSectionIndex = 0;
+            IsInSecretSection = false;
+            NeedStartWave = false;
+            SecretDoorSectionIndex = -1;
+        }
     }
 }

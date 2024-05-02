@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: PipeSO
   m_EditorClassIdentifier: 
   _name: "\u0422\u0440\u0443\u0431\u0430"
+  _prefab: {fileID: 1544835037449901283, guid: db6add590d2738d4086ccfcdf1b71eb4, type: 3}
   _animKey: pipe
   _description: "\u041E\u0441\u043E\u0431\u0435\u043D\u043D\u043E\u0441\u0442\u044C:
     \u041D\u0435\u0431\u043E\u043B\u044C\u0448\u043E\u0439 \u0448\u0430\u043D\u0441
@@ -30,6 +31,7 @@ MonoBehaviour:
   _ammoCapacity: 0
   _bulletSpeed: 0
   _bulletTTLSeconds: 0
+  _thrownTrapSound: {fileID: 0}
   _maxAmount: 0
   _thrownDelay: 0
   _destroyType: 0

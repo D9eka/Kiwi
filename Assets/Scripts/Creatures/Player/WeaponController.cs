@@ -1,7 +1,5 @@
 using Components.UI.Screens.Store;
 using Creatures.Player;
-using DataService;
-using Newtonsoft.Json;
 using Player;
 using Sections;
 using System;
@@ -17,7 +15,6 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private GameObject _trap;
     [Space]
     [SerializeField] private List<WeaponSO> _weaponsSO;
-    [SerializeField] private List<GameObject> _weaponsGO;
 
     private Transform _weaponHandler;
     private GameObject[] _weaponsArray = new GameObject[3];
@@ -38,6 +35,8 @@ public class WeaponController : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null)
+            Destroy(Instance);
         Instance = this;
     }
 
@@ -45,36 +44,26 @@ public class WeaponController : MonoBehaviour
     {
         PlayerInputReader playerInputReader = PlayerInputReader.Instance;
         playerInputReader.OnSwitchWeapon += OnPlayerSwitchWeapon;
-        playerInputReader.OnWeaponReload += OnPlayerWeaponReload;
         playerInputReader.OnAttack += OnPlayerAttack;
 
         PlayerVisual playerVisual = PlayerController.Instance.Visual;
         playerVisual.OnStartAttackAnimation += PlayerVisual_OnStartAttackAnimation;
+        playerVisual.OnAttackAnimation += PlayerVisual_OnAttackAnimation;
         playerVisual.OnFinishAttackAnimation += PlayerVisual_OnFinishAttackAnimation;
         playerVisual.OnStartReloadAnimation += PlayerVisual_OnStartReloadAnimation;
-        playerVisual.OnFinishRealoadAnimation += PlayerVisual_OnFinishReloadAnimation;
+        playerVisual.OnFinishReloadAnimation += PlayerVisual_OnFinishReloadAnimation;
         playerVisual.OnStartDeathAnimation += PlayerVisual_OnStartDeathAnimation;
 
         PlayerController.Instance.OnChangeLadderState += PlayerController_OnChangeLadderState;
 
-        SectionManager.Instance.OnStartLoadingSection += SectionManager_OnStartLoadSection;
+        if (SectionManager.Instance != null)
+            SectionManager.Instance.OnStartLoadingSection += SectionManager_OnStartLoadingSection;
+        else
+            SectionTutorial.Instance.OnStartLoadingSection += SectionManager_OnStartLoadingSection;
 
         _weaponHandler = PlayerController.Instance.WeaponHandler;
 
-        GameObject[] weaponsToSpawn = new GameObject[3];
-        if (JsonDataService.TryLoad(this, out string[] data))
-        {
-            for (int j = 0; j < weaponsToSpawn.Length; j++)
-            {
-                if (data[j] != null)
-                {
-                    weaponsToSpawn[j] = _weaponsGO[_weaponsSO.IndexOf(_weaponsSO.Where(weaponSO => weaponSO.Name == data[j]).ToArray()[0])];
-                }
-            }
-        }
-        else
-            weaponsToSpawn = new GameObject[] { _firstWeapon, _secondWeapon, _trap };
-
+        GameObject[] weaponsToSpawn = Load();
         int i = 0;
         foreach (GameObject weapon in weaponsToSpawn)
         {
@@ -90,16 +79,16 @@ public class WeaponController : MonoBehaviour
 
     public void SwitchWeapon(int weaponIndex)
     {
-        if (_currentWeapon != -1)
-            _weaponsArray[_currentWeapon]?.SetActive(false);
+        if (_currentWeapon != -1 && _weaponsArray[_currentWeapon] != null)
+            _weaponsArray[_currentWeapon].SetActive(false);
 
         if (_currentWeapon == weaponIndex)
             _currentWeapon = -1;
         else
             _currentWeapon = weaponIndex;
 
-        if (_currentWeapon != -1)
-            _weaponsArray[_currentWeapon]?.SetActive(true);
+        if (_currentWeapon != -1 && _weaponsArray[_currentWeapon] != null)
+            _weaponsArray[_currentWeapon].SetActive(true);
     }
     public void SwitchWeapon()
     {
@@ -123,14 +112,9 @@ public class WeaponController : MonoBehaviour
         OnStateChange?.Invoke(this, (WeaponPosition)_currentWeapon);
     }
 
-    private void OnPlayerWeaponReload(object sender, EventArgs e)
+    private void OnPlayerSwitchWeapon(object sender, WeaponPosition e)
     {
-        OnStateChange?.Invoke(this, (WeaponPosition)_currentWeapon);
-    }
-
-    private void OnPlayerSwitchWeapon(object sender, EventArgs e)
-    {
-        SwitchWeapon();
+        SwitchWeapon(e);
     }
 
     private void PlayerVisual_OnStartAttackAnimation(object sender, EventArgs e)
@@ -138,6 +122,16 @@ public class WeaponController : MonoBehaviour
         if (_currentWeapon == -1 || _weaponsArray[_currentWeapon] == null)
             return;
         _weaponsArray[_currentWeapon].SetActive(false);
+    }
+
+    private void PlayerVisual_OnAttackAnimation(object sender, EventArgs e)
+    {
+        if (_currentWeapon == -1 || _weaponsArray[_currentWeapon] == null)
+            return;
+        if (CurrentWeapon is Melee melee)
+            melee.OnAttack();
+        if (CurrentWeapon is Trap trap)
+            trap.OnAttack();
     }
 
     private void PlayerVisual_OnFinishAttackAnimation(object sender, EventArgs e)
@@ -164,6 +158,7 @@ public class WeaponController : MonoBehaviour
             return;
         _weaponsArray[_currentWeapon].SetActive(true);
         CurrentWeapon.GetComponent<Gun>().Reload();
+        OnStateChange?.Invoke(this, (WeaponPosition)_currentWeapon);
     }
 
     private void PlayerController_OnChangeLadderState(object sender, bool e)
@@ -179,7 +174,7 @@ public class WeaponController : MonoBehaviour
         _weaponsArray[_currentWeapon].SetActive(false);
     }
 
-    private void SectionManager_OnStartLoadSection(object sender, EventArgs e)
+    private void SectionManager_OnStartLoadingSection(object sender, EventArgs e)
     {
         Save();
     }
@@ -203,11 +198,11 @@ public class WeaponController : MonoBehaviour
         }
         else
         {
-            if (!_firstWeapon)
+            if (_weaponsArray[0] == null)
             {
                 WeaponGetConfirmUI.Instance.Open(weapon, WeaponPosition.Weapon1);
             }
-            else if (!_secondWeapon)
+            else if (_weaponsArray[1] == null)
             {
                 WeaponGetConfirmUI.Instance.Open(weapon, WeaponPosition.Weapon2);
             }
@@ -253,7 +248,11 @@ public class WeaponController : MonoBehaviour
 
         GameObject weaponGO = Instantiate(weapon.gameObject, _weaponHandler);
         _weaponsArray[(int)position] = weaponGO;
-        weaponGO.SetActive(false);
+        if (_currentWeapon != -1)
+            _weaponsArray[_currentWeapon].SetActive(false);
+        _currentWeapon = (int)position;
+        _weaponsArray[_currentWeapon].SetActive(true);
+        OnStateChange?.Invoke(this, position);
     }
 
 
@@ -268,17 +267,47 @@ public class WeaponController : MonoBehaviour
     {
         DropWeapon(WeaponPosition.Trap);
     }
-    
+
     private void Save()
     {
-        string[] data = new string[_weaponsArray.Length];
-        for (int i = 0; i < _weaponsArray.Length; i++) 
-        { 
+        WeaponControllerData.WeaponsArray = new WeaponSO[_weaponsArray.Length];
+        for (int i = 0; i < _weaponsArray.Length; i++)
+        {
             if (_weaponsArray[i] != null)
             {
-                data[i] = _weaponsArray[i].GetComponent<Weapon>().Data.Name;
+                WeaponControllerData.WeaponsArray[i] = _weaponsArray[i].GetComponent<Weapon>().Data;
             }
         }
-        JsonDataService.Save(data);
+        WeaponControllerData.CurrentWeapon = _currentWeapon;
+    }
+
+    private GameObject[] Load()
+    {
+        GameObject[] weaponsToSpawn;
+        if (WeaponControllerData.WeaponsArray == null)
+            weaponsToSpawn = new GameObject[] { _firstWeapon, _secondWeapon, _trap };
+        else
+        {
+            weaponsToSpawn = new GameObject[WeaponControllerData.WeaponsArray.Length];
+            for (int i = 0; i < weaponsToSpawn.Length; i++)
+            {
+                if (WeaponControllerData.WeaponsArray[i] != null)
+                    weaponsToSpawn[i] = WeaponControllerData.WeaponsArray[i].Prefab;
+            }
+            _currentWeapon = WeaponControllerData.CurrentWeapon;
+        }
+        return weaponsToSpawn;
+    }
+}
+
+public static class WeaponControllerData
+{
+    public static WeaponSO[] WeaponsArray;
+    public static int CurrentWeapon;
+
+    public static void Clear()
+    {
+        WeaponsArray = null;
+        CurrentWeapon = -1;
     }
 }

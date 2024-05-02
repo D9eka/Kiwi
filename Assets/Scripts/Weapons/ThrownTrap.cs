@@ -7,8 +7,10 @@ namespace Weapons
 {
     public class ThrownTrap : MonoBehaviour
     {
+        [SerializeField] private WeaponSO _data;
+        [Space]
         [SerializeField] private CircleCollider2D _attackRange;
-        [SerializeField] protected AudioClip _sound;
+        [SerializeField] private Vector2 _initialForce;
 
         private Rigidbody2D _rigidbody;
         private Animator _animator;
@@ -16,7 +18,7 @@ namespace Weapons
         private float _damage;
         private TrapDestroyType _destroyType;
 
-        protected const string ATTACK_KEY = "attack";
+        private const string ATTACK_KEY = "attack";
 
         private void Awake()
         {
@@ -24,20 +26,19 @@ namespace Weapons
             _animator = GetComponent<Animator>();
         }
 
-        public void Initialize(float damage, float attackDelay, TrapDestroyType destroyType, float ttl, Vector2 force)
+        private void Start()
         {
-            _damage = damage;
-            _destroyType = destroyType;
+            _damage = _data.Damage;
+            _destroyType = _data.DestroyType;
 
-            _rigidbody.velocity = force;
+            _rigidbody.velocity = _initialForce;
 
-            InvokeRepeating(nameof(Attack), attackDelay, attackDelay);
+            InvokeRepeating(nameof(Attack), _data.AttackDelay, _data.AttackDelay);
 
             if (_destroyType == TrapDestroyType.TimeLimit)
             {
-                Invoke(nameof(DestroyIt), ttl);
+                Invoke(nameof(DestroyIt), _data.TTLSeconds);
             }
-
         }
 
         private void Attack()
@@ -46,7 +47,7 @@ namespace Weapons
 
             Collider2D[] colliders = Physics2D.OverlapCircleAll(_attackRange.transform.position, _attackRange.radius);
 
-            float damage = _damage;
+            float damage = StatsModifier.GetModifiedDamage(_damage, DamageType.Trap);
             if (_destroyType == TrapDestroyType.TimeLimit)
                 damage += (_damage / 2) * colliders.Count(collider => collider.GetComponent<ThrownTrap>() != null);
 
@@ -54,8 +55,9 @@ namespace Weapons
                      !collider.isTrigger && collider.GetComponentInParent<HealthComponent>() != null))
             {
                 collider.GetComponentInParent<HealthComponent>().ModifyHealth(-damage);
+                MyGameManager.AddAmountDamage(damage);
             }
-            SoundManager.Instance.PlaySound(_sound);
+            SoundManager.Instance.PlaySound(_data.ThrownTrapSound);
         }
 
         private void DestroyIt()

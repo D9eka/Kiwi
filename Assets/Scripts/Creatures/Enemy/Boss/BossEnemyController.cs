@@ -1,19 +1,17 @@
 using Components.Health;
-using System;
-using System.Collections;
+using Creatures.AI;
+using System.Linq;
 using UnityEngine;
 
 namespace Creatures.Enemy
 {
     public class BossEnemyController : EnemyController
     {
-        [SerializeField] private Transform _attack1Start;
-        [SerializeField] private Transform _attack1Center;
-        [SerializeField] private Transform _attack1End;
-        [SerializeField] private float _attack1MaxHeight;
+        [SerializeField] private AttackComponent[] _speedUpAttacks;
 
         private HealthComponent _health;
 
+        private bool _speedUp;
         private const string SPEED_UP_KEY = "speed-up";
 
         protected override void Awake()
@@ -27,55 +25,36 @@ namespace Creatures.Enemy
             base.Start();
 
             _health.OnValueChange += Health_OnValueChange;
+
+            GetComponent<AINavigation>().Initialize();
+        }
+
+        protected override void ChooseAttack()
+        {
+            AttackComponent[] availableAttacks = _speedUp ? _speedUpAttacks.Where(attack => attack.CanAttack).ToArray() : _attacks.Where(attack => attack.CanAttack).ToArray();
+            if (availableAttacks.Length > 0)
+            {
+                SetState(EnemyState.Attack);
+                if (availableAttacks.Length == 1)
+                {
+                    _activeAttack = availableAttacks[0];
+                    _animator.SetTrigger(availableAttacks[0].Attack());
+                }
+                if (availableAttacks.Length > 1)
+                {
+                    int randomAttack = UnityEngine.Random.Range(0, availableAttacks.Length - 1);
+                    _activeAttack = availableAttacks[randomAttack];
+                    _animator.SetTrigger(availableAttacks[randomAttack].Attack());
+                }
+            }
         }
 
         private void Health_OnValueChange(object sender, HealthComponent.OnValueChangeEventArgs e)
         {
-            _animator.SetBool(SPEED_UP_KEY, e.value < 58);
-        }
-
-        public void Attack1()
-            => StartCoroutine(Attack1Routine());
-        
-        private IEnumerator Attack1Routine()
-        {
-            _activeAttack = _attacks[0];
-            float directionX = _attack1Center.position.x - transform.position.x > 0 ? 1 : -1;
-            yield return MoveRoutine(new Vector2(directionX, 1), _attack1Center.position.x - transform.position.x, _attack1MaxHeight, 1f);
-            OnAttack();
-
-            _activeAttack = _attacks[0];
-            yield return new WaitForSeconds(0.166f);
-            directionX = _attack1Start.position.x - transform.position.x > 0 ? 1 : -1;
-            yield return MoveRoutine(new Vector2(directionX, 1), _attack1Start.position.x - transform.position.x, _attack1MaxHeight, 1f);
-            OnAttack();
-
-            _activeAttack = _attacks[0];
-            yield return new WaitForSeconds(0.166f);
-            directionX = _attack1End.position.x - transform.position.x > 0 ? 1 : -1;
-            yield return MoveRoutine(new Vector2(directionX, 1), _attack1End.position.x - transform.position.x, _attack1MaxHeight, 1f);
-        }
-
-        private IEnumerator MoveRoutine(Vector2 direction, float xDelta, float yDelta, float time)
-        {
-            Vector3 initialPosition = transform.position;
-
-            Vector2 firstHalfPosition = new Vector3(initialPosition.x + (xDelta/2 * direction.x), initialPosition.y + (yDelta * direction.y), initialPosition.z);
-            Vector3 endPosition = new Vector3(initialPosition.x + (xDelta * direction.x), initialPosition.y, initialPosition.z);
-            float startTime = Time.time;
-
-            while (transform.position != endPosition && (Time.time - startTime) / time <= 1)
+            if (e.value < 58)
             {
-                float elapsedTime = (Time.time - startTime) / time;
-                if (elapsedTime <= 0.5f)
-                {
-                    transform.position = Vector3.Lerp(initialPosition, firstHalfPosition, elapsedTime * 2f);
-                }
-                else
-                {
-                    transform.position = Vector3.Lerp(firstHalfPosition, endPosition, (elapsedTime - 0.5f) * 2f);
-                }
-                yield return new WaitForFixedUpdate();
+                _speedUp = true;
+                _animator.SetBool(SPEED_UP_KEY, true);
             }
         }
     }

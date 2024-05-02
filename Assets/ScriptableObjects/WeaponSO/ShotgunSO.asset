@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ShotgunSO
   m_EditorClassIdentifier: 
   _name: "\u0414\u0440\u043E\u0431\u043E\u0432\u0438\u043A"
+  _prefab: {fileID: 6817732230846011340, guid: bfbd7ae2fdc7c8d47acef19a8d69817a, type: 3}
   _animKey: shotgun
   _description: 
   _icon: {fileID: 21300000, guid: e619024f29e28684d8ab2546459bd0bf, type: 3}
@@ -28,6 +29,7 @@ MonoBehaviour:
   _ammoCapacity: 5
   _bulletSpeed: 15
   _bulletTTLSeconds: 5
+  _thrownTrapSound: {fileID: 0}
   _maxAmount: 0
   _thrownDelay: 0
   _destroyType: 0

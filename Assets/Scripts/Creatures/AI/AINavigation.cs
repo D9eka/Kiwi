@@ -6,6 +6,7 @@ namespace Creatures.AI
 {
     public abstract class AINavigation : MonoBehaviour
     {
+        [SerializeField] protected float _offset;
         [SerializeField] protected float _patrollingThreshold = 0.25f;
         [SerializeField] protected float _setTargetThreshold = 1.5f;
 
@@ -16,6 +17,11 @@ namespace Creatures.AI
 
         protected bool _active;
 
+        public virtual void Initialize()
+        {
+            _active = true;
+        }
+
         public virtual void Initialize(GameObject[] points)
         {
             _points = points;
@@ -23,6 +29,7 @@ namespace Creatures.AI
         }
 
         public abstract void SetTarget(Vector2 target);
+        public abstract void SetTarget(Transform target);
 
         public abstract void StartNavigation();
 

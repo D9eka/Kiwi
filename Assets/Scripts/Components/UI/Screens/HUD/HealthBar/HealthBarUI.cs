@@ -35,7 +35,7 @@ public class HealthBarUI : MonoBehaviour
     {
         var healthPercent = e.value / e.maxValue;
         SetFillerValue(healthPercent);
-        if (_textMeshProUGUI is null)
+        if (_textMeshProUGUI == null)
             return;
         SetText(e.value, e.maxValue);
     }

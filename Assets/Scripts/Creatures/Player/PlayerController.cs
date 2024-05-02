@@ -1,5 +1,7 @@
 using Components.ColliderBased;
 using Components.Health;
+using Components.UI;
+using Components.UI.Screens;
 using Extensions;
 using Player;
 using System;
@@ -71,13 +73,14 @@ namespace Creatures.Player
                 Destroy(Instance);
             }
 
+
+            Active = true;
             Instance = this;
 
             _playerVisual = _visual.GetComponent<PlayerVisual>();
             _health = GetComponent<HealthComponent>();
-
-            Active = true;
             _initialGravity = _rigidbody.gravityScale;
+
             _dashCounter = StatsModifier.DashCount;
         }
 
@@ -92,11 +95,14 @@ namespace Creatures.Player
             inputReader.OnAttack += PlayerInputReader_OnAttack;
             inputReader.OnWeaponReload += PlayerInputReader_OnWeaponReload;
 
-            _playerVisual.OnFinishPuchAttackAnimation += PlayerVisual_OnPunchAnimationEnd;
+            _playerVisual.OnFinishPuchAttackAnimation += PlayerVisual_OnFinishPunchAnimation;
+            _playerVisual.OnStartDeathAnimation += PlayerVisual_OnStartDeathAnimation;
+            _playerVisual.OnFinishDeathAnimation += PlayerVisual_OnFinishDeathAnimation;
+
+            StatsModifier.OnChangeDashCount += StatsModifier_OnChangeDashCount;
         }
 
         #region Events
-
         private void PlayerInputReader_OnMove(object sender, Vector2 e)
         {
             SetDirection(e);
@@ -131,7 +137,7 @@ namespace Creatures.Player
                     _animator.SetTrigger($"{_activeWeapon.Data.AnimKey}-{ATTACK_KEY}");
                 }
             }
-            else if (_punchAttack.CanAttack)
+            else if (!_punchAttack.Cooldown)
                 _animator.SetTrigger(_punchAttack.Attack());
         }
 
@@ -143,13 +149,38 @@ namespace Creatures.Player
             }
         }
 
-        private void PlayerVisual_OnPunchAnimationEnd(object sender, EventArgs e)
+        private void PlayerVisual_OnFinishPunchAnimation(object sender, EventArgs e)
         {
-            foreach(HealthComponent health in _punchAttack.OnAttack())
+            foreach (HealthComponent health in _punchAttack.OnAttack())
             {
                 if (health != _health)
-                    health.ModifyHealth(_punchAttack.Damage);
+                {
+                    float damage = StatsModifier.GetModifiedDamage(_punchAttack.Damage, DamageType.Hand);
+                    health.ModifyHealth(-damage);
+                    MyGameManager.AddAmountDamage(damage);
+                }
             }
+        }
+
+        private void PlayerVisual_OnStartDeathAnimation(object sender, EventArgs e)
+        {
+            Deactivate();
+        }
+        private void PlayerVisual_OnFinishDeathAnimation(object sender, EventArgs e)
+        {
+
+            if (SceneManager.GetActiveScene().buildIndex == 5)
+            {
+                PlayerPrefsController.SetBool(PlayerPrefsController.TUTORIAL_COMPLETE, true);
+                UIController.Instance.PushScreen(FadeScreen.Instance);
+            }
+            else
+                UIController.Instance.PushScreen(ResultScreen.Instance);
+        }
+
+        private void StatsModifier_OnChangeDashCount(object sender, int e)
+        {
+            _dashCounter += e;
         }
         #endregion
 
@@ -168,7 +199,7 @@ namespace Creatures.Player
 
         protected override void Move()
         {
-            float xVelocity = _direction.x * _speed;
+            float xVelocity = _direction.x * _speed * StatsModifier.SpeedMultiplier;
             float yVelocity = _isOnLadder ? _direction.y * _speed * MyGameManager.Gravity : _rigidbody.velocity.y;
             _rigidbody.velocity = new Vector2(xVelocity, yVelocity);
         }
@@ -200,8 +231,9 @@ namespace Creatures.Player
                     {
                         if (health == GetComponent<HealthComponent>())
                             continue;
-
-                        health.ModifyHealth(-_dashAttack.Damage);
+                        float damage = StatsModifier.GetModifiedDamage(_dashAttack.Damage, DamageType.Dash);
+                        health.ModifyHealth(-damage);
+                        MyGameManager.AddAmountDamage(damage);
                     }
                 }
                 Invoke(nameof(ActivateDash), _dashCooldown);
@@ -227,11 +259,6 @@ namespace Creatures.Player
             _animator.SetBool(IS_ON_LADDER_KEY, _isOnLadder);
             _rigidbody.gravityScale = _isOnLadder ? 0 : _initialGravity * MyGameManager.Gravity;
             OnChangeLadderState?.Invoke(this, _isOnLadder);
-        }
-
-        public PlayerData GetPlayerData()
-        {
-            return new PlayerData(SceneManager.GetActiveScene().name, transform.position, transform.localScale.x);
         }
 
         public override void UpdateSpriteDirection()
