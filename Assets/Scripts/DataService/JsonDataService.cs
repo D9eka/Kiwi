@@ -1,9 +1,7 @@
 ﻿using Newtonsoft.Json;
-using Sections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using Weapons;
 
 namespace DataService
 {
@@ -18,7 +16,7 @@ namespace DataService
             Save(PLAYER_FILE, playerController);
         }
         */
-        
+
         public static void Save(string[] data)
         {
             Save(WEAPON_CONTROLLER_FILE, data);
@@ -50,7 +48,7 @@ namespace DataService
         {
             return TryLoad(SECTION_MANAGER_FILE, out data);
         }
-        
+
         public static bool TryLoad<T>(string relativePath, out T data)
         {
             string path = Application.persistentDataPath + relativePath;

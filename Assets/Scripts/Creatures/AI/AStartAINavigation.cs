@@ -1,4 +1,5 @@
-﻿using Creatures.Player;
+﻿using Creatures.Enemy;
+using Creatures.Player;
 using Pathfinding;
 using System;
 using System.Collections;
@@ -11,7 +12,7 @@ namespace Creatures.AI
     public class AStartAINavigation : AINavigation
     {
         [SerializeField] private GameObject _targetPrefab;
-        [SerializeField] private GameObject _target;
+        [SerializeField] private Transform _target;
         [Header("Pathfinder")]
         [SerializeField] private bool _isFlying;
         [SerializeField] private float _pathUpdateSeconds = 0.5f;
@@ -38,7 +39,7 @@ namespace Creatures.AI
             }
         }
 
-        private Creature _creature;
+        private EnemyController _creature;
 
         private int _patrollingPointIndex;
 
@@ -51,12 +52,10 @@ namespace Creatures.AI
             _threshold = _patrollingThreshold;
 
             _seeker = GetComponent<Seeker>();
-            _creature = GetComponent<Creature>();
+            _creature = GetComponent<EnemyController>();
 
             InvokeRepeating(nameof(UpdatePath), 0, _pathUpdateSeconds);
         }
-
-
 
         private void UpdatePath()
         {
@@ -77,20 +76,15 @@ namespace Creatures.AI
             _followEnabled = false;
         }
 
-        public GameObject GetTarget()
-        {
-            return _target;
-        }
-
         public override void SetTarget(Vector2 target)
         {
             if (_spawnedTarget != null && (Vector2)_spawnedTarget.transform.position == target)
                 return;
             _spawnedTarget = Instantiate(_targetPrefab, target, Quaternion.identity);
-            SetTarget(_spawnedTarget);
+            SetTarget(_spawnedTarget.transform);
         }
 
-        public void SetTarget(GameObject target)
+        public override void SetTarget(Transform target)
         {
             _target = target;
         }
@@ -108,13 +102,13 @@ namespace Creatures.AI
                 return;
             }
 
-            Vector2 direction = (_path.vectorPath[_currentWaypoint] - transform.position).normalized;
-            if (_isFlying)
+            Vector2 direction = (_path.vectorPath[Mathf.Min(_currentWaypoint + 1, _path.vectorPath.Count - 1)] - transform.position).normalized;
+            if (_isFlying || _creature.IsOnLadder || direction.y <= 0)
                 _creature.SetDirection(direction);
             else
                 _creature.SetDirection(new Vector2(direction.x, 0f));
 
-            float distance = Vector2.Distance(transform.position, _path.vectorPath[_currentWaypoint]);
+            float distance = Vector2.Distance(new Vector2(transform.position.x, transform.position.y + _offset), _path.vectorPath[_currentWaypoint]);
             if (distance < _threshold)
             {
                 _currentWaypoint++;
@@ -147,13 +141,13 @@ namespace Creatures.AI
 
         private IEnumerator DoPatrol()
         {
-            _target = _points[_patrollingPointIndex];
+            _target = _points[_patrollingPointIndex].transform;
             while (enabled)
             {
                 if (Vector2.Distance(transform.position, _points[_patrollingPointIndex].transform.position) <= _threshold)
                 {
                     _patrollingPointIndex = (int)Mathf.Repeat(_patrollingPointIndex + 1, _points.Length);
-                    _target = _points[_patrollingPointIndex];
+                    _target = _points[_patrollingPointIndex].transform;
                 }
                 yield return null;
             }

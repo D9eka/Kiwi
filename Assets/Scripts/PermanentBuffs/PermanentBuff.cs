@@ -21,7 +21,16 @@ namespace PermanentBuffs
                 PlayerPrefsController.SetInt(_data.Name, value);
             }
         }
+        public bool IsReceived => SpentEssence >= _data.Price;
         public EventHandler OnChangeSpentEssence;
+
+        protected virtual void Start()
+        {
+            if (IsReceived)
+            {
+                Activate();
+            }
+        }
 
         public abstract void Activate();
 
@@ -38,9 +47,11 @@ namespace PermanentBuffs
             {
                 SpentEssence += spentEssence;
                 OnChangeSpentEssence?.Invoke(this, EventArgs.Empty);
+                if (IsReceived)
+                {
+                    Activate();
+                }
             }
         }
-
-        public void Save() => PlayerPrefs.SetInt(_data.Name, SpentEssence);
     }
 }

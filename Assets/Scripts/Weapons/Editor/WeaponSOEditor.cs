@@ -8,6 +8,7 @@ namespace Weapons.Editor
     public class WeaponSOEditor : UnityEditor.Editor
     {
         private SerializedProperty _nameProperty;
+        private SerializedProperty _prefabProperty;
         private SerializedProperty _animKeyProperty;
         private SerializedProperty _descriptionProperty;
         private SerializedProperty _iconProperty;
@@ -26,6 +27,7 @@ namespace Weapons.Editor
         private SerializedProperty _bulletSpeedProperty;
         private SerializedProperty _bulletTTLSecondsProperty;
 
+        private SerializedProperty _thrownTrapPrefabProperty;
         private SerializedProperty _thrownTrapSoundProperty;
         private SerializedProperty _maxAmountProperty;
         private SerializedProperty _thrownDelayProperty;
@@ -36,6 +38,7 @@ namespace Weapons.Editor
         private void OnEnable()
         {
             _nameProperty = serializedObject.FindProperty("_name");
+            _prefabProperty = serializedObject.FindProperty("_prefab");
             _animKeyProperty = serializedObject.FindProperty("_animKey");
             _descriptionProperty = serializedObject.FindProperty("_description");
             _iconProperty = serializedObject.FindProperty("_icon");
@@ -54,6 +57,7 @@ namespace Weapons.Editor
             _bulletSpeedProperty = serializedObject.FindProperty("_bulletSpeed");
             _bulletTTLSecondsProperty = serializedObject.FindProperty("_bulletTTLSeconds");
 
+            _thrownTrapPrefabProperty = serializedObject.FindProperty("_thrownTrapPrefab");
             _thrownTrapSoundProperty = serializedObject.FindProperty("_thrownTrapSound");
             _maxAmountProperty = serializedObject.FindProperty("_maxAmount");
             _thrownDelayProperty = serializedObject.FindProperty("_thrownDelay");
@@ -65,6 +69,7 @@ namespace Weapons.Editor
         public override void OnInspectorGUI()
         {
             EditorGUILayout.PropertyField(_nameProperty);
+            EditorGUILayout.PropertyField(_prefabProperty);
             EditorGUILayout.PropertyField(_animKeyProperty);
             EditorGUILayout.PropertyField(_descriptionProperty);
             EditorGUILayout.PropertyField(_iconProperty);
@@ -100,6 +105,7 @@ namespace Weapons.Editor
                     EditorGUILayout.PropertyField(_bulletTTLSecondsProperty);
                     break;
                 case WeaponType.Trap:
+                    EditorGUILayout.PropertyField(_thrownTrapPrefabProperty);
                     EditorGUILayout.PropertyField(_thrownTrapSoundProperty);
                     EditorGUILayout.PropertyField(_maxAmountProperty);
                     EditorGUILayout.PropertyField(_thrownDelayProperty);

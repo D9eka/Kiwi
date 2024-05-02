@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Start Section
   _sectionType: 0
-  _image: {fileID: 0}
+  _backgroundType: 3
   _wavesCount: 0
   _spawnPointBonus: 0
   _isOxygenWasting: 1

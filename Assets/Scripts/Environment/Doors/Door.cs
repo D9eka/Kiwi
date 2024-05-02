@@ -11,7 +11,7 @@ public class Door : MonoBehaviour
     private SpriteRenderer _rendered;
     private BoxCollider2D _collider;
 
-    private DoorType _type;
+    protected DoorType _type;
 
     private const float OPEN_HEIGHT = 2f;
     private const float OPEN_TIME = 1f;
@@ -33,7 +33,7 @@ public class Door : MonoBehaviour
         StartCoroutine(Subscribe());
     }
 
-    private IEnumerator Subscribe()
+    protected virtual IEnumerator Subscribe()
     {
         yield return new WaitUntil(() => Section.Instance != null);
 
@@ -41,27 +41,27 @@ public class Door : MonoBehaviour
         Section.Instance.OnEndSpawnWaves += Section_OnEndSpawnWaves;
     }
 
-    public void Initialize(DoorType doorType)
+    public virtual void Initialize(DoorType doorType)
     {
         _type = doorType;
         _interactableUI.anchoredPosition = new Vector2(_type == DoorType.Start ? 2 : -2, _interactableUI.anchoredPosition.y);
     }
 
-    private void Section_OnStartSpawnWaves(object sender, EventArgs e)
+    protected virtual void Section_OnStartSpawnWaves(object sender, EventArgs e)
     {
         if (_type == DoorType.Secret)
             return;
         Close();
     }
 
-    private void Section_OnEndSpawnWaves(object sender, EventArgs e)
+    protected virtual void Section_OnEndSpawnWaves(object sender, EventArgs e)
     {
-        if (_type == DoorType.Secret)
+        if (_type == DoorType.Secret || (_type == DoorType.Start && SectionManager.Instance.CurrentSectionIndex <= 1))
             return;
         Open();
     }
 
-    public void Open()
+    public virtual void Open()
     {
         if (IsOpened)
             return;
@@ -71,7 +71,7 @@ public class Door : MonoBehaviour
         StartCoroutine(LerpDoor(Vector2.up));
     }
 
-    public void Close()
+    public virtual void Close()
     {
         if (!IsOpened)
             return;

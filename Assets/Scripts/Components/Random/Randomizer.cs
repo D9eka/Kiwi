@@ -18,7 +18,7 @@ public static class Randomiser
     {
         var newList = list.GetRange(0, list.Count);
         var answerList = new List<T>();
-        while (answerList.Count < count)
+        while (answerList.Count < count && newList.Count != 0)
         {
             var element = GetRandomElement(newList);
             answerList.Add(element);

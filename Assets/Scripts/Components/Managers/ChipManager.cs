@@ -1,28 +1,69 @@
-﻿using System;
+﻿using Sections;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ChipManager : MonoBehaviour
 {
     [SerializeField] private List<ChipSO> _possibleChips = new();
+    [SerializeField] private ChipSO _brokenChipSO;
 
-    public static ChipManager Instance { get; private set; }
     private List<Chip> _obtainedChips = new();
-
     private List<UpdatingChip> _obtainedUpdatingChips = new();
-
-    //Тестовый вариант
     private ShieldChip _shieldChip;
     private RevivalChip _revivalChip;
     private VampirismChip _vampirismChip;
-    [SerializeField] private ChipSO _brokenChipSO;
-    public List<ChipSO> PossibleChips => _possibleChips;
+
+    public List<ChipSO> PossibleChips
+    {
+        get
+        {
+            List<ChipSO> obtainedChipSO = _obtainedChips.Select(chip => chip.ChipSO).ToList();
+            return _possibleChips.Where(chip => chip == _brokenChipSO || !obtainedChipSO.Contains(chip)).ToList();
+        }
+    }
     public List<Chip> ObtainedChips => _obtainedChips;
+
     public event EventHandler OnStateChange;
+    public static ChipManager Instance { get; private set; }
 
     private void Awake()
     {
         Instance = this;
+    }
+
+    private void Start()
+    {
+        if (SectionManager.Instance != null)
+            SectionManager.Instance.OnStartLoadingSection += SectionManager_OnStartLoadingSection;
+        if (SectionTutorial.Instance != null)
+            SectionTutorial.Instance.OnStartLoadingSection += SectionManager_OnStartLoadingSection;
+        StartCoroutine(Load());
+    }
+
+    private IEnumerator Load()
+    {
+        yield return new WaitForFixedUpdate();
+        if (ChipManagerData.ObtainedChips != null)
+        {
+            for (int i = 0; i < ChipManagerData.ObtainedChips.Count; i++)
+            {
+                ObtainChip(ChipManagerData.ObtainedChips[i], ChipManagerData.ObtainedChipLevels[i]);
+            }
+        }
+    }
+
+    private void SectionManager_OnStartLoadingSection(object sender, EventArgs e)
+    {
+        ChipManagerData.ObtainedChips = _obtainedChips.Select(chip => chip.ChipSO).ToList();
+        ChipManagerData.ObtainedChipLevels = _obtainedChips.Select(chip => chip.CurrentLevel).ToList();
+        foreach (Chip chip in _obtainedChips)
+        {
+            if (chip is PassiveChip passiveChip)
+                passiveChip.Deactivate();
+        }
     }
 
     private void Update()
@@ -33,18 +74,20 @@ public class ChipManager : MonoBehaviour
         }
     }
 
-    public void ObtainChip(ChipSO chipSO)
+    public void ObtainChip(ChipSO chipSO, int level = 1)
     {
         var chip = ChipCreator.Create(chipSO);
+        while (chip.CurrentLevel != level)
+            chip.TryUpgrade();
         _obtainedChips.Add(chip);
-        if (chip is not BrokenChip) _possibleChips.Remove(chipSO);
         if (chip is UpdatingChip updatingChip)
         {
             _obtainedUpdatingChips.Add(updatingChip);
         }
 
         TrySetChip(chip);
-        if (chip is PassiveChip passiveChip) passiveChip.Activate();
+        if (chip is PassiveChip passiveChip)
+            passiveChip.Activate();
         OnStateChange?.Invoke(this, EventArgs.Empty);
     }
 
@@ -79,14 +122,15 @@ public class ChipManager : MonoBehaviour
         return _shieldChip != null && _shieldChip.TryBlock();
     }
 
-    public bool TryUseRevivalChip()
+    public bool TryUseRevivalChip(out float healthPercent)
     {
         if (_revivalChip == null)
         {
+            healthPercent = 0;
             return false;
         }
 
-        _revivalChip.Revive();
+        healthPercent = _revivalChip.Revive();
         return true;
     }
 
@@ -125,5 +169,17 @@ public class ChipManager : MonoBehaviour
                 _vampirismChip = null;
                 break;
         }
+    }
+}
+
+public static class ChipManagerData
+{
+    public static List<ChipSO> ObtainedChips;
+    public static List<int> ObtainedChipLevels;
+
+    public static void Clear()
+    {
+        ObtainedChips = null;
+        ObtainedChipLevels = null;
     }
 }

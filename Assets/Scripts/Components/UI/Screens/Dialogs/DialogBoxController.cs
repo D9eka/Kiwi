@@ -7,22 +7,17 @@ namespace Components.UI.Screens.Dialogs
 {
     public class DialogBoxController : ScreenComponent
     {
-        [SerializeField] private GameObject _container;
         [SerializeField] private float _textSpeed = 0.05f;
-        [SerializeField] protected DialogContent _dialogContent;
-        [SerializeField] protected TextMeshProUGUI _speakerName;
+        [SerializeField] protected TextMeshProUGUI _nameText;
+        [SerializeField] protected TextMeshProUGUI _phraseText;
 
-        protected Sentence CurrentSentence => data.Sentences[currentSentence];
-        protected virtual TextMeshProUGUI CurrentContent => _speakerName;
-        protected virtual DialogContent SpeakerName => _dialogContent;
+        protected Sentence _currentSentence => _data.Sentences[_currentSentenceIndex];
 
-        private const string IS_OPEN_KEY = "is-open";
+        private DialogData _data;
+        private int _currentSentenceIndex;
+        private Coroutine _typingRoutine;
+        private UnityEvent _onFinishDialog;
 
-        private DialogData data;
-        private int currentSentence;
-        private Coroutine typingRoutine;
-
-        private UnityEvent onFinishDialog;
         public static DialogBoxController Instance { get; private set; }
 
         private void Awake()
@@ -30,118 +25,87 @@ namespace Components.UI.Screens.Dialogs
             Instance = this;
         }
 
-        public void ShowDialog(DialogData data, UnityEvent onStart, UnityEvent onFinish)
+        public void ShowDialog(DialogData data, UnityEvent onStart = null, UnityEvent onFinish = null)
         {
-            if (_container.activeSelf)
+            if (_content.activeInHierarchy)
             {
                 OnContinue();
                 return;
             }
 
             UIController.Instance.PushScreen(this);
-
             onStart?.Invoke();
-            onFinishDialog = onFinish;
+            _onFinishDialog = onFinish;
 
-            this.data = data;
-            currentSentence = -1;
-            _dialogContent.Text.text = "";
+            _data = data;
+            _currentSentenceIndex = -1;
+            _phraseText.text = "";
 
-            // _container.SetActive(true);
-            ShowDialog(this.data, onStart, onFinish);
-            // _animator.SetBool(IS_OPEN_KEY, true);
+            ShowDialog(_data, onStart, onFinish);
         }
 
         private IEnumerator TypeDialogText()
         {
-            _dialogContent.Text.text = string.Empty;
+            _phraseText.text = string.Empty;
 
-            var text = CurrentSentence.Phrase;
+            var text = _currentSentence.Phrase;
             foreach (var letter in text)
             {
-                _dialogContent.Text.text += letter;
+                _phraseText.text += letter;
                 yield return new WaitForSeconds(_textSpeed);
             }
 
-            typingRoutine = null;
+            _typingRoutine = null;
         }
 
         public void OnSkip()
         {
-            if (typingRoutine == null)
+            if (_typingRoutine == null)
                 return;
 
             StopTypeAnimation();
-            _dialogContent.Text.text = data.Sentences[currentSentence].Phrase;
+            _phraseText.text = _data.Sentences[_currentSentenceIndex].Phrase;
         }
 
         public void OnContinue()
         {
-            if (typingRoutine != null)
+            if (_typingRoutine != null)
             {
                 OnSkip();
                 return;
             }
 
             StopTypeAnimation();
-            currentSentence++;
+            _currentSentenceIndex++;
 
-            var isDialogComplete = currentSentence >= data.Sentences.Length;
+            var isDialogComplete = _currentSentenceIndex >= _data.Sentences.Length;
             if (isDialogComplete)
             {
                 StopDialog();
             }
             else
-
             {
                 SetSpeakerName();
-                OnStartDialogAnimationComplete();
+                _typingRoutine = StartCoroutine(TypeDialogText());
             }
         }
 
         private void StopDialog()
         {
-            onFinishDialog?.Invoke();
-            // _animator.SetBool(IS_OPEN_KEY, false);
+            _onFinishDialog?.Invoke();
             UIController.Instance.PopScreen();
         }
 
         private void StopTypeAnimation()
         {
-            if (typingRoutine != null)
-                StopCoroutine(typingRoutine);
-            typingRoutine = null;
-        }
-
-        protected virtual void OnStartDialogAnimationBegin()
-        {
-            _container.SetActive(true);
-        }
-
-        protected virtual void OnStartDialogAnimationComplete()
-        {
-            //Cursor.visible = true;
-            typingRoutine = StartCoroutine(TypeDialogText());
-        }
-
-        protected virtual void OnCloseAnimationComplete()
-        {
-            onFinishDialog?.Invoke();
-            //Cursor.visible = false;
-            _container.SetActive(false);
-        }
-
-        public void SkipAll()
-        {
-            while (currentSentence < data.Sentences.Length)
-            {
-                OnContinue();
-            }
+            if (_typingRoutine != null)
+                StopCoroutine(_typingRoutine);
+            _typingRoutine = null;
         }
 
         private void SetSpeakerName()
         {
-            _speakerName.text = CurrentSentence.SpeakerName;
+            _nameText.text = _currentSentence.SpeakerName;
         }
     }
 }

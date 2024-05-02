@@ -7,10 +7,9 @@ public abstract class Chip
     protected int currentLevel;
     public ChipSO ChipSO { get; private set; }
 
-    public int MaxLevel => maxLevel;
     public int CurrentLevel => currentLevel;
 
-    private bool CanBeUpgrade => currentLevel < maxLevel;
+    public bool CanBeUpgrade => currentLevel < ChipSO.Descriptions.Count;
 
     //Нужен для того, чтобы обновлять описание чипа
     public event EventHandler OnUpgraded;

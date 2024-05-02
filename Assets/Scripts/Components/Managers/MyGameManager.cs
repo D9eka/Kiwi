@@ -1,13 +1,42 @@
+using Creatures.Player;
 using System;
-using System.Diagnostics;
+using UnityEngine;
 
 public static class MyGameManager
 {
+    private static int _essenceCount = PlayerPrefsController.GetInt(ESSENCE_SAVE_KEY, 0);
+    public static int EssenceCount
+    {
+        get
+        {
+            return PlayerPrefsController.GetInt(ESSENCE_SAVE_KEY, _essenceCount);
+        }
+        private set
+        {
+            EssenceEarned = value - _essenceCount > 0 ? value - _essenceCount : EssenceEarned;
+            _essenceCount = value;
+            PlayerPrefsController.SetInt(ESSENCE_SAVE_KEY, _essenceCount);
+            OnEssenceCountChanged?.Invoke(null, EventArgs.Empty);
+        }
+    }
     public static bool WasKeyCardGenerated;
-    public static int EssenceCount { get; private set; }
     public static int KeyCardCount { get; private set; }
-
     public static int Gravity { get; private set; } = 1;
+
+    public static float StartTime = Time.time;
+    public static int EnemyDefeated = 0;
+    public static int RoomPassed = 0;
+    public static int EssenceEarned = 0;
+    public static int UpdatesCreated = 0;
+    public static int AmountDamage = 0;
+    public static int MaxDamage = 0;
+    public static int DamageEarned = 0;
+    public static Sprite LastDamageEnemy;
+    public static int DamageHealed = 0;
+
+    private const string ESSENCE_SAVE_KEY = "GameManagerEssence";
+    public const int CHANGE_REWARD_COST = 10;
+    public const int UPDATE_CHIP_COST = 25;
 
     public static event EventHandler OnEssenceCountChanged;
     public static event EventHandler OnGravityInverted;
@@ -15,7 +44,6 @@ public static class MyGameManager
     public static void GetEssence(int count)
     {
         EssenceCount += count;
-        OnEssenceCountChanged?.Invoke(null, EventArgs.Empty);
     }
 
     public static bool TrySpendEssence(int count)
@@ -23,7 +51,6 @@ public static class MyGameManager
         if (!CanSpendEssence(count))
             return false;
         EssenceCount -= count;
-        OnEssenceCountChanged?.Invoke(null, EventArgs.Empty);
         return true;
     }
 
@@ -49,5 +76,19 @@ public static class MyGameManager
     {
         Gravity *= -1;
         OnGravityInverted?.Invoke(null, EventArgs.Empty);
+    }
+
+    public static void AddAmountDamage(float damage)
+    {
+        int roundedDamage = Mathf.RoundToInt(damage);
+        if (roundedDamage > MaxDamage)
+            MaxDamage = roundedDamage;
+        AmountDamage += roundedDamage;
+    }
+
+    public static void AddEarnedDamage(Sprite enemySprite, float damage)
+    {
+        LastDamageEnemy = enemySprite;
+        DamageEarned += Mathf.RoundToInt(damage);
     }
 }

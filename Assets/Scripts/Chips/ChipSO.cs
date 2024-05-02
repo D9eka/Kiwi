@@ -10,10 +10,9 @@ public class ChipSO : ScriptableObject
 
     [SerializeField] private ChipType _chipType;
 
-    // [SerializeField] private Chip _chip;
     public Sprite Sprite => _sprite;
     public string Name => _name;
     public string Description => _descriptions[ChipCreator.Create(this).CurrentLevel - 1];
+    public List<string> Descriptions => _descriptions;
     public ChipType ChipType => _chipType;
-    // public Chip Chip => _chip;
 }

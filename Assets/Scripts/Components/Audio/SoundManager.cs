@@ -1,8 +1,13 @@
+using Components.Audio;
+using Creatures.Player;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    public static SoundManager Instance { get; private set; }
+    [SerializeField] private GameObject _soundPrefab;
+    [SerializeField] private AudioSource _musicAudioSource;
+    [SerializeField] private BGMType _backgroundMusic;
+    [Space]
     public AudioClip _ambienceMusic;
     public AudioClip _bossMusic;
     public AudioClip _levelMusic;
@@ -15,9 +20,13 @@ public class SoundManager : MonoBehaviour
     public AudioClip _takeDamageSound;
     public AudioClip _upgradeWeaponSound;
     public AudioClip _upgradeChipSound;
-    [Space, SerializeField] private BGM _bgm;
 
-    private enum BGM
+    public const string SOUND_VOLUME_KEY = "SoundVolume";
+    public const string MUSIC_VOLUME_KEY = "MusicVolume";
+
+    public static SoundManager Instance { get; private set; }
+
+    public enum BGMType
     {
         Ambience,
         Boss,
@@ -25,41 +34,58 @@ public class SoundManager : MonoBehaviour
         MainHall
     }
 
-    private AudioClip GetBGM()
+    private AudioClip GetBGM(BGMType type)
     {
-        return _bgm switch
+        return type switch
         {
-            BGM.Ambience => _ambienceMusic,
-            BGM.Boss => _bossMusic,
-            BGM.Level => _levelMusic,
-            BGM.MainHall => _mainHallMusic,
+            BGMType.Ambience => _ambienceMusic,
+            BGMType.Boss => _bossMusic,
+            BGMType.Level => _levelMusic,
+            BGMType.MainHall => _mainHallMusic,
             _ => null
         };
     }
 
     private void Awake()
     {
+        if (Instance != null)
+            Destroy(gameObject);
+
         Instance = this;
+        _musicAudioSource.loop = true;
+        DontDestroyOnLoad(transform.root.gameObject);
     }
 
     private void Start()
     {
-        PlayMusic(GetBGM());
+        _musicAudioSource.loop = true;
+        ChangeVolume();
+        PlayMusic(GetBGM(_backgroundMusic));
     }
 
-    public void PlaySound(AudioClip audioClip)
+    public void PlaySound(AudioClip clip)
     {
-        var soundGameObject = new GameObject("Sound");
-        var audioSource = soundGameObject.AddComponent<AudioSource>();
-        audioSource.PlayOneShot(audioClip);
+        SoundObject soundGO = Instantiate(_soundPrefab, transform).GetComponent<SoundObject>();
+        soundGO.Initialize(clip, PlayerPrefsController.GetFloat(SOUND_VOLUME_KEY, 1f));
     }
 
-    public void PlayMusic(AudioClip audioClip)
+    public void PlayMusic(BGMType type)
     {
-        var soundGameObject = new GameObject("Sound");
-        var audioSource = soundGameObject.AddComponent<AudioSource>();
-        audioSource.loop = true;
-        audioSource.clip = audioClip;
-        audioSource.PlayDelayed(0);
+        PlayMusic(GetBGM(type));
+    }
+
+    public void PlayMusic(AudioClip clip)
+    {
+        if (_musicAudioSource.clip == clip)
+            return;
+        _musicAudioSource.Stop();
+        _musicAudioSource.clip = clip;
+        _musicAudioSource.Play();
+    }
+
+    public void ChangeVolume()
+    {
+        float musicVolume = PlayerPrefsController.GetFloat(MUSIC_VOLUME_KEY, 1f);
+        _musicAudioSource.volume = musicVolume;
     }
 }

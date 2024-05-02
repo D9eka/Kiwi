@@ -40,9 +40,12 @@ public static class EnemySpawner
         {
             int maxSpawnPoints = availableSpawnPoints - ((maxEnemiesCount - i - 1) * minSpawnPoint);
             List<EnemyController> availableEnemies = enemies.Where(enemy => enemy.SpawnPointPrice <= maxSpawnPoints).ToList();
-            EnemyController enemy = Randomiser.GetRandomElement(availableEnemies);
-            wave.Add(enemy);
-            availableSpawnPoints -= enemy.SpawnPointPrice;
+            if (availableEnemies.Count != 0)
+            {
+                EnemyController enemy = Randomiser.GetRandomElement(availableEnemies);
+                wave.Add(enemy);
+                availableSpawnPoints -= enemy.SpawnPointPrice;
+            }
         }
         List<EnemyController> lastAvailableEnemies = enemies.Where(enemy => enemy.SpawnPointPrice <= availableSpawnPoints).ToList();
         EnemyController lastEnemy = Randomiser.GetRandomElement(lastAvailableEnemies);

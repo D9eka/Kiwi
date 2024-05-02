@@ -12,17 +12,13 @@ namespace Components.UI.ScreenEvent
 
         private Button _button;
 
-        private void Awake()
-        {
-            _button = GetComponent<Button>();
-        }
-
         public void Fill(string keyText, string labelText, UnityEvent unityEvent)
         {
+            _button = GetComponent<Button>();
             _keyText.text = keyText;
             _labelText.text = labelText;
-            //_button.onClick.RemoveAllListeners();
-            //_button.onClick.AddListener(() => unityEvent?.Invoke());
+            _button.onClick.RemoveAllListeners();
+            _button.onClick.AddListener(() => unityEvent?.Invoke());
         }
     }
 }

@@ -8,6 +8,12 @@ public class ControlPanel : MonoBehaviour
     private void Start()
     {
         _secretDoor = Section.Instance.SecretDoor;
+
+        SectionManager sectionManager = SectionManager.Instance;
+        if (sectionManager.SecretDoorSectionIndex == -1)
+            sectionManager.SecretDoorSectionIndex = sectionManager.CurrentSectionIndex;
+        else
+            gameObject.SetActive(false);
     }
 
     public void TryOpenSecretDoor()

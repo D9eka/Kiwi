@@ -1,16 +1,18 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EssenceUI : MonoBehaviour
 {
-    private TextMeshProUGUI _textMeshProUGUI;
+    [SerializeField] private TextMeshProUGUI _textMeshProUGUI;
 
     void Start()
     {
-        _textMeshProUGUI = GetComponentInChildren<TextMeshProUGUI>();
         MyGameManager.OnEssenceCountChanged += OnGameManagerEssenceCountChanged;
         MyGameManager.GetEssence(0);
+        LayoutRebuilder.ForceRebuildLayoutImmediate(_textMeshProUGUI.GetComponent<RectTransform>());
+        LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
     }
 
     private void OnGameManagerEssenceCountChanged(object sender, EventArgs e)

@@ -37,7 +37,6 @@ namespace Sections
             InitializeDoor(_startDoor, Door.DoorType.Start);
             InitializeDoor(_endDoor, Door.DoorType.End);
             InitializeDoor(_secretDoor, Door.DoorType.Secret);
-
         }
 
         private void InitializeDoor(Door door, Door.DoorType doorType)
@@ -49,6 +48,7 @@ namespace Sections
         private void Start()
         {
             SpawnWaves();
+            SoundManager.Instance?.PlayMusic(_data.SectionTypeSO.BackgroundType);
         }
 
         public void SpawnWaves()
@@ -71,6 +71,7 @@ namespace Sections
                 int currentWave = 0;
                 while (currentWave < _waves.Length)
                 {
+                    SoundManager.Instance.PlaySound(SoundManager.Instance._startWaveSound);
                     SpawnWave(currentWave);
                     yield return new WaitUntil(() => _spawnedEnemiesCount == 0);
                     currentWave++;

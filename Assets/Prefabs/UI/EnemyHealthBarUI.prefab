@@ -343,7 +343,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _filler: {fileID: 5199283771969968797}
-  _healthComponent: {fileID: 0}
-  _isStatic: 0
   _isPlayer: 0
+  _isStatic: 0
   _textMeshProUGUI: {fileID: 0}

@@ -20,7 +20,6 @@ namespace Components.UI.Screens.Store
         private List<Weapon> _weaponsList = new();
         private int _currentIndex;
         private bool _canChangeProduct = StatsModifier.CanChangeReward;
-        private const int CHANGE_PRODUCT_COST = 5;
 
         public static StoreUI Instance { get; private set; }
 
@@ -58,30 +57,31 @@ namespace Components.UI.Screens.Store
                 _weaponsList.Add(weapon);
                 allowedWeapons.Remove(weapon);
 
-                _cardsList[i].Fill(weapon);
-                _cardsList[i].GetComponent<Button>().onClick.RemoveAllListeners();
-                _cardsList[i].GetComponent<Button>().onClick.AddListener(() => TryBuy(i));
+                _cardsList[i].Fill(weapon, true);
             }
+            LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
         }
 
         public void TryChangeProduct()
         {
-            if (!_canChangeProduct || !MyGameManager.TrySpendEssence(CHANGE_PRODUCT_COST))
+            if (!_canChangeProduct || !MyGameManager.TrySpendEssence(MyGameManager.CHANGE_REWARD_COST))
                 return;
             GenerateWeapons();
         }
 
         public void TryBuy()
         {
-            if (EventSystem.current.currentSelectedGameObject.TryGetComponent(out CardUI card))
+            if (EventSystem.current.currentSelectedGameObject != null &&
+                EventSystem.current.currentSelectedGameObject.TryGetComponent(out CardUI card))
                 TryBuy(_cardsList.IndexOf(card));
         }
 
         public void TryBuy(int weaponIndex)
         {
-            if (!MyGameManager.CanSpendEssence(_weaponsList[weaponIndex].Data.Price))
+            _currentIndex = weaponIndex;
+            if (!MyGameManager.CanSpendEssence(_weaponsList[_currentIndex].Data.Price))
                 return;
-            WeaponController.Instance.TryEquipWeapon(_weaponsList[weaponIndex]);
+            WeaponController.Instance.TryEquipWeapon(_weaponsList[_currentIndex]);
         }
 
         private void ShowSoldOut()
@@ -94,7 +94,7 @@ namespace Components.UI.Screens.Store
             MyGameManager.TrySpendEssence(_weaponsList[_currentIndex].Data.Price);
             _cardsList[_currentIndex].gameObject.SetActive(false);
             _canChangeProduct = false;
-            var isAnyNotSold = _cardsList.Any(cardUI => cardUI.isActiveAndEnabled);
+            bool isAnyNotSold = _cardsList.Any(cardUI => cardUI.gameObject.activeSelf);
             if (!isAnyNotSold)
                 ShowSoldOut();
         }

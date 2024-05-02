@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: "\u041E\u0440\u0443\u0436\u0435\u0439\u043D\u0430\u044F"
   _sectionType: 5
-  _image: {fileID: 0}
+  _backgroundType: 2
   _wavesCount: 0
   _spawnPointBonus: 0
   _isOxygenWasting: 0

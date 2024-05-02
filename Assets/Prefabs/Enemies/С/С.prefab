@@ -17,7 +17,8 @@ GameObject:
   - component: {fileID: 1670006882461453664}
   - component: {fileID: 7532848221299874424}
   - component: {fileID: 451804282715281104}
-  m_Layer: 0
+  - component: {fileID: 18658983507301504}
+  m_Layer: 11
   m_Name: "\u0421"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,6 +105,8 @@ MonoBehaviour:
   _objectToSpawn: {fileID: 571944651108015522, guid: a2fbdf33fcfdc6144b701e7ebb960469, type: 3}
   _minItems: 1
   _maxItems: 2
+  _initialPositionXRange: 1
+  _initialPositionYRange: 1.5
   _initialVelocityXMin: 1
   _initialVelocityXMax: 10
   _initialVelocityYMin: 1
@@ -175,6 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c63272e90cb954b4faeedadf55a320a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _offset: 1
   _patrollingThreshold: 0.25
   _setTargetThreshold: 1
   _points:
@@ -199,9 +203,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _visual: {fileID: 7642396524029179213}
-  _invertScale: 0
+  _invertScale: 1
   _speed: 7
-  _spawnPointPrice: 0
+  _spawnPointPrice: 1
   _initialState: 0
   _vision: {fileID: 2839105192233494839}
   _attacks:
@@ -224,6 +228,19 @@ MonoBehaviour:
   _attackType: 1
   _distance: {fileID: 5032527938305198466}
   _initialPosition: {x: 0, y: 0}
+--- !u!114 &18658983507301504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2566852659831297125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 531f20c87520c85409a7c58610738f39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isNeededOffset: 1
 --- !u!1 &3781641189179258297
 GameObject:
   m_ObjectHideFlags: 0
@@ -235,7 +252,7 @@ GameObject:
   - component: {fileID: 5904076167513959127}
   - component: {fileID: 2916773203373650652}
   - component: {fileID: 2839105192233494839}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Vision
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -325,7 +342,7 @@ GameObject:
   - component: {fileID: 863993136342110466}
   - component: {fileID: 4040762900641270707}
   - component: {fileID: 5032527938305198466}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: AttackRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -406,7 +423,7 @@ GameObject:
   - component: {fileID: 4818461775324853331}
   - component: {fileID: 7015761194346750222}
   - component: {fileID: 1094132425384585520}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -470,7 +487,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: -1999714742, guid: 78aad42c9e476454ab549f007f9ca279, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -546,6 +563,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4133382146405081146}
     m_Modifications:
+    - target: {fileID: 2290724201132273601, guid: 7d7da8e7c44548741943d61e88901edb, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4342157715527689863, guid: 7d7da8e7c44548741943d61e88901edb, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -626,6 +647,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4797969538042104911, guid: 7d7da8e7c44548741943d61e88901edb, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 5548323428689533002, guid: 7d7da8e7c44548741943d61e88901edb, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 6808548270981271155, guid: 7d7da8e7c44548741943d61e88901edb, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1
@@ -633,6 +662,10 @@ PrefabInstance:
     - target: {fileID: 6878937329122159235, guid: 7d7da8e7c44548741943d61e88901edb, type: 3}
       propertyPath: m_Name
       value: HealthBarUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6878937329122159235, guid: 7d7da8e7c44548741943d61e88901edb, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

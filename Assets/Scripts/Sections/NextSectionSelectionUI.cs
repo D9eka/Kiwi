@@ -1,6 +1,5 @@
 using Components.UI.Cards;
 using Sections;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -35,6 +34,13 @@ namespace Components.UI.Screens
                     _cardsList[i].gameObject.SetActive(false);
                 }
             }
+        }
+
+        public void TryChangeProduct()
+        {
+            if (!StatsModifier.CanChangeReward || !MyGameManager.TrySpendEssence(MyGameManager.CHANGE_REWARD_COST))
+                return;
+            SetTypes(SectionManager.Instance.GetRandomSectionTypes());
         }
 
         public void Choose()

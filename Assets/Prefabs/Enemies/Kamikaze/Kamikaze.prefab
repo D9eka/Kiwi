@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8279269344601977830}
   - component: {fileID: 1855074008440694659}
   - component: {fileID: 4167515403620081354}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,7 +175,7 @@ GameObject:
   - component: {fileID: 7316411863252727838}
   - component: {fileID: 1253435821952211740}
   - component: {fileID: 1836624000995399157}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Vision
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -258,7 +258,7 @@ GameObject:
   - component: {fileID: 194948738284104924}
   - component: {fileID: 8409666718545908501}
   - component: {fileID: 5933547112092494589}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Kamikaze
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -382,7 +382,7 @@ MonoBehaviour:
   _visual: {fileID: 2185466598041369774}
   _invertScale: 0
   _speed: 0
-  _spawnPointPrice: 0
+  _spawnPointPrice: 1
   _initialState: 0
   _vision: {fileID: 1836624000995399157}
   _attacks:

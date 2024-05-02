@@ -1,10 +1,10 @@
-﻿using Components.Audio;
-using Components.UI.Screens;
-using DataService;
+﻿using Components.UI.Screens;
+using Creatures.Player;
 using Extensions;
 using Sections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Components.UI
 {
@@ -14,28 +14,24 @@ namespace Components.UI
         [Space]
         [SerializeField] private GameObject _contunueButton;
         [Space]
-        [SerializeField] private SectionSO _newGameSection;
         [SerializeField] private SectionSO _continueGameSection;
 
         protected override void Start()
         {
             base.Start();
 
-            if (_backgroundMusic != null)
-                AudioHandler.Instance.PlayMusic(_backgroundMusic);
-
-            //_contunueButton.SetActive(PlayerPrefsController.HaveData());
+            _contunueButton.GetComponent<Button>().interactable = PlayerPrefsController.IsCompleteTutorial();
         }
 
         public void StartNewGame()
         {
-            JsonDataService.DeleteAllData(true);
-            new SceneManager().LoadScene(_newGameSection.SectionName, _newGameSection.StartPosition);
+            PlayerPrefsController.CleanPlayerInfo();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
 
         public void ContinueGame()
         {
-            JsonDataService.DeleteAllData();
+            PlayerPrefsController.CleanRunInfo();
             new SceneManager().LoadScene(_continueGameSection.SectionName, _continueGameSection.StartPosition);
         }
     }

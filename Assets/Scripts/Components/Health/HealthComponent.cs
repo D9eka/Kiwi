@@ -10,9 +10,32 @@ namespace Components.Health
         [SerializeField] private float _maxHealth;
         [SerializeField] private UnityEvent _onHeal;
         [SerializeField] private UnityEvent _onDamage;
-        public UnityEvent _onDie;
+        [SerializeField] private UnityEvent _onDie;
 
         private float _health;
+        private float Health
+        {
+            get
+            {
+                return _health;
+            }
+            set
+            {
+                if (_isPlayer && value > _health)
+                    MyGameManager.DamageHealed += Mathf.RoundToInt(value - _health);
+                _health = value;
+                OnValueChange?.Invoke(this, new OnValueChangeEventArgs
+                {
+                    value = _health,
+                    maxValue = _maxHealth,
+                });
+                if (_isPlayer)
+                    PlayerPrefsController.SetVector2(SAVE_KEY, new Vector2(_health, _maxHealth));
+            }
+        }
+        private bool _isPlayer;
+
+        public const string SAVE_KEY = "PlayerHealth";
 
         public EventHandler<OnValueChangeEventArgs> OnValueChange;
 
@@ -22,38 +45,61 @@ namespace Components.Health
             public float maxValue;
         }
 
-        private void Start()
+        private void Awake()
         {
-            _health = _maxHealth;
-
-            OnValueChange?.Invoke(this, new OnValueChangeEventArgs
+            if (TryGetComponent<PlayerController>(out PlayerController playerController))
             {
-                value = _health,
-                maxValue = _maxHealth,
-            });
-            if (TryGetComponent(out PlayerController playerController))
-            {
-                //_onDamage.AddListener(() => SoundManager.Instance.PlaySound(SoundManager.Instance._takeDamageSound));
+                SetPlayerHealth();
             }
+            else
+            {
+                Health = _maxHealth;
+            }
+        }
+
+        private void SetPlayerHealth()
+        {
+            Vector2 savedData = PlayerPrefsController.GetVector2(SAVE_KEY);
+            if (savedData != Vector2.zero)
+            {
+                _maxHealth = savedData.y;
+                Health = savedData.x;
+            }
+            else
+            {
+                Health = _maxHealth;
+            }
+            _isPlayer = true;
         }
 
         public void ModifyHealth(float changeValue)
         {
-            _health = Mathf.Min(_health + changeValue, _maxHealth);
-            OnValueChange?.Invoke(this, new OnValueChangeEventArgs
-            {
-                value = _health,
-                maxValue = _maxHealth,
-            });
+            if (_isPlayer && !PlayerController.Instance.Active)
+                return;
+            if (_isPlayer && changeValue < 0 && ChipManager.Instance.TryUseShieldChip())
+                return;
+
+            Health = Mathf.Clamp(Health + changeValue, 0, _maxHealth);
 
             if (changeValue < 0)
+            {
+                if (_isPlayer)
+                {
+                    SoundManager.Instance?.PlaySound(SoundManager.Instance._takeDamageSound);
+                }
                 _onDamage?.Invoke();
-            if (_health <= 0)
+            }
+            if (Health <= 0)
+            {
+                if (_isPlayer && ChipManager.Instance.TryUseRevivalChip(out float healthPercent))
+                {
+                    ModifyHealth(_maxHealth * healthPercent);
+                    return;
+                }
                 _onDie?.Invoke();
+            }
             if (changeValue > 0)
                 _onHeal?.Invoke();
-
-            Debug.Log($"{gameObject.name}: {_health} ({changeValue})");
         }
 
         public void ModifyHealthPercent(float changeValuePercent)
@@ -61,24 +107,21 @@ namespace Components.Health
             ModifyHealth(_maxHealth * changeValuePercent);
         }
 
-        public (float health, float maxHealth) SaveData()
-        {
-            return (_health, _maxHealth);
-        }
-
         public void ChangeHealthStats(float addingValue)
         {
             _maxHealth += addingValue;
             if (addingValue > 0)
             {
-                _health += addingValue;
+                Health += addingValue;
             }
-
-            OnValueChange?.Invoke(this, new OnValueChangeEventArgs
+            else
             {
-                value = _health,
-                maxValue = _maxHealth,
-            });
+                OnValueChange?.Invoke(this, new OnValueChangeEventArgs
+                {
+                    value = _health,
+                    maxValue = _maxHealth,
+                });
+            }
         }
     }
 }

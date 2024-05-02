@@ -1,4 +1,5 @@
 ﻿using Components.Health;
+using Creatures.Player;
 using UnityEngine;
 
 namespace Weapons
@@ -27,10 +28,12 @@ namespace Weapons
             Collider2D[] colliders = Physics2D.OverlapCircleAll(_attackRange.transform.position, _attackRange.radius);
             foreach (Collider2D collider in colliders)
             {
-                if (!collider.isTrigger && !collider.CompareTag("Player") &&
-                    collider.transform.parent.TryGetComponent(out HealthComponent health))
+                if (!collider.isTrigger && collider.transform.parent.TryGetComponent(out HealthComponent health) &&
+                    health != PlayerController.Instance.GetComponent<HealthComponent>())
                 {
-                    health.ModifyHealth(-_currentDamage);
+                    float damage = StatsModifier.GetModifiedDamage(_currentDamage, DamageType.Melee);
+                    health.ModifyHealth(-damage);
+                    MyGameManager.AddAmountDamage(damage);
                 }
             }
         }

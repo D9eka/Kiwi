@@ -1,9 +1,4 @@
-﻿using Creatures.Player;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using UnityEngine;
 
 namespace Player
@@ -13,10 +8,11 @@ namespace Player
         public EventHandler OnFinishPuchAttackAnimation;
 
         public EventHandler OnStartAttackAnimation;
+        public EventHandler OnAttackAnimation;
         public EventHandler OnFinishAttackAnimation;
 
         public EventHandler OnStartReloadAnimation;
-        public EventHandler OnFinishRealoadAnimation;
+        public EventHandler OnFinishReloadAnimation;
 
         public EventHandler OnStartDeathAnimation;
         public EventHandler OnFinishDeathAnimation;
@@ -31,19 +27,24 @@ namespace Player
             OnStartAttackAnimation?.Invoke(this, EventArgs.Empty);
         }
 
+        public void OnAttack()
+        {
+            OnAttackAnimation?.Invoke(this, EventArgs.Empty);
+        }
+
         public void FinishAttackAnimation()
         {
             OnFinishAttackAnimation?.Invoke(this, EventArgs.Empty);
         }
 
-        public void StartRealoadAnimation() 
+        public void StartRealoadAnimation()
         {
             OnStartReloadAnimation?.Invoke(this, EventArgs.Empty);
         }
 
         public void FinishReloadAnimation()
         {
-            OnFinishRealoadAnimation?.Invoke(this, EventArgs.Empty);
+            OnFinishReloadAnimation?.Invoke(this, EventArgs.Empty);
         }
 
         public void StartDeathAnimation()

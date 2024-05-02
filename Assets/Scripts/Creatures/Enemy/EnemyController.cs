@@ -1,6 +1,5 @@
 ﻿using Components.ColliderBased;
 using Components.Health;
-using Creatures.AI;
 using Creatures.Player;
 using Sections;
 using System.Linq;
@@ -16,6 +15,8 @@ namespace Creatures.Enemy
         [SerializeField] protected ColliderTrigger _vision;
         [SerializeField] protected AttackComponent[] _attacks;
 
+        public bool IsOnLadder { get; private set; }
+
         public enum EnemyState
         {
             Idle,
@@ -27,6 +28,7 @@ namespace Creatures.Enemy
         protected EnemyState _state;
         protected bool _seePlayer;
         protected AttackComponent _activeAttack;
+        protected bool _fake;
 
         private const string PATROLLING_TRIGGER = "patrolling";
         private const string CHASING_TRIGGER = "chasing";
@@ -48,6 +50,7 @@ namespace Creatures.Enemy
 
         public void StartInitialState()
         {
+            /*
             if (_seePlayer)
             {
                 SetState(EnemyState.Chasing);
@@ -64,6 +67,9 @@ namespace Creatures.Enemy
             {
                 SetState(EnemyState.Idle);
             }
+            */
+            SetState(EnemyState.Chasing);
+            _animator.SetTrigger(CHASING_TRIGGER);
         }
 
         protected virtual void Vision_OnPlayerEnterTrigger(object sender, System.EventArgs e)
@@ -79,18 +85,29 @@ namespace Creatures.Enemy
         protected override void Update()
         {
             base.Update();
-
+            /*
             if ((_state == EnemyState.Idle || _state == EnemyState.Patrolling) && _seePlayer)
             {
                 SetState(EnemyState.Chasing);
                 _animator.SetTrigger(CHASING_TRIGGER);
                 return;
             }
-
+            */
             if (_activeAttack == null)
             {
                 ChooseAttack();
             }
+        }
+
+        public override void SetDirection(Vector2 direction)
+        {
+            if (direction.x < 0 != _direction.x < 0 && !_fake)
+            {
+                _fake = true;
+                return;
+            }
+            _fake = false;
+            _direction = direction;
         }
 
         protected virtual void ChooseAttack()
@@ -119,24 +136,34 @@ namespace Creatures.Enemy
                 return;
 
             _state = state;
-            Debug.Log(_state.ToString());
+            Debug.Log($"{gameObject.name}-{_state.ToString()}");
+        }
+
+        public void SetLadderState(bool state)
+        {
+            IsOnLadder = state;
         }
 
         public virtual void OnAttack()
         {
-            foreach (HealthComponent health in _activeAttack.OnAttack())
+            if (_activeAttack == null)
+                return;
+            HealthComponent playerHealth = PlayerController.Instance.GetComponent<HealthComponent>();
+            if (_activeAttack.OnAttack().Contains(playerHealth) && PlayerController.Instance.Active)
             {
-                if (health != PlayerController.Instance.GetComponent<HealthComponent>())
-                    continue;
-
-                health.ModifyHealth(-_activeAttack.Damage);
+                playerHealth.ModifyHealth(-_activeAttack.Damage);
+                MyGameManager.AddEarnedDamage(_visual.GetComponent<SpriteRenderer>().sprite, _activeAttack.Damage);
             }
             _activeAttack = null;
         }
 
         protected virtual void OnDestroy()
         {
-            Section.Instance.ReduseSpawnedEnemiesCount();
+            MyGameManager.EnemyDefeated++;
+            if (Section.Instance != null)
+                Section.Instance.ReduseSpawnedEnemiesCount();
+            if (SectionTutorial.Instance != null)
+                SectionTutorial.Instance.ReduseSpawnedEnemiesCount();
         }
     }
 }

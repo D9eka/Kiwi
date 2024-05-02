@@ -33,6 +33,7 @@ namespace Creatures
         {
             get => _canAttackPlayer && !_cooldown;
         }
+        public bool Cooldown => _cooldown;
 
         private void Start()
         {

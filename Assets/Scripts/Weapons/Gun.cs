@@ -20,10 +20,10 @@ namespace Weapons
 
         public override void Attack()
         {
-            base.Attack();
-
             if (_timeBetweenAttacks < _data.AttackDelay || ammoCount <= 0)
                 return;
+
+            base.Attack();
 
             GameObject bullet = Instantiate(_bullet, _shotPoint.position, transform.rotation);
             bullet.GetComponent<Bullet>().Initialize(_currentDamage, _data.BulletSpeed, _data.BulletTTLSeconds);

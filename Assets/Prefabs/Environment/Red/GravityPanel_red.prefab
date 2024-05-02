@@ -12,10 +12,6 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 9a4d7ae3e45d75344b26e0f6aafb4f43, type: 3}
-    - target: {fileID: 5068476721187224203, guid: 4a6665e2e5585504997ad3d5fef4ba2d, type: 3}
-      propertyPath: _action.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: InvertGravity
-      objectReference: {fileID: 0}
     - target: {fileID: 6149777668595128208, guid: 4a6665e2e5585504997ad3d5fef4ba2d, type: 3}
       propertyPath: m_Name
       value: GravityPanel_red

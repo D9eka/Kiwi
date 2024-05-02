@@ -18,7 +18,7 @@ namespace Creatures
 
         protected const string IS_RUNNING_KEY = "is-running";
         protected const string VERTICAL_VELOCITY_KEY = "vertical-velocity";
-        private const string DEATH_TRIGGER = "death";
+        private const string IS_DYING_KEY = "is-dying";
 
         protected virtual void Awake()
         {
@@ -47,11 +47,12 @@ namespace Creatures
 
         public virtual void UpdateSpriteDirection()
         {
-            var multiplier = _invertScale ? -1 : 1;
-            if (_direction.x > 0)
-                transform.localScale = new Vector3(multiplier, 1, 1);
-            else if (_direction.x < 0)
-                transform.localScale = new Vector3(-multiplier, 1, 1);
+            float multiplier = _invertScale ? -1f : 1f;
+            Vector3 localScale = transform.localScale;
+            if (_rigidbody.velocity.x > 0)
+                transform.localScale = new Vector3(multiplier * Mathf.Abs(localScale.x), localScale.y, localScale.z);
+            else if (_rigidbody.velocity.x < 0)
+                transform.localScale = new Vector3(-1 * multiplier * Mathf.Abs(localScale.x), localScale.y, localScale.z);
         }
 
         public virtual void SetDirection(Vector2 direction)
@@ -59,9 +60,21 @@ namespace Creatures
             _direction = direction;
         }
 
+        public float GetOffset()
+        {
+            Collider2D collider = _visual.GetComponent<Collider2D>();
+            if (collider is CircleCollider2D circleCollider)
+                return circleCollider.radius + circleCollider.offset.y;
+            if (collider is BoxCollider2D boxCollider)
+                return boxCollider.size.y + boxCollider.offset.y;
+            if (collider is CapsuleCollider2D capsuleCollider)
+                return capsuleCollider.size.y + capsuleCollider.offset.y;
+            return collider.offset.y;
+        }
+
         public virtual void Die()
         {
-            _animator.SetTrigger(DEATH_TRIGGER);
+            _animator.SetTrigger(IS_DYING_KEY);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Sections;
+﻿using Creatures.Player;
+using Sections;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -11,10 +12,32 @@ namespace Components.Oxygen
         [SerializeField] private float _maxOxygen;
         [SerializeField] private float _decreaseValue = 1f;
         [SerializeField] private float _decreaseTime = 1f;
-        [Space][SerializeField] private UnityEvent _onRestore;
+        [Space]
+        [SerializeField] private UnityEvent _onRestore;
         [SerializeField] private UnityEvent _onEnd;
 
         private float _oxygen;
+        private float Oxygen
+        {
+            get
+            {
+                return _oxygen;
+            }
+            set
+            {
+                _oxygen = value;
+                OnValueChange?.Invoke(this, new OnValueChangeEventArgs
+                {
+                    value = _oxygen,
+                    maxValue = _maxOxygen,
+                });
+                if (_isPlayer)
+                    PlayerPrefsController.SetVector2(SAVE_KEY, new Vector2(_oxygen, _maxOxygen));
+            }
+        }
+        private bool _isPlayer;
+
+        public const string SAVE_KEY = "PlayerOxygen";
 
         public EventHandler<OnValueChangeEventArgs> OnValueChange;
 
@@ -24,50 +47,65 @@ namespace Components.Oxygen
             public float maxValue;
         }
 
+        private void Awake()
+        {
+            if (TryGetComponent<PlayerController>(out PlayerController playerController))
+            {
+                SetPlayerOxygen();
+            }
+            else
+            {
+                Oxygen = _maxOxygen;
+            }
+        }
+
         private void Start()
         {
-            Restore();
-            if (!Section.Instance.TypeSO.IsOxygenWasting)
+            if ((Section.Instance != null && !Section.Instance.TypeSO.IsOxygenWasting) ||
+                (SectionTutorial.Instance != null && !SectionTutorial.Instance.IsOxygenWasting))
                 return;
             StartCoroutine(Decrease());
         }
 
+        private void SetPlayerOxygen()
+        {
+            Vector2 savedData = PlayerPrefsController.GetVector2(SAVE_KEY);
+            if (savedData != Vector2.zero)
+            {
+                _maxOxygen = savedData.y;
+                Oxygen = savedData.x;
+            }
+            else
+            {
+                Oxygen = _maxOxygen;
+            }
+            _isPlayer = true;
+        }
+
         public void Restore()
         {
-            _oxygen = _maxOxygen;
-
-            _onRestore?.Invoke();
-
-            OnValueChange?.Invoke(this, new OnValueChangeEventArgs
-            {
-                value = _oxygen,
-                maxValue = _maxOxygen,
-            });
+            Oxygen = _maxOxygen;
         }
 
         private IEnumerator Decrease()
         {
-            while (_oxygen > 0f)
+            while (Oxygen > 0f)
             {
-                _oxygen -= _decreaseValue;
-                OnValueChange?.Invoke(this, new OnValueChangeEventArgs
-                {
-                    value = _oxygen,
-                    maxValue = _maxOxygen,
-                });
+                ModifyOxygen(-_decreaseValue);
                 yield return new WaitForSeconds(_decreaseTime);
             }
-
             _onEnd?.Invoke();
         }
 
         public void ModifyOxygen(float changeValue)
         {
-            _oxygen = Mathf.Min(_oxygen + changeValue, _maxOxygen);
+            if (_isPlayer && !PlayerController.Instance.Active)
+                return;
 
-            if (changeValue < 0)
+            Oxygen = Mathf.Min(Oxygen + changeValue, _maxOxygen);
+
+            if (Oxygen <= 0)
             {
-                _onRestore?.Invoke();
                 _onEnd?.Invoke();
             }
         }
@@ -82,13 +120,16 @@ namespace Components.Oxygen
             _maxOxygen += addingValue;
             if (addingValue > 0)
             {
-                _oxygen += addingValue;
+                Oxygen += addingValue;
             }
-            OnValueChange?.Invoke(this, new OnValueChangeEventArgs
+            else
             {
-                value = _oxygen,
-                maxValue = _maxOxygen,
-            });
+                OnValueChange?.Invoke(this, new OnValueChangeEventArgs
+                {
+                    value = _oxygen,
+                    maxValue = _maxOxygen,
+                });
+            }
         }
     }
 }

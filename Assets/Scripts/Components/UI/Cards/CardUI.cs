@@ -8,6 +8,7 @@ namespace Components.UI.Cards
 {
     public class CardUI : MonoBehaviour
     {
+        [SerializeField] private RectTransform _content;
         [SerializeField] private TextMeshProUGUI _name;
         [SerializeField] private Image _icon;
         [Space]
@@ -23,7 +24,7 @@ namespace Components.UI.Cards
         {
             WeaponSO data = weapon.Data;
             List<string> labels = new() { "Урон", "Скорость", "Дальность", "Боезапас", "Тип урона" };
-            List<string> values = new() { data.Damage.ToString(), data.AttackSpeed.ToString(), data.Range, data.Ammo, data.DamageTypeUI };
+            List<string> values = new() { data.Damage.ToString(), System.Math.Round(data.AttackSpeed, 1).ToString(), data.Range, data.Ammo, data.DamageTypeUI };
             if (havePrice)
             {
                 labels.Add("Цена");
@@ -35,6 +36,19 @@ namespace Components.UI.Cards
         public void Fill(ChipSO chipSO)
         {
             Fill(chipSO.Name, chipSO.Sprite, true, chipSO.Description);
+        }
+
+        public void Fill(Chip chip, bool nextLevel = false)
+        {
+            List<string> labels = new() { "Уровень" };
+            int level = chip.CurrentLevel;
+            if (nextLevel && level < chip.ChipSO.Descriptions.Count)
+                level++;
+            string description = chip.ChipSO.Descriptions[level - 1];
+            List<string> values = new() { level.ToString() };
+            Fill(chip.ChipSO.Name, chip.ChipSO.Sprite,
+                description != "", description,
+                true, labels, values);
         }
 
         public void Fill(SectionTypeSO sectionTypeSO)
@@ -54,6 +68,7 @@ namespace Components.UI.Cards
             _descrHandler.SetActive(haveDescr);
             if (haveDescr)
                 _descr.text = descr;
+            LayoutRebuilder.ForceRebuildLayoutImmediate(_descrHandler.GetComponent<RectTransform>());
 
             _paramsHandler.SetActive(haveParams);
             if (haveParams)
@@ -61,7 +76,8 @@ namespace Components.UI.Cards
                 FillParent(_labelsHandler.transform, labels);
                 FillParent(_valuesHandler.transform, values);
             }
-            LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
+            _content.gameObject.SetActive(false);
+            _content.gameObject.SetActive(true);
         }
 
         private void FillParent(Transform parent, List<string> values)
