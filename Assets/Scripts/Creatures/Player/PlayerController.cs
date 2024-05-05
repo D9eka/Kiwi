@@ -43,6 +43,7 @@ namespace Creatures.Player
         private int _dashCounter;
         private bool _canDashAttack;
         private bool _isDashing;
+        private bool _isAttack;
 
         private Weapon _activeWeapon => WeaponController.Instance?.CurrentWeapon;
 
@@ -95,6 +96,8 @@ namespace Creatures.Player
             inputReader.OnAttack += PlayerInputReader_OnAttack;
             inputReader.OnWeaponReload += PlayerInputReader_OnWeaponReload;
 
+            _playerVisual.OnStartAttackAnimation += PlayerVisual_OnStartAttackAnimation;
+            _playerVisual.OnFinishAttackAnimation += PlayerVisual_OnFinishAttackAnimation;
             _playerVisual.OnFinishPuchAttackAnimation += PlayerVisual_OnFinishPunchAnimation;
             _playerVisual.OnStartDeathAnimation += PlayerVisual_OnStartDeathAnimation;
             _playerVisual.OnFinishDeathAnimation += PlayerVisual_OnFinishDeathAnimation;
@@ -127,7 +130,7 @@ namespace Creatures.Player
 
         private void PlayerInputReader_OnAttack(object sender, EventArgs e)
         {
-            if (_isOnLadder)
+            if (_isOnLadder || _isAttack)
                 return;
             if (_activeWeapon != null && _activeWeapon.gameObject.activeSelf)
             {
@@ -149,6 +152,16 @@ namespace Creatures.Player
             }
         }
 
+        private void PlayerVisual_OnStartAttackAnimation(object sender, EventArgs e)
+        {
+            _isAttack = true;
+        }
+
+        private void PlayerVisual_OnFinishAttackAnimation(object sender, EventArgs e)
+        {
+            _isAttack = false;
+        }
+
         private void PlayerVisual_OnFinishPunchAnimation(object sender, EventArgs e)
         {
             foreach (HealthComponent health in _punchAttack.OnAttack())
@@ -160,6 +173,7 @@ namespace Creatures.Player
                     MyGameManager.AddAmountDamage(damage);
                 }
             }
+            _isAttack = false;
         }
 
         private void PlayerVisual_OnStartDeathAnimation(object sender, EventArgs e)

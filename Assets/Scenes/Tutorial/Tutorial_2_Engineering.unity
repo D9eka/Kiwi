@@ -223,6 +223,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7352129922303584613, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
+      propertyPath: m_text
+      value: "\u041F\u043E\u0434\u043E\u0431\u0440\u0430\u0442\u044C"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -751,6 +755,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5224224388397166106, guid: 7b9951ff659e4fe4eb3eaaba1b9cb9d2, type: 3}
+      propertyPath: _isRandom
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5224224388397166106, guid: 7b9951ff659e4fe4eb3eaaba1b9cb9d2, type: 3}
+      propertyPath: _choicesCount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5224224388397166106, guid: 7b9951ff659e4fe4eb3eaaba1b9cb9d2, type: 3}
+      propertyPath: _notRandomSection
+      value: 
+      objectReference: {fileID: 11400000, guid: a7dde46eb4032a2498135e4f6ab30935, type: 2}
     - target: {fileID: 3779882940821334043, guid: 96d362bb33613ac4a896d30dc6cdf03b, type: 3}
       propertyPath: m_Name
       value: EndTutorialDoor
@@ -803,18 +819,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.x
       value: 1.5
       objectReference: {fileID: 0}
-    - target: {fileID: 5224224388397166106, guid: 7b9951ff659e4fe4eb3eaaba1b9cb9d2, type: 3}
-      propertyPath: _isRandom
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5224224388397166106, guid: 7b9951ff659e4fe4eb3eaaba1b9cb9d2, type: 3}
-      propertyPath: _choicesCount
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5224224388397166106, guid: 7b9951ff659e4fe4eb3eaaba1b9cb9d2, type: 3}
-      propertyPath: _notRandomSection
-      value: 
-      objectReference: {fileID: 11400000, guid: a7dde46eb4032a2498135e4f6ab30935, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1647,7 +1651,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4915596234513953623}
   - component: {fileID: 8589903689971346524}
-  - component: {fileID: 5935435790516801610}
   - component: {fileID: 8589903689971346526}
   - component: {fileID: 8589903689971346525}
   - component: {fileID: 8589903689971346527}
@@ -1674,27 +1677,6 @@ Transform:
   - {fileID: 360451420}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &5935435790516801610
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4288971980893920975}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b497f059ebb71b94db44ce34fafac024, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!212 &8589903689971346524
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -104,7 +104,7 @@ MonoBehaviour:
   _target: {fileID: 4133382146405081146}
   _objectToSpawn: {fileID: 571944651108015522, guid: a2fbdf33fcfdc6144b701e7ebb960469, type: 3}
   _minItems: 1
-  _maxItems: 2
+  _maxItems: 1
   _initialPositionXRange: 1
   _initialPositionYRange: 1.5
   _initialVelocityXMin: 1
@@ -240,7 +240,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 531f20c87520c85409a7c58610738f39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isNeededOffset: 1
 --- !u!1 &3781641189179258297
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,7 +251,7 @@ GameObject:
   - component: {fileID: 5904076167513959127}
   - component: {fileID: 2916773203373650652}
   - component: {fileID: 2839105192233494839}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Vision
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -342,7 +341,7 @@ GameObject:
   - component: {fileID: 863993136342110466}
   - component: {fileID: 4040762900641270707}
   - component: {fileID: 5032527938305198466}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: AttackRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
