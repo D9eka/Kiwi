@@ -91,4 +91,9 @@ public static class MyGameManager
         LastDamageEnemy = enemySprite;
         DamageEarned += Mathf.RoundToInt(damage);
     }
+
+    public static void ClearEssence()
+    {
+        EssenceCount = 0;
+    }
 }

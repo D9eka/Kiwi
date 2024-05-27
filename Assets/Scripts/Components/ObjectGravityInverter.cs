@@ -1,3 +1,4 @@
+using Assets.Scripts.Extensions;
 using Creatures;
 using UnityEngine;
 
@@ -9,7 +10,11 @@ public class ObjectGravityInverter : MonoBehaviour
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
-        _offset = GetComponent<Creature>().GetOffset();
+        if (TryGetComponent(out Creature creature))
+            _offset = creature.GetOffset();
+        else
+            _offset = GetComponent<Collider2D>().GetOffset();
+
         if (MyGameManager.Gravity < 0)
             InvertObjectGravity();
         MyGameManager.OnGravityInverted += (sender, args) => InvertObjectGravity();
@@ -17,6 +22,9 @@ public class ObjectGravityInverter : MonoBehaviour
 
     private void InvertObjectGravity()
     {
+        if (this == null || !gameObject.activeSelf)
+            return;
+
         transform.position += new Vector3(0, _offset, 0) * -MyGameManager.Gravity;
         transform.Rotate(0, 180, 180);
         _rigidbody.gravityScale = -_rigidbody.gravityScale;

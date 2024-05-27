@@ -185,7 +185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animationTrigger: attack1
-  _damage: 4
+  _damage: 3
   _cooldownTime: 2
   _attackType: 1
   _distance: {fileID: 4269928182473057199}
@@ -203,8 +203,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animationTrigger: attack2
-  _damage: 6
-  _cooldownTime: 2
+  _damage: 4
+  _cooldownTime: 3
   _attackType: 1
   _distance: {fileID: 5326744146633094736}
   _initialPosition: {x: 0, y: 0}

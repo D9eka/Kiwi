@@ -495,7 +495,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: 21300000, guid: 05cc7f64311076747b8f9475e5f1686c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b3a2126c1249cab47b0b16f6a34a5d55, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -591,8 +591,12 @@ PolygonCollider2D:
       - {x: -8.805362, y: -4.285305}
       - {x: -9.07, y: -3.9399998}
       - {x: -9.599999, y: -3.9499998}
+      - {x: -9.630228, y: -0.96880054}
+      - {x: -10.628581, y: -4.0724664}
       - {x: -9.599999, y: -5.4}
       - {x: 9.599999, y: -5.4}
+      - {x: 10.152168, y: 0.534745}
+      - {x: 9.658982, y: 3.59005}
       - {x: 9.599999, y: 0.55}
       - {x: -0.45999998, y: 0.55}
     - - {x: -8.38, y: 4.65}
@@ -651,7 +655,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 15ec9004a1c70b14fb063ed28b39602d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 93a467e97f801ff4892bb334eec49ff0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

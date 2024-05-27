@@ -17,7 +17,6 @@ public class Tutorial : MonoBehaviour
             StartCoroutine(InvokeStartSpeaker());
         if (_afterBattleDialog != null)
             SectionTutorial.Instance.OnEndSpawnWaves += SectionTutorial_OnEndSpawnWaves;
-
     }
 
     private IEnumerator InvokeStartSpeaker()

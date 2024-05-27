@@ -5,6 +5,7 @@ using Creatures.AI;
 using Creatures.Enemy;
 using Creatures.Player;
 using Environment.Doors;
+using Player;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace Sections
         [SerializeField] private bool _startWaveOnAwake;
         [SerializeField] private bool _isOxygenWasting;
         [SerializeField] private bool _giveChip;
+        [SerializeField] private bool _isFinalSection;
         [Header("Music")]
         [SerializeField] private AudioClip _backgroundMusic;
         [SerializeField] private AudioClip _startWaveSound;
@@ -53,9 +55,11 @@ namespace Sections
         {
             if (_startDoor != null)
                 _startDoor.Initialize(Door.DoorType.Start);
+
             if (_endDoor != null)
                 _endDoor.Initialize(Door.DoorType.End);
 
+            PlayerController.Instance.Visual.OnFinishDeathAnimation += PlayerVisual_OnFinishDeathAnimation;
             FadeScreen.Instance.OnEndFade += Fade_OnEndFade;
 
             if (_giveChip)
@@ -66,6 +70,33 @@ namespace Sections
 
             if (_startWaveOnAwake)
                 SpawnWaves();
+        }
+
+        private void PlayerVisual_OnFinishDeathAnimation(object sender, EventArgs e)
+        {
+            if (_isFinalSection)
+            {
+                CompleteTutorial(false);
+            }
+            else
+            {
+                UIController.Instance.PushScreen(ResultScreen.Instance);
+                MyGameManager.ClearEssence();
+            }
+        }
+
+        public void CompleteTutorial(bool needDelay = true)
+        {
+            StartCoroutine(CompleteTutorialRoutine(needDelay));
+        }
+
+        private IEnumerator CompleteTutorialRoutine(bool needDelay)
+        {
+            if (needDelay)
+                yield return new WaitForSeconds(3f);
+
+            PlayerPrefsController.SetBool(PlayerPrefsController.TUTORIAL_COMPLETE, true);
+            UIController.Instance.PushScreen(FadeScreen.Instance);
         }
 
         private void Fade_OnEndFade(object sender, EventArgs e)

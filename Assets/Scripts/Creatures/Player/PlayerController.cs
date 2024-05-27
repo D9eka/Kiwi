@@ -4,6 +4,7 @@ using Components.UI;
 using Components.UI.Screens;
 using Extensions;
 using Player;
+using Sections;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -182,12 +183,8 @@ namespace Creatures.Player
         }
         private void PlayerVisual_OnFinishDeathAnimation(object sender, EventArgs e)
         {
-
-            if (SceneManager.GetActiveScene().buildIndex == 5)
-            {
-                PlayerPrefsController.SetBool(PlayerPrefsController.TUTORIAL_COMPLETE, true);
-                UIController.Instance.PushScreen(FadeScreen.Instance);
-            }
+            if (SectionTutorial.Instance != null)
+                return;
             else
                 UIController.Instance.PushScreen(ResultScreen.Instance);
         }
@@ -268,6 +265,7 @@ namespace Creatures.Player
 
         public void SetLadderState(bool state)
         {
+            _isAttack = false;
             _isOnLadder = state;
             _animator.SetTrigger(_isOnLadder ? ENTER_LADDER_KEY : EXIT_LADDER_KEY);
             _animator.SetBool(IS_ON_LADDER_KEY, _isOnLadder);
