@@ -223,6 +223,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7352129922303584613, guid: 32621c46689f61045b6028c4bc7341b3, type: 3}
+      propertyPath: m_text
+      value: "\u041F\u043E\u0434\u043E\u0431\u0440\u0430\u0442\u044C"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -593,7 +597,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: 21300000, guid: 5c019a2b07b934d498d40b447947f820, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8d0dc2d6898570d4698ae1934f83b953, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -754,6 +758,10 @@ PrefabInstance:
     - target: {fileID: 3779882940821334043, guid: 96d362bb33613ac4a896d30dc6cdf03b, type: 3}
       propertyPath: m_Name
       value: EndTutorialDoor
+      objectReference: {fileID: 0}
+    - target: {fileID: 4156051398795774860, guid: 96d362bb33613ac4a896d30dc6cdf03b, type: 3}
+      propertyPath: _openOnAwake
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5893736102276121899, guid: 96d362bb33613ac4a896d30dc6cdf03b, type: 3}
       propertyPath: m_LocalScale.x
@@ -1044,14 +1052,18 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 8.901711, y: -3.8052368}
+    - - {x: 9.647097, y: -1.02209}
+      - {x: 9.606535, y: -3.792499}
+      - {x: 8.901711, y: -3.8052368}
       - {x: 8.558321, y: -4.165804}
       - {x: -8.741095, y: -4.1820397}
       - {x: -9.005844, y: -3.868282}
       - {x: -9.599999, y: -3.8690193}
+      - {x: -9.665583, y: -0.9629048}
+      - {x: -9.864115, y: -3.857189}
       - {x: -9.599999, y: -5.4}
       - {x: 9.599999, y: -5.4}
-      - {x: 9.599999, y: -3.8}
+      - {x: 10.082531, y: -3.7907207}
     - - {x: -8.19, y: 4.7599998}
       - {x: 7.97, y: 4.7599998}
       - {x: 8.03, y: 4.69}
@@ -1114,7 +1126,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: cd0c40bfd2b17744ab468e5df7451735, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 75fed6183b2405d4cbde23815c531444, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1647,7 +1659,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4915596234513953623}
   - component: {fileID: 8589903689971346524}
-  - component: {fileID: 5935435790516801610}
   - component: {fileID: 8589903689971346526}
   - component: {fileID: 8589903689971346525}
   - component: {fileID: 8589903689971346527}
@@ -1674,27 +1685,6 @@ Transform:
   - {fileID: 360451420}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &5935435790516801610
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4288971980893920975}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b497f059ebb71b94db44ce34fafac024, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!212 &8589903689971346524
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 ﻿using Components.Health;
+using Creatures.Player;
 using System.Linq;
 using UnityEngine;
 using static Weapons.WeaponSO;
@@ -31,7 +32,7 @@ namespace Weapons
             _damage = _data.Damage;
             _destroyType = _data.DestroyType;
 
-            _rigidbody.velocity = _initialForce;
+            _rigidbody.velocity = new Vector2(_initialForce.x * PlayerController.Instance.transform.localScale.x, _initialForce.y);
 
             InvokeRepeating(nameof(Attack), _data.AttackDelay, _data.AttackDelay);
 
@@ -57,7 +58,8 @@ namespace Weapons
                 collider.GetComponentInParent<HealthComponent>().ModifyHealth(-damage);
                 MyGameManager.AddAmountDamage(damage);
             }
-            SoundManager.Instance.PlaySound(_data.ThrownTrapSound);
+            if (_data.ThrownTrapSound != null)
+                SoundManager.Instance.PlaySound(_data.ThrownTrapSound);
         }
 
         private void DestroyIt()

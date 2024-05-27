@@ -81,6 +81,7 @@ GameObject:
   - component: {fileID: 7696963639730060361}
   - component: {fileID: 8042183129822942626}
   - component: {fileID: 4694739624449353348}
+  - component: {fileID: 9057062805570889400}
   m_Layer: 9
   m_Name: ThrownLightningTrap
   m_TagString: Untagged
@@ -254,3 +255,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &9057062805570889400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7587832527862688737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 531f20c87520c85409a7c58610738f39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

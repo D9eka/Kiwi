@@ -6,7 +6,7 @@ using UnityEngine;
 public class MedicalStation : MonoBehaviour
 {
     private int _usesCount = 2;
-    private float restoringHealthPercent = 0.25f;
+    private float restoringHealthPercent = 1f;
 
     public void TryRestoreHealth(int cost)
     {

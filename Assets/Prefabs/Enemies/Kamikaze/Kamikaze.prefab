@@ -160,6 +160,8 @@ MonoBehaviour:
   _objectToSpawn: {fileID: 571944651108015522, guid: a2fbdf33fcfdc6144b701e7ebb960469, type: 3}
   _minItems: 2
   _maxItems: 3
+  _initialPositionXRange: 1
+  _initialPositionYRange: 1.5
   _initialVelocityXMin: 1
   _initialVelocityXMax: 10
   _initialVelocityYMin: 1
@@ -175,7 +177,7 @@ GameObject:
   - component: {fileID: 7316411863252727838}
   - component: {fileID: 1253435821952211740}
   - component: {fileID: 1836624000995399157}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Vision
   m_TagString: Untagged
   m_Icon: {fileID: 0}

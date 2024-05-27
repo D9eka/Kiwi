@@ -71,7 +71,7 @@ namespace Sections
                 int currentWave = 0;
                 while (currentWave < _waves.Length)
                 {
-                    SoundManager.Instance.PlaySound(SoundManager.Instance._startWaveSound);
+                    SoundManager.Instance?.PlaySound(SoundManager.Instance._startWaveSound);
                     SpawnWave(currentWave);
                     yield return new WaitUntil(() => _spawnedEnemiesCount == 0);
                     currentWave++;

@@ -75,6 +75,10 @@ public class WeaponController : MonoBehaviour
             }
             i++;
         }
+        if (_currentWeapon != -1)
+        {
+            _weaponsArray[_currentWeapon].SetActive(true);
+        }
     }
 
     public void SwitchWeapon(int weaponIndex)
