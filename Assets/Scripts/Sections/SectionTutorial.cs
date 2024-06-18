@@ -5,7 +5,6 @@ using Creatures.AI;
 using Creatures.Enemy;
 using Creatures.Player;
 using Environment.Doors;
-using Player;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -88,6 +87,7 @@ namespace Sections
         public void CompleteTutorial(bool needDelay = true)
         {
             StartCoroutine(CompleteTutorialRoutine(needDelay));
+            PlayerPrefsController.CleanRunInfo();
         }
 
         private IEnumerator CompleteTutorialRoutine(bool needDelay)
@@ -95,13 +95,13 @@ namespace Sections
             if (needDelay)
                 yield return new WaitForSeconds(3f);
 
+            PlayerPrefsController.CleanRunInfo();
             PlayerPrefsController.SetBool(PlayerPrefsController.TUTORIAL_COMPLETE, true);
             UIController.Instance.PushScreen(FadeScreen.Instance);
         }
 
         private void Fade_OnEndFade(object sender, EventArgs e)
         {
-            PlayerPrefsController.CleanRunInfo();
             StartCoroutine(EnterNextSectionRoutine());
         }
 

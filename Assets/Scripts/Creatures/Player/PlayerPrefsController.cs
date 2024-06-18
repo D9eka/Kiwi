@@ -124,6 +124,8 @@ namespace Creatures.Player
             SectionManagerData.Clear();
             WeaponControllerData.Clear();
             ChipManagerData.Clear();
+            MyGameManager.Clear();
+            StatsModifier.Clear();
 
             PlayerPrefs.DeleteKey(HealthComponent.SAVE_KEY + "X");
             PlayerPrefs.DeleteKey(HealthComponent.SAVE_KEY + "Y");

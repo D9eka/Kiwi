@@ -1,5 +1,6 @@
 using Components.UI;
 using Components.UI.Screens;
+using Creatures.Player;
 using Extensions;
 using System;
 using System.Collections;
@@ -121,8 +122,7 @@ namespace Sections
 
         public void EnterPreviousSection()
         {
-            if (CurrentSectionIndex <= 1)
-                return;
+            
             if (_isInSecretSection)
             {
                 _isInSecretSection = false;
@@ -130,8 +130,15 @@ namespace Sections
             }
             else
             {
-                CurrentSectionIndex -= 1;
-                LoadSection(_openedSections[CurrentSectionIndex], SectionSpawnPosition.End);
+                if (CurrentSectionIndex <= 1)
+                {
+                    return;
+                }
+                else
+                {
+                    CurrentSectionIndex -= 1;
+                    LoadSection(_openedSections[CurrentSectionIndex], SectionSpawnPosition.End);
+                }
             }
         }
 
@@ -183,6 +190,19 @@ namespace Sections
         public void ShowCurrentSection()
         {
             Debug.Log(_openedSections[0]);
+        }
+
+        public void CompleteRun()
+        {
+            StartCoroutine(CompleteRunRoutine());
+        }
+
+        private IEnumerator CompleteRunRoutine()
+        {
+            yield return new WaitForSeconds(3f);
+
+            ResultScreen.Instance.SetEndDemo();
+            UIController.Instance.PushScreen(ResultScreen.Instance);
         }
 
         private void Save()

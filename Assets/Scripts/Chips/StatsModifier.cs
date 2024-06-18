@@ -102,4 +102,24 @@ public static class StatsModifier
         oxygen += _oxygenAdder;
         return oxygen;
     }
+
+    public static void Clear()
+    {
+        _healthAdder = 0;
+        _oxygenAdder = 0;
+
+        BrokenChipsCount = 0;
+
+        DashDamageAdder = 0;
+        DamageMultiplier = 1;
+        HandDamageAdder = 0;
+        BulletDamageAdder = 0;
+        TakenDamageMultiplier = 1;
+        MeleeAddHPChance = 0;
+
+        SpeedMultiplier = 1;
+        PriceMultiplier = 1;
+
+        BrokenChipDamagePercentAdder = 0;
+}
 }

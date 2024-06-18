@@ -26,7 +26,7 @@ namespace Weapons
             base.Attack();
 
             GameObject bullet = Instantiate(_bullet, _shotPoint.position, transform.rotation);
-            bullet.GetComponent<Bullet>().Initialize(_currentDamage, _data.BulletSpeed, _data.BulletTTLSeconds);
+            bullet.GetComponent<Bullet>().Initialize(_currentDamage, _data.BulletSpeed, _data.BulletTTLSeconds, _data.DamageTypeUI == "Энергетический");
             _timeBetweenAttacks = 0;
             ammoCount--;
             Label = $"{ammoCount} / {_data.AmmoCapacity}";

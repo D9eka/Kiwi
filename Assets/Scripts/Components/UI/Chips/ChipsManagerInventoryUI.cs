@@ -28,7 +28,8 @@ public class ChipsManagerInventoryUI : MonoBehaviour
             {
                 CreateNewRow();
             }
-            _chipIcons[i].SetInfo(_chipManager.ObtainedChips[i].ChipSO);
+            if (_chipManager != null && _chipManager.ObtainedChips[i] != null && _chipManager.ObtainedChips[i].ChipSO != null)
+                _chipIcons[i].SetInfo(_chipManager.ObtainedChips[i].ChipSO);
         }
     }
 

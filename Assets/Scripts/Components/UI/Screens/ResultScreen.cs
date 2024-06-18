@@ -39,7 +39,8 @@ namespace Components.UI.Screens
 
         public void Fill()
         {
-            _lastEnemyImage.sprite = MyGameManager.LastDamageEnemy;
+            if (MyGameManager.LastDamageEnemy != null)
+                _lastEnemyImage.sprite = MyGameManager.LastDamageEnemy;
 
             _playtime.text = TimeSpan.FromSeconds(Time.time - MyGameManager.StartTime).ToString("mm':'ss");
             _enemyDefeated.text = MyGameManager.EnemyDefeated.ToString();
