@@ -20,7 +20,16 @@ public static class MyGameManager
         }
     }
     public static bool WasKeyCardGenerated;
-    public static int KeyCardCount { get; private set; }
+    private static bool _haveKeyCard;
+    public static bool HaveKeyCard
+    {
+        get => _haveKeyCard;
+        private set
+        {
+            _haveKeyCard = value;
+            OnChangeHaveKeyCardState?.Invoke(null, value);
+        }
+    }
     public static int Gravity { get; private set; } = 1;
 
     public static float StartTime = Time.time;
@@ -39,6 +48,7 @@ public static class MyGameManager
     public const int UPDATE_CHIP_COST = 25;
 
     public static event EventHandler OnEssenceCountChanged;
+    public static event EventHandler<bool> OnChangeHaveKeyCardState;
     public static event EventHandler OnGravityInverted;
 
     public static void GetEssence(int count)
@@ -59,16 +69,17 @@ public static class MyGameManager
         return count <= EssenceCount;
     }
 
-    public static void GetKeyCard(int count)
+    public static void GetKeyCard()
     {
-        KeyCardCount += count;
+        HaveKeyCard = true;
         WasKeyCardGenerated = true;
     }
 
-    public static bool TryUseKeyCard(int count)
+    public static bool TryUseKeyCard()
     {
-        if (count > KeyCardCount) return false;
-        KeyCardCount -= count;
+        if (!HaveKeyCard) 
+            return false;
+        HaveKeyCard = false;
         return true;
     }
 
@@ -90,6 +101,21 @@ public static class MyGameManager
     {
         LastDamageEnemy = enemySprite;
         DamageEarned += Mathf.RoundToInt(damage);
+    }
+
+    public static void Clear()
+    {
+        Gravity = 1;
+        StartTime = Time.time;
+        EnemyDefeated = 0;
+        RoomPassed = 0;
+        EssenceEarned = 0;
+        UpdatesCreated = 0;
+        AmountDamage = 0;
+        MaxDamage = 0;
+        DamageEarned = 0;
+        LastDamageEnemy = null;
+        DamageHealed = 0;
     }
 
     public static void ClearEssence()

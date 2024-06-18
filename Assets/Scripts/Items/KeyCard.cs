@@ -9,7 +9,7 @@ public class KeyCard : MonoBehaviour
 
     public void GetKeyCard()
     {
-        MyGameManager.GetKeyCard(1);
+        MyGameManager.GetKeyCard();
         Destroy(gameObject);
     }
 }

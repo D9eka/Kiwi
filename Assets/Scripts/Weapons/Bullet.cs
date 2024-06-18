@@ -11,16 +11,19 @@ namespace Weapons
         private float _damage;
         private float _speed;
 
+        private bool _isEnergyDamage;
+
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
         }
 
-        public void Initialize(float damage, float speed, float ttl)
+        public void Initialize(float damage, float speed, float ttl, bool isEnergyDamage)
         {
             this._damage = damage;
             this._speed = speed;
             Destroy(gameObject, ttl);
+            this._isEnergyDamage = isEnergyDamage;
         }
 
         private void Update()
@@ -30,9 +33,15 @@ namespace Weapons
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.isTrigger ||
-                (collision.transform.parent != null && collision.transform.parent.TryGetComponent<PlayerController>(out PlayerController player)))
-                return;
+            if (collision.isTrigger)
+            {
+                if (_isEnergyDamage && collision.TryGetComponent(out ControlPanel controlPanel))
+                    controlPanel.TryOpenSecretDoor(false);
+                else if (_isEnergyDamage && collision.TryGetComponent(out GravityPanel gravityPanel))
+                    gravityPanel.InvertGravity();
+                else
+                    return;
+            }
 
             if (collision.transform.parent != null &&
                 collision.transform.parent.TryGetComponent(out HealthComponent health) &&

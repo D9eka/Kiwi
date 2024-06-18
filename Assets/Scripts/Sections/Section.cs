@@ -42,7 +42,11 @@ namespace Sections
         private void InitializeDoor(Door door, Door.DoorType doorType)
         {
             if (door != null)
-                door.Initialize(doorType);
+            {
+                door.Initialize(doorType); 
+                if (_data.SectionTypeSO.SectionType == SectionType.Secret)
+                    door.Open();
+            }
         }
 
         private void Start()
@@ -62,6 +66,8 @@ namespace Sections
             yield return new WaitForSeconds(1f);
             if (_data.SectionTypeSO.SectionType == SectionType.Boss)
                 yield break;
+            if (_data.SectionTypeSO.SectionType == SectionType.Secret)
+                CloseDoors();
             if (SectionManager.Instance.NeedStartWave && _data.SectionTypeSO.WavesCount > 0)
             {
                 _spawnPoints = SectionManager.Instance.GetSpawnPoints(_data.SectionTypeSO);
@@ -78,6 +84,16 @@ namespace Sections
                 }
             }
             OnEndSpawnWaves?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void CloseDoors()
+        {
+            if (_startDoor != null)
+                _startDoor.Close(); 
+            if (_endDoor != null)
+                _endDoor.Close();
+            if (_secretDoor != null)
+                _secretDoor.Close();
         }
 
         private void SpawnWave(int waveIndex)

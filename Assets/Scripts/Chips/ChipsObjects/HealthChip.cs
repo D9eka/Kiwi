@@ -7,10 +7,9 @@ public class HealthChip : PassiveChip
 
     protected override void Upgrade()
     {
-        var previousLevelHealth = _healthIncreaseLevels[currentLevel];
         currentLevel += 1;
         SetValues();
-        StatsModifier.ModifyHealthAdder(_healthIncrease - previousLevelHealth);
+        StatsModifier.ModifyHealthAdder(-_healthIncreaseLevels[currentLevel]);
     }
 
     protected override void SetValues()

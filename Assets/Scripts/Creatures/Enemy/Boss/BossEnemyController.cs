@@ -31,8 +31,8 @@ namespace Creatures.Enemy
 
         protected override void ChooseAttack()
         {
-            AttackComponent[] availableAttacks = _speedUp ? 
-                                                 _speedUpAttacks.Where(attack => attack.CanAttack).ToArray() : 
+            AttackComponent[] availableAttacks = _speedUp ?
+                                                 _speedUpAttacks.Where(attack => attack.CanAttack).ToArray() :
                                                  _attacks.Where(attack => attack.CanAttack).ToArray();
             if (availableAttacks.Length > 0)
             {

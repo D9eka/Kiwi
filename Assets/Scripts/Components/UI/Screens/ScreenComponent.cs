@@ -64,8 +64,6 @@ namespace Components.UI.Screens
                 case UIEvent.Cancel:
                     if (_cancelEvent.UnityEvent.GetPersistentEventCount() != 0 && _cancelEvent.UnityEvent.GetPersistentTarget(0) != null)
                         _cancelEvent.UnityEvent.Invoke();
-                    else
-                        Instance.PopScreen();
                     break;
                 case UIEvent.Additional:
                     _additionalEvent.UnityEvent?.Invoke();

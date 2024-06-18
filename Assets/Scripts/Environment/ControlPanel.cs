@@ -16,9 +16,9 @@ public class ControlPanel : MonoBehaviour
             gameObject.SetActive(false);
     }
 
-    public void TryOpenSecretDoor()
+    public void TryOpenSecretDoor(bool needKey = true)
     {
-        if (_secretDoor.IsOpened || !MyGameManager.TryUseKeyCard(1))
+        if (_secretDoor.IsOpened || (needKey && !MyGameManager.TryUseKeyCard()))
             return;
         _secretDoor.Open();
     }

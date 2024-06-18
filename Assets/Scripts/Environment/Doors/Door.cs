@@ -66,9 +66,8 @@ public class Door : MonoBehaviour
         if (IsOpened)
             return;
 
-        IsOpened = true;
         GetComponent<InteractableComponent>().Activate();
-        StartCoroutine(LerpDoor(Vector2.up));
+        StartCoroutine(LerpDoor(Vector2.up, true));
     }
 
     public virtual void Close()
@@ -76,13 +75,14 @@ public class Door : MonoBehaviour
         if (!IsOpened)
             return;
 
-        IsOpened = false;
         GetComponent<InteractableComponent>().Deactivate();
-        StartCoroutine(LerpDoor(Vector2.down));
+        StartCoroutine(LerpDoor(Vector2.down, false));
     }
 
-    private IEnumerator LerpDoor(Vector2 direction)
+    private IEnumerator LerpDoor(Vector2 direction, bool doorState)
     {
+        if (_collider == null)
+            yield return new WaitUntil(() => _collider != null);
         _collider.isTrigger = direction.y == 1;
         Vector3 initialPosition = transform.position;
         float initialHeight = _rendered.size.y;
@@ -101,6 +101,7 @@ public class Door : MonoBehaviour
             _collider.offset = new Vector2(_collider.offset.x, Mathf.Lerp(initialOffset, endOffset, elapsedTime));
             yield return new WaitForFixedUpdate();
         }
+        IsOpened = doorState;
     }
 
     public void TryEnter()
